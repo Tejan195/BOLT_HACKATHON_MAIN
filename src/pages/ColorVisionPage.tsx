@@ -2,7 +2,6 @@ import React from 'react';
 import { Eye } from 'lucide-react';
 import { useVisionStore } from '../store/useVisionStore';
 import { ColorVisionType } from '../types';
-import ColorVisionFilter from '../components/vision/ColorVisionFilter';
 
 const colorVisionInfo = [
   {
@@ -49,13 +48,11 @@ const ColorVisionPage: React.FC = () => {
             key={info.type}
             className="overflow-hidden rounded-lg bg-white shadow-lg transition-transform hover:scale-[1.02]"
           >
-            <ColorVisionFilter>
-              <img
-                src={info.example}
-                alt={`Example for ${info.title}`}
-                className="h-48 w-full object-cover"
-              />
-            </ColorVisionFilter>
+            <img
+              src={info.example}
+              alt={`Example for ${info.title}`}
+              className="h-48 w-full object-cover"
+            />
             <div className="p-6">
               <div className="mb-4 flex items-center">
                 <Eye className="mr-2 h-5 w-5 text-primary-600" />
