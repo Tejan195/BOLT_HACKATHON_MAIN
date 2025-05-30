@@ -7,27 +7,27 @@ const Hero: React.FC = () => {
     <div className="bg-white">
       {/* Main Hero Section */}
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-        <div className="text-center">
+        <div className="text-center animate-fade-in">
           <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
-            <span className="block text-primary-600">VisionAid AI</span>
-            <span className="block">Web Accessibility for Everyone</span>
+            <span className="block text-primary-600 animate-slide-up">VisionAid AI</span>
+            <span className="block animate-slide-up-delay">Web Accessibility for Everyone</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-lg text-xl text-gray-500 sm:max-w-3xl">
+          <p className="mx-auto mt-6 max-w-lg text-xl text-gray-500 sm:max-w-3xl animate-fade-in-delay">
             Transform websites to be more accessible for people with visual impairments. Color
             correction for color blindness and dyslexia-friendly text, all in one tool.
           </p>
-          <div className="mx-auto mt-10 max-w-sm sm:max-w-none sm:flex sm:justify-center">
+          <div className="mx-auto mt-10 max-w-sm sm:max-w-none sm:flex sm:justify-center animate-fade-in-up">
             <div className="sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 space-y-4 sm:space-y-0">
               <Link
                 to="/color-vision"
-                className="flex items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-700 transition-colors duration-300"
+                className="flex items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-700 transition-all duration-300 hover:scale-105"
               >
                 <Eye className="mr-2 h-5 w-5" />
                 <span>Color Vision Tools</span>
               </Link>
               <Link
                 to="/dyslexia"
-                className="flex items-center justify-center rounded-md border border-transparent bg-primary-100 px-4 py-3 text-base font-medium text-primary-700 shadow-sm hover:bg-primary-200 transition-colors duration-300"
+                className="flex items-center justify-center rounded-md border border-transparent bg-primary-100 px-4 py-3 text-base font-medium text-primary-700 shadow-sm hover:bg-primary-200 transition-all duration-300 hover:scale-105"
               >
                 <BookOpen className="mr-2 h-5 w-5" />
                 <span>Dyslexia Support</span>
@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
       {/* Vision and Mission Section */}
       <div className="bg-gray-50 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 animate-fade-in">
             <h2 className="text-3xl font-bold text-gray-900">Our Vision for Web Accessibility</h2>
             <p className="mt-4 text-lg text-gray-600">
               Making the digital world accessible to everyone, one website at a time
@@ -48,8 +48,8 @@ const Hero: React.FC = () => {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            <div className="bg-white rounded-lg p-8 shadow-sm">
-              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-primary-100 text-primary-600 mx-auto mb-4">
+            <div className="bg-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-primary-100 text-primary-600 mx-auto mb-4 animate-bounce-slow">
                 <Target className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">Our Mission</h3>
@@ -58,8 +58,8 @@ const Hero: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white rounded-lg p-8 shadow-sm">
-              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-primary-100 text-primary-600 mx-auto mb-4">
+            <div className="bg-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-primary-100 text-primary-600 mx-auto mb-4 animate-bounce-slow">
                 <Users className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">Who We Help</h3>
@@ -68,8 +68,8 @@ const Hero: React.FC = () => {
               </p>
             </div>
 
-            <div className="bg-white rounded-lg p-8 shadow-sm">
-              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-primary-100 text-primary-600 mx-auto mb-4">
+            <div className="bg-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-primary-100 text-primary-600 mx-auto mb-4 animate-bounce-slow">
                 <Sparkles className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">Our Solution</h3>
@@ -79,19 +79,19 @@ const Hero: React.FC = () => {
             </div>
           </div>
 
-          <div className="mt-12 bg-white rounded-lg p-8 shadow-sm">
+          <div className="mt-12 bg-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-all duration-300">
             <h3 className="text-2xl font-semibold text-gray-900 mb-4 text-center">Impact & Statistics</h3>
             <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div>
-                <p className="text-4xl font-bold text-primary-600">300M+</p>
+              <div className="transform hover:scale-105 transition-transform duration-300">
+                <p className="text-4xl font-bold text-primary-600 animate-count-up">300M+</p>
                 <p className="mt-2 text-gray-600">People worldwide with color blindness</p>
               </div>
-              <div>
-                <p className="text-4xl font-bold text-primary-600">15-20%</p>
+              <div className="transform hover:scale-105 transition-transform duration-300">
+                <p className="text-4xl font-bold text-primary-600 animate-count-up">15-20%</p>
                 <p className="mt-2 text-gray-600">Of people show symptoms of dyslexia</p>
               </div>
-              <div>
-                <p className="text-4xl font-bold text-primary-600">96%</p>
+              <div className="transform hover:scale-105 transition-transform duration-300">
+                <p className="text-4xl font-bold text-primary-600 animate-count-up">96%</p>
                 <p className="mt-2 text-gray-600">Of websites fail accessibility standards</p>
               </div>
             </div>

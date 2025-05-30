@@ -35,7 +35,7 @@ const ColorVisionPage: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8 text-center">
+      <div className="mb-8 text-center animate-fade-in">
         <h1 className="mb-4 text-4xl font-bold text-gray-900">Color Vision Simulation</h1>
         <p className="text-lg text-gray-600">
           Experience how different types of color blindness affect visual perception
@@ -43,16 +43,20 @@ const ColorVisionPage: React.FC = () => {
       </div>
 
       <div className="grid gap-8 md:grid-cols-2">
-        {colorVisionInfo.map((info) => (
+        {colorVisionInfo.map((info, index) => (
           <div
             key={info.type}
-            className="overflow-hidden rounded-lg bg-white shadow-lg transition-transform hover:scale-[1.02]"
+            className="overflow-hidden rounded-lg bg-white shadow-lg transition-all duration-500 hover:shadow-xl hover:scale-[1.02] animate-fade-in-up"
+            style={{ animationDelay: `${index * 150}ms` }}
           >
-            <img
-              src={info.example}
-              alt={`Example for ${info.title}`}
-              className="h-48 w-full object-cover"
-            />
+            <div className="relative overflow-hidden">
+              <img
+                src={info.example}
+                alt={`Example for ${info.title}`}
+                className="h-48 w-full object-cover transition-transform duration-500 hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300 hover:opacity-100" />
+            </div>
             <div className="p-6">
               <div className="mb-4 flex items-center">
                 <Eye className="mr-2 h-5 w-5 text-primary-600" />
@@ -61,7 +65,7 @@ const ColorVisionPage: React.FC = () => {
               <p className="mb-4 text-gray-600">{info.description}</p>
               <button
                 onClick={() => setColorVisionType(info.type as ColorVisionType)}
-                className={`w-full rounded-md px-4 py-2 text-center transition-colors ${
+                className={`w-full rounded-md px-4 py-2 text-center transition-all duration-300 transform active:scale-95 ${
                   colorVisionType === info.type
                     ? 'bg-primary-600 text-white'
                     : 'bg-primary-100 text-primary-700 hover:bg-primary-200'
@@ -75,10 +79,10 @@ const ColorVisionPage: React.FC = () => {
       </div>
 
       {colorVisionType && (
-        <div className="mt-8 text-center">
+        <div className="mt-8 text-center animate-fade-in">
           <button
             onClick={() => setColorVisionType(null)}
-            className="rounded-md bg-gray-100 px-6 py-2 text-gray-700 hover:bg-gray-200"
+            className="rounded-md bg-gray-100 px-6 py-2 text-gray-700 hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 active:scale-95"
           >
             Reset to Normal Vision
           </button>
