@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye, Wand2, XCircle } from 'lucide-react';
+import { Eye, Wand2 } from 'lucide-react';
 import { useVisionStore } from '../store/useVisionStore';
 import { ColorVisionType } from '../types';
 
@@ -42,11 +42,6 @@ const ColorVisionPage: React.FC = () => {
     setLoadedImages(prev => ({ ...prev, [type]: true }));
   };
 
-  const resetVision = () => {
-    setColorVisionType(null);
-    setCorrectionEnabled(false);
-  };
-
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 text-center animate-fade-in">
@@ -55,39 +50,6 @@ const ColorVisionPage: React.FC = () => {
           Experience how different types of color blindness affect visual perception
         </p>
       </div>
-
-      {/* Floating Control Panel */}
-      {colorVisionType && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 animate-fade-in-up">
-          <div className="bg-white rounded-lg shadow-lg p-4 flex items-center gap-4">
-            <div className="flex items-center">
-              <Eye className="h-5 w-5 text-primary-600 mr-2" />
-              <span className="text-sm font-medium text-gray-700">
-                {colorVisionInfo.find(info => info.type === colorVisionType)?.title}
-              </span>
-            </div>
-            <button
-              onClick={() => setCorrectionEnabled(!correctionEnabled)}
-              className={`rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 flex items-center ${
-                correctionEnabled
-                  ? 'bg-accent-500 text-white hover:bg-accent-600'
-                  : 'bg-accent-100 text-accent-700 hover:bg-accent-200'
-              }`}
-              aria-label={correctionEnabled ? 'Disable color correction' : 'Enable color correction'}
-            >
-              <Wand2 className="mr-2 h-4 w-4" />
-              {correctionEnabled ? 'Correction On' : 'Correction Off'}
-            </button>
-            <button
-              onClick={resetVision}
-              className="rounded-lg bg-gray-100 p-2 text-gray-700 hover:bg-gray-200 transition-all duration-300"
-              aria-label="Reset to normal vision"
-            >
-              <XCircle className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
-      )}
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto">
         {colorVisionInfo.map((info, index) => (
@@ -130,7 +92,6 @@ const ColorVisionPage: React.FC = () => {
                     ? 'bg-primary-600 text-white shadow-md'
                     : 'bg-primary-100 text-primary-700 hover:bg-primary-200'
                 }`}
-                aria-pressed={colorVisionType === info.type}
               >
                 {colorVisionType === info.type ? 'Currently Active' : 'Simulate This Vision'}
               </button>
@@ -138,6 +99,31 @@ const ColorVisionPage: React.FC = () => {
           </div>
         ))}
       </div>
+
+      {colorVisionType && (
+        <div className="mt-8 flex flex-col items-center space-y-4 animate-fade-in">
+          <button
+            onClick={() => setCorrectionEnabled(!correctionEnabled)}
+            className={`rounded-lg px-6 py-2 text-sm font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center ${
+              correctionEnabled
+                ? 'bg-accent-500 text-white hover:bg-accent-600'
+                : 'bg-accent-100 text-accent-700 hover:bg-accent-200'
+            }`}
+          >
+            <Wand2 className="mr-2 h-4 w-4" />
+            {correctionEnabled ? 'Disable Color Correction' : 'Enable Color Correction'}
+          </button>
+          <button
+            onClick={() => {
+              setColorVisionType(null);
+              setCorrectionEnabled(false);
+            }}
+            className="rounded-lg bg-gray-100 px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 active:scale-95"
+          >
+            Reset to Normal Vision
+          </button>
+        </div>
+      )}
     </div>
   );
 };
