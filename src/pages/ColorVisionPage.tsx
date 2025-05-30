@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Eye } from 'lucide-react';
 import { useVisionStore } from '../store/useVisionStore';
 import { ColorVisionType } from '../types';
@@ -8,30 +8,39 @@ const colorVisionInfo = [
     type: 'protanopia',
     title: 'Protanopia (Red-Blind)',
     description: 'Inability to perceive red light, making it difficult to distinguish between red and green colors. This affects approximately 1% of males.',
-    example: 'https://images.pexels.com/photos/33109/fall-autumn-red-season.jpg',
+    example: 'https://images.pexels.com/photos/33109/fall-autumn-red-season.jpg?auto=compress&cs=tinysrgb&w=800',
+    thumbnail: 'https://images.pexels.com/photos/33109/fall-autumn-red-season.jpg?auto=compress&cs=tinysrgb&w=50',
   },
   {
     type: 'deuteranopia',
     title: 'Deuteranopia (Green-Blind)',
     description: 'Difficulty perceiving green light, resulting in problems distinguishing between red and green. This is the most common type of color blindness.',
-    example: 'https://images.pexels.com/photos/338936/pexels-photo-338936.jpeg',
+    example: 'https://images.pexels.com/photos/338936/pexels-photo-338936.jpeg?auto=compress&cs=tinysrgb&w=800',
+    thumbnail: 'https://images.pexels.com/photos/338936/pexels-photo-338936.jpeg?auto=compress&cs=tinysrgb&w=50',
   },
   {
     type: 'tritanopia',
     title: 'Tritanopia (Blue-Blind)',
     description: 'Rare condition affecting blue light perception, making it hard to distinguish between blue and yellow colors.',
-    example: 'https://images.pexels.com/photos/1834407/pexels-photo-1834407.jpeg',
+    example: 'https://images.pexels.com/photos/1834407/pexels-photo-1834407.jpeg?auto=compress&cs=tinysrgb&w=800',
+    thumbnail: 'https://images.pexels.com/photos/1834407/pexels-photo-1834407.jpeg?auto=compress&cs=tinysrgb&w=50',
   },
   {
     type: 'achromatopsia',
     title: 'Achromatopsia (Total Color Blindness)',
     description: 'Complete inability to perceive colors, seeing only in shades of gray. This is an extremely rare condition.',
-    example: 'https://images.pexels.com/photos/235615/pexels-photo-235615.jpeg',
+    example: 'https://images.pexels.com/photos/235615/pexels-photo-235615.jpeg?auto=compress&cs=tinysrgb&w=800',
+    thumbnail: 'https://images.pexels.com/photos/235615/pexels-photo-235615.jpeg?auto=compress&cs=tinysrgb&w=50',
   },
 ];
 
 const ColorVisionPage: React.FC = () => {
   const { colorVisionType, setColorVisionType } = useVisionStore();
+  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
+
+  const handleImageLoad = (type: string) => {
+    setLoadedImages(prev => ({ ...prev, [type]: true }));
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -50,10 +59,23 @@ const ColorVisionPage: React.FC = () => {
             style={{ animationDelay: `${index * 150}ms` }}
           >
             <div className="relative overflow-hidden group">
+              <div 
+                className="absolute inset-0 bg-cover bg-center blur-xl scale-110 opacity-50 transition-opacity duration-300"
+                style={{ 
+                  backgroundImage: `url(${info.thumbnail})`,
+                  opacity: loadedImages[info.type] ? 0 : 0.5 
+                }}
+              />
               <img
                 src={info.example}
                 alt={`Example for ${info.title}`}
-                className="h-40 w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                loading="lazy"
+                onLoad={() => handleImageLoad(info.type)}
+                className={`h-40 w-full object-cover transition-all duration-700 ${
+                  loadedImages[info.type] 
+                    ? 'opacity-100 group-hover:scale-110' 
+                    : 'opacity-0'
+                }`}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             </div>
