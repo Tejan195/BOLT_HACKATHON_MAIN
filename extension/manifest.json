@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "VisionAid Color Correction",
+  "version": "1.0",
+  "description": "Color vision correction for various types of color blindness",
+  "permissions": ["activeTab", "storage"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["content.js"]
+  }]
+}
