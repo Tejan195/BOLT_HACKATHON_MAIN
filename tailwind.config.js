@@ -33,11 +33,42 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        dyslexic: ['OpenDyslexic', 'Comic Sans MS', 'cursive'],
+        display: ['Inter', 'system-ui', 'sans-serif'],
+      },
+      boxShadow: {
+        'inner-lg': 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
+      },
+      animation: {
+        'text-gradient': 'text-gradient 1.5s linear infinite',
+        'background-shine': 'background-shine 2s linear infinite',
+      },
+      keyframes: {
+        'text-gradient': {
+          to: {
+            backgroundPosition: '200% center',
+          },
+        },
+        'background-shine': {
+          from: { backgroundPosition: '0 0' },
+          to: { backgroundPosition: '-200% 0' },
+        },
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      const newUtilities = {
+        '.text-gradient': {
+          'background-clip': 'text',
+          '-webkit-background-clip': 'text',
+          '-webkit-text-fill-color': 'transparent',
+          'background-size': '200% auto',
+          'background-position': '0 center',
+        },
+      };
+      addUtilities(newUtilities);
+    },
+  ],
   future: {
     hoverOnlyWhenSupported: true,
   },
