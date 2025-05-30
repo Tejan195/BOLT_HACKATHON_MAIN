@@ -1,5 +1,6 @@
 export interface UserPreferences {
   colorVisionType: ColorVisionType | null;
+  correctionEnabled: boolean;
   dyslexiaSupport: boolean;
   highContrast: boolean;
 }

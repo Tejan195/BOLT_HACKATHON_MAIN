@@ -8,12 +8,25 @@ const filters = {
   achromatopsia: 'grayscale(1)',
 };
 
+const correctionFilters = {
+  protanopia: 'saturate(1.2) hue-rotate(20deg)',
+  deuteranopia: 'saturate(1.3) hue-rotate(-20deg)',
+  tritanopia: 'saturate(1.4) hue-rotate(-180deg)',
+  achromatopsia: 'contrast(1.2) saturate(1.3)',
+};
+
 const ColorVisionFilter: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { colorVisionType } = useVisionStore();
+  const { colorVisionType, correctionEnabled } = useVisionStore();
 
-  const filterStyle = colorVisionType ? { filter: filters[colorVisionType] } : undefined;
+  const getFilter = () => {
+    if (!colorVisionType) return undefined;
+    if (correctionEnabled) {
+      return { filter: correctionFilters[colorVisionType] };
+    }
+    return { filter: filters[colorVisionType] };
+  };
 
-  return <div style={filterStyle}>{children}</div>;
+  return <div style={getFilter()}>{children}</div>;
 };
 
 export default ColorVisionFilter;

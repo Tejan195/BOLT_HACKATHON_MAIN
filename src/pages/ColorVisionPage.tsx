@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye } from 'lucide-react';
+import { Eye, Wand2 } from 'lucide-react';
 import { useVisionStore } from '../store/useVisionStore';
 import { ColorVisionType } from '../types';
 
@@ -35,7 +35,7 @@ const colorVisionInfo = [
 ];
 
 const ColorVisionPage: React.FC = () => {
-  const { colorVisionType, setColorVisionType } = useVisionStore();
+  const { colorVisionType, setColorVisionType, correctionEnabled, setCorrectionEnabled } = useVisionStore();
   const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
 
   const handleImageLoad = (type: string) => {
@@ -101,9 +101,23 @@ const ColorVisionPage: React.FC = () => {
       </div>
 
       {colorVisionType && (
-        <div className="mt-8 text-center animate-fade-in">
+        <div className="mt-8 flex flex-col items-center space-y-4 animate-fade-in">
           <button
-            onClick={() => setColorVisionType(null)}
+            onClick={() => setCorrectionEnabled(!correctionEnabled)}
+            className={`rounded-lg px-6 py-2 text-sm font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center ${
+              correctionEnabled
+                ? 'bg-accent-500 text-white hover:bg-accent-600'
+                : 'bg-accent-100 text-accent-700 hover:bg-accent-200'
+            }`}
+          >
+            <Wand2 className="mr-2 h-4 w-4" />
+            {correctionEnabled ? 'Disable Color Correction' : 'Enable Color Correction'}
+          </button>
+          <button
+            onClick={() => {
+              setColorVisionType(null);
+              setCorrectionEnabled(false);
+            }}
             className="rounded-lg bg-gray-100 px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 active:scale-95"
           >
             Reset to Normal Vision
