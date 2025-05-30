@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, BookOpen, Target, Users, Sparkles } from 'lucide-react';
+import { Eye, BookOpen, Target, Users, Sparkles, Download, Chrome } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Hero: React.FC = () => {
@@ -32,6 +32,60 @@ const Hero: React.FC = () => {
                 <BookOpen className="mr-3 h-5 w-5" />
                 <span>Dyslexia Support</span>
               </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Browser Extension Section */}
+      <div className="bg-gradient-to-b from-primary-50 to-white py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Browser Extension</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Take VisionAid's color correction everywhere you go with our Chrome extension.
+              Apply color filters to any website instantly.
+            </p>
+          </div>
+          
+          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-3xl mx-auto">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="flex-1">
+                <h3 className="text-2xl font-semibold text-gray-900 mb-4">Color Vision Extension</h3>
+                <ul className="space-y-3 text-gray-600 mb-6">
+                  <li className="flex items-center">
+                    <Chrome className="h-5 w-5 text-primary-600 mr-2" />
+                    Works on any website
+                  </li>
+                  <li className="flex items-center">
+                    <Eye className="h-5 w-5 text-primary-600 mr-2" />
+                    Supports all color vision types
+                  </li>
+                  <li className="flex items-center">
+                    <Sparkles className="h-5 w-5 text-primary-600 mr-2" />
+                    Real-time color correction
+                  </li>
+                </ul>
+                <a
+                  href="/extension.zip"
+                  download
+                  className="inline-flex items-center justify-center rounded-lg bg-primary-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-700 transition-all duration-300 hover:scale-105"
+                >
+                  <Download className="mr-2 h-5 w-5" />
+                  Download Extension
+                </a>
+              </div>
+              
+              <div className="flex-1 bg-gray-50 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-900 mb-4">How to Install:</h4>
+                <ol className="space-y-3 text-gray-600 list-decimal list-inside">
+                  <li>Download the extension</li>
+                  <li>Open Chrome and go to Extensions</li>
+                  <li>Enable Developer mode</li>
+                  <li>Click "Load unpacked"</li>
+                  <li>Select the downloaded folder</li>
+                </ol>
+              </div>
             </div>
           </div>
         </div>
