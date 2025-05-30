@@ -12,7 +12,7 @@ const correctionFilters = {
   protanopia: 'saturate(1.2) hue-rotate(20deg)',
   deuteranopia: 'saturate(1.3) hue-rotate(-20deg)',
   tritanopia: 'saturate(1.4) hue-rotate(-180deg)',
-  achromatopsia: 'contrast(1.2) saturate(1.3)',
+  achromatopsia: 'contrast(1.5) brightness(1.2) saturate(2)',
 };
 
 const ColorVisionFilter: React.FC<{ children: React.ReactNode }> = ({ children }) => {
