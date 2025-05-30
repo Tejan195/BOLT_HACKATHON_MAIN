@@ -1,27 +1,34 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
-import Hero from './components/landing/Hero';
-import ColorVisionPage from './pages/ColorVisionPage';
-import AuthPage from './pages/AuthPage';
-import AccountPage from './pages/AccountPage';
-import ColorVisionFilter from './components/vision/ColorVisionFilter';
 import { AuthProvider } from './components/auth/AuthProvider';
+import { Toaster } from 'sonner';
+import LoadingSpinner from './components/common/LoadingSpinner';
+
+// Lazy load components
+const Hero = React.lazy(() => import('./components/landing/Hero'));
+const ColorVisionPage = React.lazy(() => import('./pages/ColorVisionPage'));
+const AuthPage = React.lazy(() => import('./pages/AuthPage'));
+const AccountPage = React.lazy(() => import('./pages/AccountPage'));
+const ColorVisionFilter = React.lazy(() => import('./components/vision/ColorVisionFilter'));
 
 function App() {
   return (
     <Router>
       <AuthProvider>
-        <ColorVisionFilter>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Hero />} />
-              <Route path="/color-vision" element={<ColorVisionPage />} />
-              <Route path="/auth" element={<AuthPage />} />
-              <Route path="/account" element={<AccountPage />} />
-            </Routes>
-          </Layout>
-        </ColorVisionFilter>
+        <Suspense fallback={<LoadingSpinner />}>
+          <ColorVisionFilter>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Hero />} />
+                <Route path="/color-vision" element={<ColorVisionPage />} />
+                <Route path="/auth" element={<AuthPage />} />
+                <Route path="/account" element={<AccountPage />} />
+              </Routes>
+            </Layout>
+          </ColorVisionFilter>
+        </Suspense>
+        <Toaster position="top-right" />
       </AuthProvider>
     </Router>
   );

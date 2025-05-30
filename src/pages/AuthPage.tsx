@@ -1,38 +1,47 @@
 import React, { useState } from 'react';
 import { signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth, googleProvider } from '../lib/firebase';
+import { auth, googleProvider, handleAuthError } from '../lib/firebase';
 import { useNavigate } from 'react-router-dom';
 import { Eye, Mail, Lock, LogIn, UserPlus, Chrome } from 'lucide-react';
+import { toast } from 'sonner';
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     try {
+      setLoading(true);
       await signInWithPopup(auth, googleProvider);
+      toast.success('Successfully signed in!');
       navigate('/account');
     } catch (error) {
-      setError('Failed to sign in with Google');
+      handleAuthError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setLoading(true);
 
     try {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password);
+        toast.success('Successfully signed in!');
       } else {
         await createUserWithEmailAndPassword(auth, email, password);
+        toast.success('Account created successfully!');
       }
       navigate('/account');
     } catch (error) {
-      setError(isLogin ? 'Invalid email or password' : 'Failed to create account');
+      handleAuthError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -84,21 +93,26 @@ const AuthPage: React.FC = () => {
               </div>
             </div>
 
-            {error && (
-              <div className="text-red-600 text-sm">{error}</div>
-            )}
-
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                disabled={loading}
+                className={`w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+                  loading ? 'bg-primary-400 cursor-not-allowed' : 'bg-primary-600 hover:bg-primary-700'
+                } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500`}
               >
-                {isLogin ? (
-                  <LogIn className="h-5 w-5 mr-2" />
+                {loading ? (
+                  <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
                 ) : (
-                  <UserPlus className="h-5 w-5 mr-2" />
+                  <>
+                    {isLogin ? (
+                      <LogIn className="h-5 w-5 mr-2" />
+                    ) : (
+                      <UserPlus className="h-5 w-5 mr-2" />
+                    )}
+                    {isLogin ? 'Sign in' : 'Sign up'}
+                  </>
                 )}
-                {isLogin ? 'Sign in' : 'Sign up'}
               </button>
             </div>
           </form>
@@ -116,10 +130,19 @@ const AuthPage: React.FC = () => {
             <div className="mt-6">
               <button
                 onClick={handleGoogleSignIn}
-                className="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                disabled={loading}
+                className={`w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white ${
+                  loading ? 'cursor-not-allowed' : 'hover:bg-gray-50'
+                } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500`}
               >
-                <Chrome className="h-5 w-5 mr-2 text-primary-600" />
-                Sign in with Google
+                {loading ? (
+                  <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-primary-600"></div>
+                ) : (
+                  <>
+                    <Chrome className="h-5 w-5 mr-2 text-primary-600" />
+                    Sign in with Google
+                  </>
+                )}
               </button>
             </div>
           </div>
