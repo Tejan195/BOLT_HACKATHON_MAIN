@@ -9,25 +9,25 @@ const colorVisionInfo = [
     type: 'protanopia',
     title: 'Protanopia (Red-Blind)',
     description: 'Inability to perceive red light, making it difficult to distinguish between red and green colors. This affects approximately 1% of males.',
-    example: 'https://images.pexels.com/photos/1125136/pexels-photo-1125136.jpeg',
+    example: 'https://images.pexels.com/photos/33109/fall-autumn-red-season.jpg',
   },
   {
     type: 'deuteranopia',
     title: 'Deuteranopia (Green-Blind)',
     description: 'Difficulty perceiving green light, resulting in problems distinguishing between red and green. This is the most common type of color blindness.',
-    example: 'https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg',
+    example: 'https://images.pexels.com/photos/338936/pexels-photo-338936.jpeg',
   },
   {
     type: 'tritanopia',
     title: 'Tritanopia (Blue-Blind)',
     description: 'Rare condition affecting blue light perception, making it hard to distinguish between blue and yellow colors.',
-    example: 'https://images.pexels.com/photos/1420440/pexels-photo-1420440.jpeg',
+    example: 'https://images.pexels.com/photos/1834407/pexels-photo-1834407.jpeg',
   },
   {
     type: 'achromatopsia',
     title: 'Achromatopsia (Total Color Blindness)',
     description: 'Complete inability to perceive colors, seeing only in shades of gray. This is an extremely rare condition.',
-    example: 'https://images.pexels.com/photos/1420702/pexels-photo-1420702.jpeg',
+    example: 'https://images.pexels.com/photos/235615/pexels-photo-235615.jpeg',
   },
 ];
 
