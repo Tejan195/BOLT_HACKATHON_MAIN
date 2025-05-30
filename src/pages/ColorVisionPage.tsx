@@ -42,21 +42,36 @@ const ColorVisionPage: React.FC = () => {
     setLoadedImages(prev => ({ ...prev, [type]: true }));
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent, type: ColorVisionType) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      setColorVisionType(type);
+      e.preventDefault();
+    }
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8" role="main">
       <div className="mb-8 text-center animate-fade-in">
-        <h1 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Color Vision Simulation</h1>
+        <h1 className="mb-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          Color Vision Simulation
+        </h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Experience how different types of color blindness affect visual perception
+          Experience how different types of color blindness affect visual perception. Select a type to
+          simulate and use color correction to enhance visibility.
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto">
+      <div 
+        className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto"
+        role="list"
+        aria-label="Color vision types"
+      >
         {colorVisionInfo.map((info, index) => (
           <div
             key={info.type}
-            className="overflow-hidden rounded-lg bg-white shadow-md transition-all duration-500 hover:shadow-lg hover:scale-[1.02] animate-fade-in-up"
+            className="overflow-hidden rounded-lg bg-white shadow-md transition-all duration-500 hover:shadow-lg hover:scale-[1.02] animate-fade-in-up focus-within:ring-2 focus-within:ring-primary-500"
             style={{ animationDelay: `${index * 150}ms` }}
+            role="listitem"
           >
             <div className="relative overflow-hidden group">
               <div 
@@ -65,10 +80,11 @@ const ColorVisionPage: React.FC = () => {
                   backgroundImage: `url(${info.thumbnail})`,
                   opacity: loadedImages[info.type] ? 0 : 0.5 
                 }}
+                aria-hidden="true"
               />
               <img
                 src={info.example}
-                alt={`Example for ${info.title}`}
+                alt={`Visual example of ${info.title}`}
                 loading="lazy"
                 onLoad={() => handleImageLoad(info.type)}
                 className={`h-40 w-full object-cover transition-all duration-700 ${
@@ -77,21 +93,27 @@ const ColorVisionPage: React.FC = () => {
                     : 'opacity-0'
                 }`}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div 
+                className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                aria-hidden="true"
+              />
             </div>
             <div className="p-4">
               <div className="mb-2 flex items-center">
-                <Eye className="mr-2 h-4 w-4 text-primary-600" />
+                <Eye className="mr-2 h-4 w-4 text-primary-600" aria-hidden="true" />
                 <h2 className="text-lg font-semibold tracking-tight text-gray-900">{info.title}</h2>
               </div>
               <p className="mb-4 text-sm leading-relaxed text-gray-600">{info.description}</p>
               <button
                 onClick={() => setColorVisionType(info.type as ColorVisionType)}
-                className={`w-full rounded-lg px-4 py-2 text-sm font-medium text-center transition-all duration-300 transform active:scale-95 ${
+                onKeyDown={(e) => handleKeyPress(e, info.type as ColorVisionType)}
+                className={`w-full rounded-lg px-4 py-2 text-sm font-medium text-center transition-all duration-300 transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 ${
                   colorVisionType === info.type
                     ? 'bg-primary-600 text-white shadow-md'
                     : 'bg-primary-100 text-primary-700 hover:bg-primary-200'
                 }`}
+                aria-pressed={colorVisionType === info.type}
+                aria-label={`Simulate ${info.title}`}
               >
                 {colorVisionType === info.type ? 'Currently Active' : 'Simulate This Vision'}
               </button>
@@ -101,16 +123,21 @@ const ColorVisionPage: React.FC = () => {
       </div>
 
       {colorVisionType && (
-        <div className="mt-8 flex flex-col items-center space-y-4 animate-fade-in">
+        <div 
+          className="mt-8 flex flex-col items-center space-y-4 animate-fade-in"
+          role="group"
+          aria-label="Vision control options"
+        >
           <button
             onClick={() => setCorrectionEnabled(!correctionEnabled)}
-            className={`rounded-lg px-6 py-2 text-sm font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center ${
+            className={`rounded-lg px-6 py-2 text-sm font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500 ${
               correctionEnabled
                 ? 'bg-accent-500 text-white hover:bg-accent-600'
                 : 'bg-accent-100 text-accent-700 hover:bg-accent-200'
             }`}
+            aria-pressed={correctionEnabled}
           >
-            <Wand2 className="mr-2 h-4 w-4" />
+            <Wand2 className="mr-2 h-4 w-4" aria-hidden="true" />
             {correctionEnabled ? 'Disable Color Correction' : 'Enable Color Correction'}
           </button>
           <button
@@ -118,7 +145,8 @@ const ColorVisionPage: React.FC = () => {
               setColorVisionType(null);
               setCorrectionEnabled(false);
             }}
-            className="rounded-lg bg-gray-100 px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 active:scale-95"
+            className="rounded-lg bg-gray-100 px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            aria-label="Reset to normal vision"
           >
             Reset to Normal Vision
           </button>
