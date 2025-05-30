@@ -85,31 +85,30 @@ const ColorVisionPage: React.FC = () => {
                 <h2 className="text-lg font-semibold tracking-tight text-gray-900">{info.title}</h2>
               </div>
               <p className="mb-4 text-sm leading-relaxed text-gray-600">{info.description}</p>
-              <button
-                onClick={() => setColorVisionType(info.type as ColorVisionType)}
-                className={`w-full rounded-lg px-4 py-2 text-sm font-medium text-center transition-all duration-300 transform active:scale-95 ${
-                  colorVisionType === info.type
-                    ? 'bg-primary-600 text-white shadow-md'
-                    : 'bg-primary-100 text-primary-700 hover:bg-primary-200'
-                }`}
-              >
-                {colorVisionType === info.type ? 'Currently Active' : 'Simulate This Vision'}
-              </button>
+              <div className="flex flex-col space-y-2">
+                <button
+                  onClick={() => setColorVisionType(info.type as ColorVisionType)}
+                  className={`w-full rounded-lg px-4 py-2 text-sm font-medium text-center transition-all duration-300 transform active:scale-95 ${
+                    colorVisionType === info.type
+                      ? 'bg-primary-600 text-white shadow-md'
+                      : 'bg-primary-100 text-primary-700 hover:bg-primary-200'
+                  }`}
+                >
+                  Simulate This Vision
+                </button>
+                {colorVisionType === info.type && (
+                  <button
+                    onClick={() => setColorVisionType(null)}
+                    className="w-full rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 active:scale-95"
+                  >
+                    Reset Vision
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         ))}
       </div>
-
-      {colorVisionType && (
-        <div className="mt-8 text-center animate-fade-in">
-          <button
-            onClick={() => setColorVisionType(null)}
-            className="rounded-lg bg-gray-100 px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 active:scale-95"
-          >
-            Reset to Normal Vision
-          </button>
-        </div>
-      )}
     </div>
   );
 };
