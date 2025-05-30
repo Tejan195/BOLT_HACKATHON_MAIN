@@ -6,40 +6,42 @@ const Hero: React.FC = () => {
   return (
     <div className="bg-white">
       {/* Main Hero Section */}
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-16 lg:py-24">
-        <div className="text-center animate-fade-in">
-          <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl lg:text-6xl">
-            <span className="block text-primary-600 animate-slide-up mb-2">VisionAid AI</span>
-            <span className="block animate-slide-up-delay leading-tight">Web Accessibility for Everyone</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-lg text-lg sm:text-xl leading-relaxed text-gray-500 sm:max-w-3xl animate-fade-in-delay">
-            Transform websites to be more accessible for people with visual impairments. Color
-            correction for color blindness and dyslexia-friendly text, all in one tool.
-          </p>
-          <div className="mx-auto mt-8 sm:mt-12 max-w-sm sm:max-w-none sm:flex sm:justify-center animate-fade-in-up">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
-              <Link
-                to="/color-vision"
-                className="flex items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 sm:px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-700 transition-all duration-300 hover:scale-105"
-              >
-                <Eye className="mr-2 h-5 w-5" />
-                <span>Color Vision Tools</span>
-              </Link>
-              <Link
-                to="/dyslexia"
-                className="flex items-center justify-center rounded-md border border-transparent bg-primary-100 px-4 sm:px-6 py-3 text-base font-medium text-primary-700 shadow-sm hover:bg-primary-200 transition-all duration-300 hover:scale-105"
-              >
-                <BookOpen className="mr-2 h-5 w-5" />
-                <span>Dyslexia Support</span>
-              </Link>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-16 lg:py-24">
+          <div className="text-center animate-fade-in">
+            <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl lg:text-6xl">
+              <span className="block text-primary-600 animate-slide-up mb-2">VisionAid AI</span>
+              <span className="block animate-slide-up-delay leading-tight">Web Accessibility for Everyone</span>
+            </h1>
+            <p className="mx-auto mt-6 max-w-lg text-lg sm:text-xl leading-relaxed text-gray-500 sm:max-w-3xl animate-fade-in-delay">
+              Transform websites to be more accessible for people with visual impairments. Color
+              correction for color blindness and dyslexia-friendly text, all in one tool.
+            </p>
+            <div className="mx-auto mt-8 sm:mt-12 max-w-sm sm:max-w-none sm:flex sm:justify-center animate-fade-in-up">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
+                <Link
+                  to="/color-vision"
+                  className="flex items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 sm:px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-700 transition-all duration-300 hover:scale-105"
+                >
+                  <Eye className="mr-2 h-5 w-5" />
+                  <span>Color Vision Tools</span>
+                </Link>
+                <Link
+                  to="/dyslexia"
+                  className="flex items-center justify-center rounded-md border border-transparent bg-primary-100 px-4 sm:px-6 py-3 text-base font-medium text-primary-700 shadow-sm hover:bg-primary-200 transition-all duration-300 hover:scale-105"
+                >
+                  <BookOpen className="mr-2 h-5 w-5" />
+                  <span>Dyslexia Support</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Browser Extension Section */}
-      <div className="bg-gradient-to-b from-primary-50 to-white py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen flex items-center bg-gradient-to-b from-primary-50 to-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Browser Extension</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -92,8 +94,8 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Vision and Mission Section */}
-      <div className="bg-gray-50 py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen flex items-center bg-gray-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Vision for Web Accessibility</h2>
             <p className="mt-6 text-xl leading-relaxed text-gray-600">
