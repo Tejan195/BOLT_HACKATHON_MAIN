@@ -55,7 +55,7 @@ const ColorVisionPage: React.FC = () => {
         <div className="relative pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12 animate-fade-in">
-              <h1 className="text-4xl font-bold sm:text-5xl lg:text-6xl mb-6 text-gray-900">
+              <h1 className="text-4xl font-bold sm:text-5xl lg:text-6xl mb-6 from-violet-400 via-primary-500 to-violet-600">
                 Color Vision Simulation
               </h1>
               <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
