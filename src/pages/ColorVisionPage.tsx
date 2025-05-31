@@ -50,24 +50,15 @@ const ColorVisionPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-white">
       <div className="relative">
-        {/* Background Effects */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 via-primary-900/40 to-black"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(124,58,237,0.12),transparent_50%)]"></div>
-        </div>
-
-        {/* Content */}
         <div className="relative pt-24 pb-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12 animate-fade-in">
-              <h1 className="text-4xl font-bold sm:text-5xl lg:text-6xl mb-6">
-                <span className="text-transparent bg-gradient-to-r from-violet-400 to-primary-500 bg-clip-text animate-text-gradient">
-                  Color Vision Simulation
-                </span>
+              <h1 className="text-4xl font-bold sm:text-5xl lg:text-6xl mb-6 text-gray-900">
+                Color Vision Simulation
               </h1>
-              <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto">
+              <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
                 Experience how different types of color blindness affect visual perception. Select a type to
                 simulate and use color correction to enhance visibility.
               </p>
@@ -81,7 +72,7 @@ const ColorVisionPage: React.FC = () => {
               {colorVisionInfo.map((info, index) => (
                 <div
                   key={info.type}
-                  className="group bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:bg-white/10 animate-fade-in-up"
+                  className="group bg-white rounded-2xl border border-gray-200 overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-lg animate-fade-in-up"
                   style={{ animationDelay: `${index * 150}ms` }}
                   role="listitem"
                 >
@@ -113,28 +104,21 @@ const ColorVisionPage: React.FC = () => {
 
                   <div className="p-6">
                     <div className="flex items-center mb-3">
-                      <Eye className="h-5 w-5 text-primary-400 mr-2" aria-hidden="true" />
-                      <h2 className="text-lg font-semibold text-white">{info.title}</h2>
+                      <Eye className="h-5 w-5 text-primary-600 mr-2" aria-hidden="true" />
+                      <h2 className="text-lg font-semibold text-gray-900">{info.title}</h2>
                     </div>
-                    <p className="text-sm leading-relaxed text-gray-400 mb-4">{info.description}</p>
+                    <p className="text-sm leading-relaxed text-gray-600 mb-4">{info.description}</p>
                     <button
                       onClick={() => setColorVisionType(info.type as ColorVisionType)}
                       onKeyDown={(e) => handleKeyPress(e, info.type as ColorVisionType)}
-                      className={`w-full group relative rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 overflow-hidden ${
+                      className={`w-full rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ${
                         colorVisionType === info.type
-                          ? 'text-white'
-                          : 'text-primary-400 hover:text-white'
+                          ? 'bg-primary-600 text-white'
+                          : 'bg-gray-100 text-gray-900 hover:bg-primary-50 hover:text-primary-600'
                       }`}
                       aria-pressed={colorVisionType === info.type}
                     >
-                      <div className={`absolute inset-0 rounded-lg transition-transform duration-300 ${
-                        colorVisionType === info.type
-                          ? 'bg-gradient-to-r from-violet-600 to-primary-600'
-                          : 'bg-primary-900/50 group-hover:bg-gradient-to-r group-hover:from-violet-600 group-hover:to-primary-600'
-                      }`}></div>
-                      <span className="relative">
-                        {colorVisionType === info.type ? 'Currently Active' : 'Simulate This Vision'}
-                      </span>
+                      {colorVisionType === info.type ? 'Currently Active' : 'Simulate This Vision'}
                     </button>
                   </div>
                 </div>
@@ -149,15 +133,14 @@ const ColorVisionPage: React.FC = () => {
               >
                 <button
                   onClick={() => setCorrectionEnabled(!correctionEnabled)}
-                  className="group relative rounded-full px-8 py-3 text-sm font-medium transition-all duration-300 hover:scale-105 overflow-hidden"
+                  className={`rounded-full px-8 py-3 text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                    correctionEnabled
+                      ? 'bg-primary-600 text-white'
+                      : 'bg-gray-100 text-gray-900 hover:bg-primary-50 hover:text-primary-600'
+                  }`}
                   aria-pressed={correctionEnabled}
                 >
-                  <div className={`absolute inset-0 rounded-full transition-transform duration-300 ${
-                    correctionEnabled
-                      ? 'bg-gradient-to-r from-violet-600 to-primary-600'
-                      : 'bg-white/10'
-                  }`}></div>
-                  <span className="relative flex items-center">
+                  <span className="flex items-center">
                     <Wand2 className="h-5 w-5 mr-2" />
                     {correctionEnabled ? 'Disable Color Correction' : 'Enable Color Correction'}
                   </span>
@@ -168,7 +151,7 @@ const ColorVisionPage: React.FC = () => {
                     setColorVisionType(null);
                     setCorrectionEnabled(false);
                   }}
-                  className="text-sm text-gray-400 hover:text-white transition-colors duration-300"
+                  className="text-sm text-gray-500 hover:text-primary-600 transition-colors duration-300"
                   aria-label="Reset to normal vision"
                 >
                   Reset to Normal Vision
