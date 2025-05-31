@@ -1,0 +1,54 @@
+body {
+  width: 300px;
+  padding: 16px;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+h1 {
+  font-size: 18px;
+  margin: 0;
+  color: #7c3aed;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+.slider {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+input:checked + .slider {
+  color: #7c3aed;
+  font-weight: 500;
+}
