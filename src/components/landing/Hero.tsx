@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, BookOpen, Target, Users, Sparkles, Download, Chrome } from 'lucide-react';
+import { Eye, BookOpen, Target, Users, Sparkles, Download, Chrome, ZoomIn } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Hero: React.FC = () => {
@@ -24,7 +24,7 @@ const Hero: React.FC = () => {
             </h1>
             <p className="mx-auto mt-8 max-w-2xl text-lg sm:text-xl leading-relaxed text-gray-300">
               Transform websites to be more accessible for people with visual impairments. 
-              Color correction for color blindness and dyslexia-friendly text, all in one tool.
+              Color correction for color blindness, dyslexia-friendly text, and low vision support, all in one tool.
             </p>
             <div className="mx-auto mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
               <Link
@@ -45,6 +45,16 @@ const Hero: React.FC = () => {
                 <span className="relative flex items-center justify-center text-base font-medium">
                   <BookOpen className="mr-2 h-5 w-5" />
                   Dyslexia Support
+                </span>
+              </Link>
+              <Link
+                to="/low-vision"
+                className="group relative px-6 py-3 w-full sm:w-auto rounded-full bg-white/10 text-white overflow-hidden transition-all duration-300 hover:scale-105"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 transition-transform duration-300 group-hover:scale-105"></div>
+                <span className="relative flex items-center justify-center text-base font-medium">
+                  <ZoomIn className="mr-2 h-5 w-5" />
+                  Low Vision Support
                 </span>
               </Link>
             </div>
