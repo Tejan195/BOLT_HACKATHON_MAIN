@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Eye, ZoomIn, Focus, Glasses, Sparkles } from 'lucide-react';
 
 const RefractiveErrorPage: React.FC = () => {
@@ -7,6 +7,8 @@ const RefractiveErrorPage: React.FC = () => {
   const [textSize, setTextSize] = useState(16);
   const [distanceMode, setDistanceMode] = useState<'near' | 'far'>('near');
   const [correction, setCorrection] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
 
   const sampleText = `
     This is a sample text to demonstrate how refractive error correction works.
@@ -19,84 +21,110 @@ const RefractiveErrorPage: React.FC = () => {
     vision and how corrective measures can help improve visual clarity.
   `;
 
-  const getVisionStyle = () => {
-    if (correction || !visionType) return {};
+  // Pre-distortion matrix calculations
+  const calculateDistortionMatrix = (type: string, severity: number, distance: 'near' | 'far') => {
+    const base = severity / 10;
+    const matrix = {
+      scale: { x: 1, y: 1 },
+      rotation: 0,
+      blur: 0,
+      brightness: 1,
+      contrast: 1
+    };
 
-    const baseBlur = severity * (distanceMode === 'far' ? 1.5 : 1);
-    let transform = '';
-    let filter = '';
-
-    switch (visionType) {
+    switch (type) {
       case 'myopia':
-        // Distant objects appear blurry
-        if (distanceMode === 'far') {
-          filter = `blur(${baseBlur}px)`;
-          transform = 'scale(0.95)';
+        if (distance === 'far') {
+          matrix.scale.x = 1 - base * 0.15;
+          matrix.scale.y = 1 - base * 0.15;
+          matrix.blur = base * 8;
+          matrix.brightness = 1 - base * 0.2;
         }
         break;
       case 'hyperopia':
-        // Near objects appear blurry
-        if (distanceMode === 'near') {
-          filter = `blur(${baseBlur}px)`;
-          transform = 'scale(1.05)';
+        if (distance === 'near') {
+          matrix.scale.x = 1 + base * 0.15;
+          matrix.scale.y = 1 + base * 0.15;
+          matrix.blur = base * 8;
+          matrix.brightness = 1 - base * 0.2;
         }
         break;
       case 'astigmatism':
-        // Objects appear stretched and distorted
-        filter = `blur(${baseBlur}px)`;
-        transform = `scale(${1 + severity * 0.05}, ${1 - severity * 0.05})`;
+        matrix.scale.x = 1 + base * 0.2;
+        matrix.scale.y = 1 - base * 0.2;
+        matrix.rotation = base * 15;
+        matrix.blur = base * 6;
         break;
       case 'presbyopia':
-        // Difficulty focusing on near objects (age-related)
-        if (distanceMode === 'near') {
-          filter = `blur(${baseBlur}px) brightness(0.95)`;
-          transform = 'scale(0.98)';
+        if (distance === 'near') {
+          matrix.scale.x = 1 - base * 0.1;
+          matrix.scale.y = 1 - base * 0.1;
+          matrix.blur = base * 7;
+          matrix.brightness = 1 - base * 0.15;
+          matrix.contrast = 1 - base * 0.2;
         }
         break;
     }
 
-    return {
-      filter,
-      transform,
-      transition: 'all 0.3s ease-in-out',
-    };
+    return matrix;
   };
 
-  const getImageStyle = () => {
-    if (correction || !visionType) return {};
+  // Apply pre-distortion to canvas
+  const applyPreDistortion = (ctx: CanvasRenderingContext2D, matrix: any) => {
+    const { width, height } = ctx.canvas;
+    ctx.save();
+    
+    // Center transform
+    ctx.translate(width / 2, height / 2);
+    
+    // Apply distortion
+    ctx.rotate((matrix.rotation * Math.PI) / 180);
+    ctx.scale(matrix.scale.x, matrix.scale.y);
+    
+    // Return to original position
+    ctx.translate(-width / 2, -height / 2);
+  };
 
-    const baseBlur = severity * (distanceMode === 'far' ? 1.5 : 1);
-    let transform = '';
-    let filter = '';
+  // Update canvas when parameters change
+  useEffect(() => {
+    if (!canvasRef.current || !imageRef.current || !visionType) return;
 
-    switch (visionType) {
-      case 'myopia':
-        if (distanceMode === 'far') {
-          filter = `blur(${baseBlur * 1.2}px) brightness(0.9)`;
-          transform = 'scale(0.95)';
-        }
-        break;
-      case 'hyperopia':
-        if (distanceMode === 'near') {
-          filter = `blur(${baseBlur * 1.2}px) brightness(0.9)`;
-          transform = 'scale(1.05)';
-        }
-        break;
-      case 'astigmatism':
-        filter = `blur(${baseBlur * 1.2}px)`;
-        transform = `scale(${1 + severity * 0.08}, ${1 - severity * 0.08})`;
-        break;
-      case 'presbyopia':
-        if (distanceMode === 'near') {
-          filter = `blur(${baseBlur * 1.2}px) brightness(0.9)`;
-          transform = 'scale(0.98)';
-        }
-        break;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const img = imageRef.current;
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (!correction) {
+      const matrix = calculateDistortionMatrix(visionType, severity, distanceMode);
+      applyPreDistortion(ctx, matrix);
+      
+      // Apply blur and other effects
+      ctx.filter = `blur(${matrix.blur}px) brightness(${matrix.brightness}) contrast(${matrix.contrast})`;
     }
 
+    // Draw image
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    ctx.restore();
+  }, [visionType, severity, distanceMode, correction]);
+
+  const getTextStyle = () => {
+    if (correction || !visionType) return {};
+
+    const matrix = calculateDistortionMatrix(visionType, severity, distanceMode);
+    const transform = `
+      scale(${matrix.scale.x}, ${matrix.scale.y})
+      rotate(${matrix.rotation}deg)
+    `;
+
     return {
-      filter,
       transform,
+      filter: `blur(${matrix.blur}px) brightness(${matrix.brightness}) contrast(${matrix.contrast})`,
       transition: 'all 0.3s ease-in-out',
     };
   };
@@ -237,13 +265,23 @@ const RefractiveErrorPage: React.FC = () => {
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">Vision Simulation</h2>
             
-            {/* Image Preview */}
-            <div className="mb-6 rounded-lg overflow-hidden">
+            {/* Image Preview with Canvas */}
+            <div className="mb-6 rounded-lg overflow-hidden relative">
               <img
+                ref={imageRef}
                 src="https://images.pexels.com/photos/261662/pexels-photo-261662.jpeg?auto=compress&cs=tinysrgb&w=1280"
-                alt="Vision test scene with text and objects"
+                alt="Vision test scene"
+                className="hidden"
+                onLoad={() => {
+                  if (canvasRef.current && imageRef.current) {
+                    canvasRef.current.width = imageRef.current.width;
+                    canvasRef.current.height = imageRef.current.height;
+                  }
+                }}
+              />
+              <canvas
+                ref={canvasRef}
                 className="w-full h-48 object-cover"
-                style={getImageStyle()}
               />
             </div>
 
@@ -251,7 +289,7 @@ const RefractiveErrorPage: React.FC = () => {
             <div
               className="prose max-w-none"
               style={{
-                ...getVisionStyle(),
+                ...getTextStyle(),
                 fontSize: `${textSize}px`,
               }}
             >
