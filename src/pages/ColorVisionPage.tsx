@@ -56,7 +56,7 @@ const ColorVisionPage: React.FC = () => {
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12 animate-fade-in">
               <h1 className="text-4xl font-bold sm:text-5xl lg:text-6xl mb-6 text-gray-900">
-                Vision Simulation
+                Color Vision Simulation
               </h1>
               <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
                 Experience how different types of color blindness affect visual perception. Select a type to
