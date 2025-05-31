@@ -11,6 +11,7 @@ const ColorVisionPage = React.lazy(() => import('./pages/ColorVisionPage'));
 const VisionSimulationPage = React.lazy(() => import('./pages/VisionSimulationPage'));
 const DyslexiaPage = React.lazy(() => import('./pages/DyslexiaPage'));
 const LowVisionPage = React.lazy(() => import('./pages/LowVisionPage'));
+const RefractiveErrorPage = React.lazy(() => import('./pages/RefractiveErrorPage'));
 const AuthPage = React.lazy(() => import('./pages/AuthPage'));
 const AccountPage = React.lazy(() => import('./pages/AccountPage'));
 const ColorVisionFilter = React.lazy(() => import('./components/vision/ColorVisionFilter'));
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/color-vision/:type" element={<VisionSimulationPage />} />
                 <Route path="/dyslexia" element={<DyslexiaPage />} />
                 <Route path="/low-vision" element={<LowVisionPage />} />
+                <Route path="/refractive" element={<RefractiveErrorPage />} />
                 <Route path="/auth" element={<AuthPage />} />
                 <Route path="/account" element={<AccountPage />} />
               </Routes>
@@ -40,4 +42,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
