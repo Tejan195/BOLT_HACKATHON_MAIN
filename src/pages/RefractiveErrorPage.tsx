@@ -134,7 +134,7 @@ const RefractiveErrorPage: React.FC = () => {
       title: 'Convergence Insufficiency Training',
       description: 'Exercises to improve eye coordination and focusing ability.',
       instructions: [
-        'Hold a small target at arm's length',
+        'Hold a small target at arm\'s length',
         'Slowly bring it closer while maintaining focus',
         'Stop if you see double vision',
         'Repeat 10 times per session'
