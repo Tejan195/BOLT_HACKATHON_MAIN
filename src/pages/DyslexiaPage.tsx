@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Book, Type, Palette, Sparkles, Maximize2, AlignLeft } from 'lucide-react';
 import { useVisionStore } from '../store/useVisionStore';
 
@@ -8,6 +8,16 @@ const DyslexiaPage: React.FC = () => {
   const [lineSpacing, setLineSpacing] = useState(1.5);
   const [fontFamily, setFontFamily] = useState<'lexend' | 'opendyslexic'>('lexend');
   const [backgroundColor, setBackgroundColor] = useState<'white' | 'cream' | 'light-blue'>('white');
+
+  // Apply all optimized settings when "Enable All Features" is clicked
+  useEffect(() => {
+    if (dyslexiaSupport) {
+      setFontFamily('opendyslexic');
+      setFontSize(18);
+      setLineSpacing(1.8);
+      setBackgroundColor('cream');
+    }
+  }, [dyslexiaSupport]);
 
   const sampleText = `
     The quick brown fox jumps over the lazy dog. This is a sample text that demonstrates
@@ -32,13 +42,8 @@ const DyslexiaPage: React.FC = () => {
     }
   };
 
-  const getFontFamily = () => {
-    switch (fontFamily) {
-      case 'opendyslexic':
-        return 'font-opendyslexic';
-      default:
-        return 'font-lexend';
-    }
+  const getFontClass = () => {
+    return fontFamily === 'opendyslexic' ? 'font-opendyslexic' : 'font-lexend';
   };
 
   return (
@@ -78,12 +83,15 @@ const DyslexiaPage: React.FC = () => {
                   ].map((font) => (
                     <button
                       key={font.value}
-                      onClick={() => setFontFamily(font.value as 'lexend' | 'opendyslexic')}
+                      onClick={() => {
+                        setFontFamily(font.value as 'lexend' | 'opendyslexic');
+                        if (dyslexiaSupport) setDyslexiaSupport(false);
+                      }}
                       className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                         fontFamily === font.value
                           ? 'bg-primary-100 text-primary-700 border-2 border-primary-500'
                           : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
-                      }`}
+                      } ${font.value === 'opendyslexic' ? 'font-opendyslexic' : 'font-lexend'}`}
                     >
                       {font.label}
                     </button>
@@ -102,7 +110,10 @@ const DyslexiaPage: React.FC = () => {
                   min="14"
                   max="24"
                   value={fontSize}
-                  onChange={(e) => setFontSize(Number(e.target.value))}
+                  onChange={(e) => {
+                    setFontSize(Number(e.target.value));
+                    if (dyslexiaSupport) setDyslexiaSupport(false);
+                  }}
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
                 />
               </div>
@@ -119,7 +130,10 @@ const DyslexiaPage: React.FC = () => {
                   max="2"
                   step="0.1"
                   value={lineSpacing}
-                  onChange={(e) => setLineSpacing(Number(e.target.value))}
+                  onChange={(e) => {
+                    setLineSpacing(Number(e.target.value));
+                    if (dyslexiaSupport) setDyslexiaSupport(false);
+                  }}
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
                 />
               </div>
@@ -138,7 +152,10 @@ const DyslexiaPage: React.FC = () => {
                   ].map((bg) => (
                     <button
                       key={bg.value}
-                      onClick={() => setBackgroundColor(bg.value as 'white' | 'cream' | 'light-blue')}
+                      onClick={() => {
+                        setBackgroundColor(bg.value as 'white' | 'cream' | 'light-blue');
+                        if (dyslexiaSupport) setDyslexiaSupport(false);
+                      }}
                       className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                         bg.color
                       } ${
@@ -174,7 +191,7 @@ const DyslexiaPage: React.FC = () => {
           >
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">Preview</h2>
             <div
-              className={`prose max-w-none ${getFontFamily()}`}
+              className={`prose max-w-none ${getFontClass()}`}
               style={{
                 fontSize: `${fontSize}px`,
                 lineHeight: lineSpacing,
@@ -182,7 +199,7 @@ const DyslexiaPage: React.FC = () => {
             >
               {sampleText.split('\n').map((paragraph, index) => (
                 <p key={index} className="mb-4 text-gray-700">
-                  {paragraph}
+                  {paragraph.trim()}
                 </p>
               ))}
             </div>
