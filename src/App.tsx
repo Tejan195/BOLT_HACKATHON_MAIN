@@ -8,6 +8,7 @@ import LoadingSpinner from './components/common/LoadingSpinner';
 // Lazy load components
 const Hero = React.lazy(() => import('./components/landing/Hero'));
 const ColorVisionPage = React.lazy(() => import('./pages/ColorVisionPage'));
+const VisionSimulationPage = React.lazy(() => import('./pages/VisionSimulationPage'));
 const AuthPage = React.lazy(() => import('./pages/AuthPage'));
 const AccountPage = React.lazy(() => import('./pages/AccountPage'));
 const ColorVisionFilter = React.lazy(() => import('./components/vision/ColorVisionFilter'));
@@ -22,6 +23,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Hero />} />
                 <Route path="/color-vision" element={<ColorVisionPage />} />
+                <Route path="/color-vision/:type" element={<VisionSimulationPage />} />
                 <Route path="/auth" element={<AuthPage />} />
                 <Route path="/account" element={<AccountPage />} />
               </Routes>

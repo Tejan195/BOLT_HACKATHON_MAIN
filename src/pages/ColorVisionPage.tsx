@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Eye, Wand2 } from 'lucide-react';
-import { useVisionStore } from '../store/useVisionStore';
+import React from 'react';
+import { Eye } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { ColorVisionType } from '../types';
 
 const colorVisionInfo = [
@@ -35,18 +35,10 @@ const colorVisionInfo = [
 ];
 
 const ColorVisionPage: React.FC = () => {
-  const { colorVisionType, setColorVisionType, correctionEnabled, setCorrectionEnabled } = useVisionStore();
-  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
+  const [loadedImages, setLoadedImages] = React.useState<Record<string, boolean>>({});
 
   const handleImageLoad = (type: string) => {
     setLoadedImages(prev => ({ ...prev, [type]: true }));
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent, type: ColorVisionType) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      setColorVisionType(type);
-      e.preventDefault();
-    }
   };
 
   return (
@@ -62,7 +54,7 @@ const ColorVisionPage: React.FC = () => {
               </h1>
               <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
                 Experience how different types of color blindness affect visual perception. Select a type to
-                simulate and use color correction to enhance visibility.
+                explore and understand its impact on daily life.
               </p>
             </div>
 
@@ -72,8 +64,9 @@ const ColorVisionPage: React.FC = () => {
               aria-label="Color vision types"
             >
               {colorVisionInfo.map((info, index) => (
-                <div
+                <Link
                   key={info.type}
+                  to={`/color-vision/${info.type}`}
                   className="group bg-white rounded-2xl border border-gray-200 overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-lg animate-fade-in-up"
                   style={{ animationDelay: `${index * 150}ms` }}
                   role="listitem"
@@ -110,56 +103,13 @@ const ColorVisionPage: React.FC = () => {
                       <h2 className="text-lg font-semibold text-gray-900">{info.title}</h2>
                     </div>
                     <p className="text-sm leading-relaxed text-gray-600 mb-4">{info.description}</p>
-                    <button
-                      onClick={() => setColorVisionType(info.type as ColorVisionType)}
-                      onKeyDown={(e) => handleKeyPress(e, info.type as ColorVisionType)}
-                      className={`w-full rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ${
-                        colorVisionType === info.type
-                          ? 'bg-primary-600 text-white'
-                          : 'bg-gray-100 text-gray-900 hover:bg-primary-50 hover:text-primary-600'
-                      }`}
-                      aria-pressed={colorVisionType === info.type}
-                    >
-                      {colorVisionType === info.type ? 'Currently Active' : 'Simulate This Vision'}
-                    </button>
+                    <div className="rounded-lg px-4 py-2 text-sm font-medium bg-primary-50 text-primary-600 group-hover:bg-primary-100 transition-colors duration-300">
+                      Explore Vision Type
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
-
-            {colorVisionType && (
-              <div 
-                className="mt-12 flex flex-col items-center space-y-4 animate-fade-in"
-                role="group"
-                aria-label="Vision control options"
-              >
-                <button
-                  onClick={() => setCorrectionEnabled(!correctionEnabled)}
-                  className={`rounded-full px-8 py-3 text-sm font-medium transition-all duration-300 hover:scale-105 ${
-                    correctionEnabled
-                      ? 'bg-primary-600 text-white'
-                      : 'bg-gray-100 text-gray-900 hover:bg-primary-50 hover:text-primary-600'
-                  }`}
-                  aria-pressed={correctionEnabled}
-                >
-                  <span className="flex items-center">
-                    <Wand2 className="h-5 w-5 mr-2" />
-                    {correctionEnabled ? 'Disable Color Correction' : 'Enable Color Correction'}
-                  </span>
-                </button>
-
-                <button
-                  onClick={() => {
-                    setColorVisionType(null);
-                    setCorrectionEnabled(false);
-                  }}
-                  className="text-sm text-gray-500 hover:text-primary-600 transition-colors duration-300"
-                  aria-label="Reset to normal vision"
-                >
-                  Reset to Normal Vision
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>
