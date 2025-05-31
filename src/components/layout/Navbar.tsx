@@ -32,8 +32,8 @@ const Navbar: React.FC = () => {
       onClick={() => setIsMenuOpen(false)}
       className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
         location.pathname === path
-          ? 'text-primary-600 bg-primary-50/50 md:bg-transparent'
-          : 'text-gray-600 hover:text-primary-600 hover:bg-primary-50/50 md:hover:bg-transparent'
+          ? 'text-primary-400 bg-white/5'
+          : 'text-gray-300 hover:text-primary-400 hover:bg-white/5'
       }`}
     >
       {label}
@@ -43,14 +43,14 @@ const Navbar: React.FC = () => {
   return (
     <header 
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
+        isScrolled ? 'bg-black/80 backdrop-blur-xl border-b border-white/10' : 'bg-transparent'
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center group">
-            <Eye className="h-8 w-8 text-primary-600 transition-transform duration-300 group-hover:scale-110" />
-            <span className="ml-2 text-xl font-bold text-gray-900 transition-colors duration-300">
+            <Eye className="h-8 w-8 text-primary-400 transition-transform duration-300 group-hover:scale-110" />
+            <span className="ml-2 text-xl font-bold text-white transition-colors duration-300">
               VisionAid AI
             </span>
           </Link>
@@ -68,13 +68,13 @@ const Navbar: React.FC = () => {
               {user ? (
                 <button
                   onClick={() => navigate('/account')}
-                  className="flex items-center space-x-2 rounded-full bg-primary-50/50 p-2 text-primary-600 hover:bg-primary-100 transition-all duration-300 hover:scale-105 focus-ring"
+                  className="flex items-center space-x-2 rounded-full bg-white/5 p-2 text-primary-400 hover:bg-white/10 transition-all duration-300 hover:scale-105"
                 >
                   {user.photoURL ? (
                     <img
                       src={user.photoURL}
                       alt="Profile"
-                      className="h-8 w-8 rounded-full ring-2 ring-white"
+                      className="h-8 w-8 rounded-full ring-2 ring-primary-400"
                     />
                   ) : (
                     <User className="h-5 w-5" />
@@ -83,9 +83,10 @@ const Navbar: React.FC = () => {
               ) : (
                 <button
                   onClick={() => navigate('/auth')}
-                  className="btn-hover-effect rounded-full bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-all duration-300 focus-ring"
+                  className="group relative rounded-full px-4 py-2 text-sm font-medium text-white transition-all duration-300 hover:scale-105"
                 >
-                  Sign In
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-600 to-primary-600 transition-transform duration-300 group-hover:scale-105"></div>
+                  <span className="relative">Sign In</span>
                 </button>
               )}
             </div>
@@ -93,7 +94,7 @@ const Navbar: React.FC = () => {
             {/* Mobile menu button */}
             <button
               onClick={toggleMenu}
-              className="md:hidden rounded-md p-2 text-gray-500 hover:bg-gray-100 hover:text-primary-600 focus-ring"
+              className="md:hidden rounded-md p-2 text-gray-300 hover:bg-white/5 hover:text-primary-400"
               aria-expanded={isMenuOpen}
               aria-label="Toggle navigation menu"
             >

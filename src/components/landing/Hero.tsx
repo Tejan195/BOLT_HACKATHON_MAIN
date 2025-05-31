@@ -4,89 +4,114 @@ import { Link } from 'react-router-dom';
 
 const Hero: React.FC = () => {
   return (
-    <div className="bg-white">
+    <div className="bg-black text-white">
       {/* Main Hero Section */}
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-16 lg:py-24">
-          <div className="text-center animate-fade-in">
-            <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl lg:text-6xl">
-              <span className="block text-primary-600 animate-slide-up mb-2">VisionAid AI</span>
-              <span className="block animate-slide-up-delay leading-tight">Web Accessibility for Everyone</span>
+      <div className="min-h-screen relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 via-primary-900/40 to-black"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(124,58,237,0.12),transparent_50%)]"></div>
+        </div>
+        
+        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 flex flex-col justify-center min-h-screen">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+              <span className="block text-transparent bg-gradient-to-r from-violet-400 via-primary-500 to-violet-600 bg-clip-text animate-text-gradient">
+                VisionAid AI
+              </span>
+              <span className="mt-4 block text-white/90">
+                Web Accessibility for Everyone
+              </span>
             </h1>
-            <p className="mx-auto mt-6 max-w-lg text-lg sm:text-xl leading-relaxed text-gray-500 sm:max-w-3xl animate-fade-in-delay">
-              Transform websites to be more accessible for people with visual impairments. Color
-              correction for color blindness and dyslexia-friendly text, all in one tool.
+            <p className="mx-auto mt-8 max-w-2xl text-lg sm:text-xl leading-relaxed text-gray-300">
+              Transform websites to be more accessible for people with visual impairments. 
+              Color correction for color blindness and dyslexia-friendly text, all in one tool.
             </p>
-            <div className="mx-auto mt-8 sm:mt-12 max-w-sm sm:max-w-none sm:flex sm:justify-center animate-fade-in-up">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
-                <Link
-                  to="/color-vision"
-                  className="flex items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 sm:px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-700 transition-all duration-300 hover:scale-105"
-                >
+            <div className="mx-auto mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+              <Link
+                to="/color-vision"
+                className="group relative px-6 py-3 w-full sm:w-auto rounded-full bg-primary-600 text-white overflow-hidden transition-all duration-300 hover:scale-105"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-primary-600 transition-transform duration-300 group-hover:scale-105"></div>
+                <span className="relative flex items-center justify-center text-base font-medium">
                   <Eye className="mr-2 h-5 w-5" />
-                  <span>Color Vision Tools</span>
-                </Link>
-                <Link
-                  to="/dyslexia"
-                  className="flex items-center justify-center rounded-md border border-transparent bg-primary-100 px-4 sm:px-6 py-3 text-base font-medium text-primary-700 shadow-sm hover:bg-primary-200 transition-all duration-300 hover:scale-105"
-                >
+                  Color Vision Tools
+                </span>
+              </Link>
+              <Link
+                to="/dyslexia"
+                className="group relative px-6 py-3 w-full sm:w-auto rounded-full bg-white/10 text-white overflow-hidden transition-all duration-300 hover:scale-105"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 transition-transform duration-300 group-hover:scale-105"></div>
+                <span className="relative flex items-center justify-center text-base font-medium">
                   <BookOpen className="mr-2 h-5 w-5" />
-                  <span>Dyslexia Support</span>
-                </Link>
-              </div>
+                  Dyslexia Support
+                </span>
+              </Link>
             </div>
           </div>
         </div>
       </div>
 
       {/* Browser Extension Section */}
-      <div className="min-h-screen flex items-center bg-gradient-to-b from-primary-50 to-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Browser Extension</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Take VisionAid's color correction everywhere you go with our Chrome extension.
-              Apply color filters to any website instantly.
-            </p>
-          </div>
-          
-          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-3xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="flex-1">
-                <h3 className="text-2xl font-semibold text-gray-900 mb-4">Color Vision Extension</h3>
-                <ul className="space-y-3 text-gray-600 mb-6">
-                  <li className="flex items-center">
-                    <Chrome className="h-5 w-5 text-primary-600 mr-2" />
-                    Works on any website
-                  </li>
-                  <li className="flex items-center">
-                    <Eye className="h-5 w-5 text-primary-600 mr-2" />
-                    Supports all color vision types
-                  </li>
-                  <li className="flex items-center">
-                    <Sparkles className="h-5 w-5 text-primary-600 mr-2" />
-                    Real-time color correction
-                  </li>
-                </ul>
-                <a
-                  href="/extension.zip"
-                  download
-                  className="inline-flex items-center justify-center rounded-lg bg-primary-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-primary-700 transition-all duration-300 hover:scale-105"
-                >
-                  <Download className="mr-2 h-5 w-5" />
-                  Download Extension
-                </a>
-              </div>
-              
-              <div className="flex-1 bg-gray-50 rounded-xl p-6">
-                <h4 className="font-semibold text-gray-900 mb-4">How to Install:</h4>
-                <ol className="space-y-3 text-gray-600 list-decimal list-inside">
-                  <li>Download the extension</li>
-                  <li>Open Chrome and go to Extensions</li>
-                  <li>Enable Developer mode</li>
-                  <li>Click "Load unpacked"</li>
-                  <li>Select the downloaded folder</li>
-                </ol>
+      <div className="min-h-screen relative overflow-hidden bg-black">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-900/40 via-black to-black"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(124,58,237,0.12),transparent_50%)]"></div>
+        </div>
+        
+        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 flex items-center min-h-screen">
+          <div className="w-full">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold sm:text-4xl mb-4 text-transparent bg-gradient-to-r from-violet-400 to-primary-500 bg-clip-text">
+                Browser Extension
+              </h2>
+              <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                Take VisionAid's color correction everywhere you go with our Chrome extension.
+                Apply color filters to any website instantly.
+              </p>
+            </div>
+            
+            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 max-w-4xl mx-auto border border-white/10">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-2xl font-semibold text-white mb-6">Color Vision Extension</h3>
+                  <ul className="space-y-4 text-gray-300 mb-8">
+                    <li className="flex items-center">
+                      <Chrome className="h-5 w-5 text-primary-400 mr-3" />
+                      Works on any website
+                    </li>
+                    <li className="flex items-center">
+                      <Eye className="h-5 w-5 text-primary-400 mr-3" />
+                      Supports all color vision types
+                    </li>
+                    <li className="flex items-center">
+                      <Sparkles className="h-5 w-5 text-primary-400 mr-3" />
+                      Real-time color correction
+                    </li>
+                  </ul>
+                  <a
+                    href="/extension.zip"
+                    download
+                    className="group relative inline-flex items-center justify-center rounded-full bg-primary-600 px-6 py-3 text-base font-medium text-white transition-all duration-300 hover:scale-105"
+                  >
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-600 to-primary-600 transition-transform duration-300 group-hover:scale-105"></div>
+                    <span className="relative flex items-center">
+                      <Download className="mr-2 h-5 w-5" />
+                      Download Extension
+                    </span>
+                  </a>
+                </div>
+                
+                <div className="bg-black/20 rounded-xl p-6">
+                  <h4 className="font-semibold text-white mb-4">How to Install:</h4>
+                  <ol className="space-y-3 text-gray-300 list-decimal list-inside">
+                    <li>Download the extension</li>
+                    <li>Open Chrome and go to Extensions</li>
+                    <li>Enable Developer mode</li>
+                    <li>Click "Load unpacked"</li>
+                    <li>Select the downloaded folder</li>
+                  </ol>
+                </div>
               </div>
             </div>
           </div>
@@ -94,61 +119,71 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Vision and Mission Section */}
-      <div className="min-h-screen flex items-center bg-gray-50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Vision for Web Accessibility</h2>
-            <p className="mt-6 text-xl leading-relaxed text-gray-600">
-              Making the digital world accessible to everyone, one website at a time
-            </p>
-          </div>
-
-          <div className="grid gap-10 md:grid-cols-3">
-            <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-              <div className="flex items-center justify-center h-14 w-14 rounded-xl bg-primary-100 text-primary-600 mx-auto mb-6 animate-bounce-slow">
-                <Target className="h-7 w-7" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">Our Mission</h3>
-              <p className="text-gray-600 leading-relaxed">
-                To empower individuals with visual impairments by providing innovative tools that enhance their web browsing experience and ensure equal access to digital content.
+      <div className="min-h-screen relative overflow-hidden bg-black">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-primary-900/20 to-black"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.12),transparent_50%)]"></div>
+        </div>
+        
+        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 flex items-center min-h-screen">
+          <div className="w-full">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold sm:text-4xl mb-4 text-transparent bg-gradient-to-r from-violet-400 to-primary-500 bg-clip-text">
+                Our Vision for Web Accessibility
+              </h2>
+              <p className="text-xl text-gray-300">
+                Making the digital world accessible to everyone, one website at a time
               </p>
             </div>
 
-            <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-              <div className="flex items-center justify-center h-14 w-14 rounded-xl bg-primary-100 text-primary-600 mx-auto mb-6 animate-bounce-slow">
-                <Users className="h-7 w-7" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">Who We Help</h3>
-              <p className="text-gray-600 leading-relaxed">
-                We serve individuals with color vision deficiencies, dyslexia, and other visual processing challenges, helping them navigate the web with greater ease and confidence.
-              </p>
+            <div className="grid gap-8 md:grid-cols-3">
+              {[
+                {
+                  icon: Target,
+                  title: 'Our Mission',
+                  description: 'To empower individuals with visual impairments by providing innovative tools that enhance their web browsing experience.'
+                },
+                {
+                  icon: Users,
+                  title: 'Who We Help',
+                  description: 'We serve individuals with color vision deficiencies, dyslexia, and other visual processing challenges.'
+                },
+                {
+                  icon: Sparkles,
+                  title: 'Our Solution',
+                  description: 'Using advanced AI and real-time color correction technology to make the internet truly inclusive.'
+                }
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className="group bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 transition-all duration-300 hover:scale-[1.02]"
+                >
+                  <div className="flex items-center justify-center h-14 w-14 rounded-xl bg-primary-900/50 text-primary-400 mx-auto mb-6">
+                    <item.icon className="h-7 w-7" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-4 text-center">{item.title}</h3>
+                  <p className="text-gray-400 leading-relaxed text-center">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
             </div>
 
-            <div className="bg-white rounded-xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-              <div className="flex items-center justify-center h-14 w-14 rounded-xl bg-primary-100 text-primary-600 mx-auto mb-6 animate-bounce-slow">
-                <Sparkles className="h-7 w-7" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4 text-center">Our Solution</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Using advanced AI and real-time color correction technology, we transform web content to accommodate different types of visual needs, making the internet truly inclusive.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-16 bg-white rounded-xl p-10 shadow-sm hover:shadow-lg transition-all duration-300">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-8 text-center">Impact & Statistics</h3>
-            <div className="grid md:grid-cols-3 gap-12 text-center">
-              <div className="transform hover:scale-105 transition-transform duration-300">
-                <p className="text-5xl font-bold text-primary-600 animate-count-up mb-3">300M+</p>
-                <p className="text-lg text-gray-600">People worldwide with color blindness</p>
-              </div>
-              <div className="transform hover:scale-105 transition-transform duration-300">
-                <p className="text-5xl font-bold text-primary-600 animate-count-up mb-3">15-20%</p>
-                <p className="text-lg text-gray-600">Of people show symptoms of dyslexia</p>
-              </div>
-              <div className="transform hover:scale-105 transition-transform duration-300">
-                <p className="text-5xl font-bold text-primary-600 animate-count-up mb-3">96%</p>
-                <p className="text-lg text-gray-600">Of websites fail accessibility standards</p>
+            <div className="mt-16 bg-white/5 backdrop-blur-xl rounded-2xl p-10 border border-white/10">
+              <h3 className="text-2xl font-semibold text-white mb-8 text-center">Impact & Statistics</h3>
+              <div className="grid md:grid-cols-3 gap-12 text-center">
+                {[
+                  { value: '300M+', label: 'People worldwide with color blindness' },
+                  { value: '15-20%', label: 'Of people show symptoms of dyslexia' },
+                  { value: '96%', label: 'Of websites fail accessibility standards' }
+                ].map((stat, index) => (
+                  <div key={index} className="transform transition-all duration-300 hover:scale-105">
+                    <p className="text-5xl font-bold text-transparent bg-gradient-to-r from-violet-400 to-primary-500 bg-clip-text mb-3">
+                      {stat.value}
+                    </p>
+                    <p className="text-lg text-gray-400">{stat.label}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
