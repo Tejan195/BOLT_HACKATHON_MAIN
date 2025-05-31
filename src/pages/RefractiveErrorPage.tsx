@@ -12,15 +12,48 @@ const RefractiveErrorPage: React.FC = () => {
     Adjust the settings to simulate different vision conditions and see how
     correction can improve visibility. The text adjusts based on your selected
     viewing distance and correction preferences.
+
+    People with refractive errors may experience difficulty reading text at various
+    distances. This simulation helps understand how different conditions affect
+    vision and how corrective measures can help improve visual clarity.
   `;
 
   const getBlurStyle = () => {
     if (correction) {
-      return {};
+      return {
+        filter: 'none',
+        fontSize: `${textSize}px`,
+        transition: 'all 0.3s ease-in-out',
+      };
     }
+
+    // Calculate blur based on distance mode and blur level
+    const baseBlur = blurLevel * (distanceMode === 'far' ? 1.5 : 1);
+    
     return {
-      filter: `blur(${blurLevel}px)`,
+      filter: `
+        blur(${baseBlur}px)
+        ${distanceMode === 'far' ? 'brightness(0.95)' : ''}
+        ${blurLevel > 5 ? `contrast(${1 - blurLevel * 0.02})` : ''}
+      `,
       fontSize: `${textSize}px`,
+      transform: distanceMode === 'far' ? 'scale(0.95)' : 'none',
+      transition: 'all 0.3s ease-in-out',
+    };
+  };
+
+  const getImageBlurStyle = () => {
+    if (correction) return {};
+
+    const baseBlur = blurLevel * (distanceMode === 'far' ? 1.5 : 1);
+    
+    return {
+      filter: `
+        blur(${baseBlur * 1.2}px)
+        ${distanceMode === 'far' ? 'brightness(0.9)' : ''}
+        ${blurLevel > 5 ? `contrast(${1 - blurLevel * 0.03})` : ''}
+      `,
+      transition: 'all 0.3s ease-in-out',
     };
   };
 
@@ -34,8 +67,8 @@ const RefractiveErrorPage: React.FC = () => {
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
-            Adjust display settings to compensate for various refractive errors including myopia,
-            hyperopia, astigmatism, and presbyopia.
+            Experience and understand different refractive errors with our interactive simulator.
+            Adjust settings to see how vision conditions affect clarity and readability.
           </p>
         </div>
 
@@ -52,7 +85,7 @@ const RefractiveErrorPage: React.FC = () => {
               <div>
                 <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
                   <Focus className="h-4 w-4 mr-2" />
-                  Blur Level: {blurLevel}px
+                  Vision Clarity: {Math.round((10 - blurLevel) * 10)}%
                 </label>
                 <input
                   type="range"
@@ -120,14 +153,26 @@ const RefractiveErrorPage: React.FC = () => {
                 }`}
               >
                 <Glasses className="h-5 w-5 mr-2" />
-                {correction ? 'Disable Correction' : 'Enable Correction'}
+                {correction ? 'Remove Correction' : 'Apply Correction'}
               </button>
             </div>
           </div>
 
           {/* Preview Panel */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Preview</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Vision Simulation</h2>
+            
+            {/* Image Preview */}
+            <div className="mb-6 rounded-lg overflow-hidden">
+              <img
+                src="https://images.pexels.com/photos/261662/pexels-photo-261662.jpeg?auto=compress&cs=tinysrgb&w=1280"
+                alt="Vision test scene with text and objects"
+                className="w-full h-48 object-cover"
+                style={getImageBlurStyle()}
+              />
+            </div>
+
+            {/* Text Preview */}
             <div
               className="prose max-w-none"
               style={getBlurStyle()}
@@ -167,7 +212,7 @@ const RefractiveErrorPage: React.FC = () => {
           ].map((card, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-sm border border-gray-200 p-6"
+              className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-300"
             >
               <div className="flex items-center mb-4">
                 <card.icon className="h-6 w-6 text-primary-600 mr-2" />
@@ -201,7 +246,7 @@ const RefractiveErrorPage: React.FC = () => {
             ].map((tip, index) => (
               <div
                 key={index}
-                className="bg-gray-50 rounded-lg p-4 border border-gray-100"
+                className="bg-gray-50 rounded-lg p-4 border border-gray-100 hover:bg-gray-100 transition-colors duration-300"
               >
                 <h3 className="font-medium text-gray-900 mb-2">{tip.title}</h3>
                 <p className="text-sm text-gray-600">{tip.description}</p>
