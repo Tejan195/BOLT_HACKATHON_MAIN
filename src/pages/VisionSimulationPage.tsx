@@ -23,6 +23,11 @@ const simulationContent = {
         url: 'https://images.pexels.com/photos/1379636/pexels-photo-1379636.jpeg?auto=compress&cs=tinysrgb&w=1280',
         title: 'Traffic Lights',
         description: 'Urban scene with traffic signals and red signs'
+      },
+      {
+        url: 'https://images.pexels.com/photos/1171170/pexels-photo-1171170.jpeg?auto=compress&cs=tinysrgb&w=1280',
+        title: 'Flower Garden',
+        description: 'Garden with red roses and various flowers'
       }
     ]
   },
@@ -44,6 +49,11 @@ const simulationContent = {
         url: 'https://images.pexels.com/photos/1414651/pexels-photo-1414651.jpeg?auto=compress&cs=tinysrgb&w=1280',
         title: 'Forest Path',
         description: 'Walking path through dense green forest'
+      },
+      {
+        url: 'https://images.pexels.com/photos/2363/france-landmark-lights-night.jpg?auto=compress&cs=tinysrgb&w=1280',
+        title: 'Traffic Junction',
+        description: 'Night scene with traffic lights and signals'
       }
     ]
   },
@@ -65,6 +75,11 @@ const simulationContent = {
         url: 'https://images.pexels.com/photos/45853/grey-crowned-crane-bird-crane-animal-45853.jpeg?auto=compress&cs=tinysrgb&w=1280',
         title: 'Exotic Bird',
         description: 'Bird with blue and yellow feathers'
+      },
+      {
+        url: 'https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg?auto=compress&cs=tinysrgb&w=1280',
+        title: 'Coastal Landscape',
+        description: 'Beautiful coastline with blue ocean and yellow beach'
       }
     ]
   },
@@ -86,6 +101,11 @@ const simulationContent = {
         url: 'https://images.pexels.com/photos/1209843/pexels-photo-1209843.jpeg?auto=compress&cs=tinysrgb&w=1280',
         title: 'Art Gallery',
         description: 'Collection of colorful paintings'
+      },
+      {
+        url: 'https://images.pexels.com/photos/1038935/pexels-photo-1038935.jpeg?auto=compress&cs=tinysrgb&w=1280',
+        title: 'Festival Celebration',
+        description: 'Vibrant festival scene with colorful decorations'
       }
     ]
   }
@@ -153,7 +173,7 @@ const VisionSimulationPage: React.FC = () => {
           </button>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2">
           {content.images.map((image, index) => (
             <div
               key={index}
