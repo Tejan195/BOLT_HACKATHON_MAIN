@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@auth/core": "^0.28.0",
+    "@fontsource/lexend": "^5.0.18",
+    "@fontsource/opendyslexic": "^5.0.1",
     "firebase": "^10.8.0",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
