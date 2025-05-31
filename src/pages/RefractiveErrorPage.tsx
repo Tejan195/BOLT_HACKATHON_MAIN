@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Eye, ZoomIn, Focus, Glasses, Sparkles } from 'lucide-react';
 
 const RefractiveErrorPage: React.FC = () => {
-  const [blurLevel, setBlurLevel] = useState(0);
+  const [visionType, setVisionType] = useState<'myopia' | 'hyperopia' | 'astigmatism' | 'presbyopia' | null>(null);
+  const [severity, setSeverity] = useState(0);
   const [textSize, setTextSize] = useState(16);
   const [distanceMode, setDistanceMode] = useState<'near' | 'far'>('near');
   const [correction, setCorrection] = useState(false);
@@ -18,41 +19,84 @@ const RefractiveErrorPage: React.FC = () => {
     vision and how corrective measures can help improve visual clarity.
   `;
 
-  const getBlurStyle = () => {
-    if (correction) {
-      return {
-        filter: 'none',
-        fontSize: `${textSize}px`,
-        transition: 'all 0.3s ease-in-out',
-      };
+  const getVisionStyle = () => {
+    if (correction || !visionType) return {};
+
+    const baseBlur = severity * (distanceMode === 'far' ? 1.5 : 1);
+    let transform = '';
+    let filter = '';
+
+    switch (visionType) {
+      case 'myopia':
+        // Distant objects appear blurry
+        if (distanceMode === 'far') {
+          filter = `blur(${baseBlur}px)`;
+          transform = 'scale(0.95)';
+        }
+        break;
+      case 'hyperopia':
+        // Near objects appear blurry
+        if (distanceMode === 'near') {
+          filter = `blur(${baseBlur}px)`;
+          transform = 'scale(1.05)';
+        }
+        break;
+      case 'astigmatism':
+        // Objects appear stretched and distorted
+        filter = `blur(${baseBlur}px)`;
+        transform = `scale(${1 + severity * 0.05}, ${1 - severity * 0.05})`;
+        break;
+      case 'presbyopia':
+        // Difficulty focusing on near objects (age-related)
+        if (distanceMode === 'near') {
+          filter = `blur(${baseBlur}px) brightness(0.95)`;
+          transform = 'scale(0.98)';
+        }
+        break;
     }
 
-    // Calculate blur based on distance mode and blur level
-    const baseBlur = blurLevel * (distanceMode === 'far' ? 1.5 : 1);
-    
     return {
-      filter: `
-        blur(${baseBlur}px)
-        ${distanceMode === 'far' ? 'brightness(0.95)' : ''}
-        ${blurLevel > 5 ? `contrast(${1 - blurLevel * 0.02})` : ''}
-      `,
-      fontSize: `${textSize}px`,
-      transform: distanceMode === 'far' ? 'scale(0.95)' : 'none',
+      filter,
+      transform,
       transition: 'all 0.3s ease-in-out',
     };
   };
 
-  const getImageBlurStyle = () => {
-    if (correction) return {};
+  const getImageStyle = () => {
+    if (correction || !visionType) return {};
 
-    const baseBlur = blurLevel * (distanceMode === 'far' ? 1.5 : 1);
-    
+    const baseBlur = severity * (distanceMode === 'far' ? 1.5 : 1);
+    let transform = '';
+    let filter = '';
+
+    switch (visionType) {
+      case 'myopia':
+        if (distanceMode === 'far') {
+          filter = `blur(${baseBlur * 1.2}px) brightness(0.9)`;
+          transform = 'scale(0.95)';
+        }
+        break;
+      case 'hyperopia':
+        if (distanceMode === 'near') {
+          filter = `blur(${baseBlur * 1.2}px) brightness(0.9)`;
+          transform = 'scale(1.05)';
+        }
+        break;
+      case 'astigmatism':
+        filter = `blur(${baseBlur * 1.2}px)`;
+        transform = `scale(${1 + severity * 0.08}, ${1 - severity * 0.08})`;
+        break;
+      case 'presbyopia':
+        if (distanceMode === 'near') {
+          filter = `blur(${baseBlur * 1.2}px) brightness(0.9)`;
+          transform = 'scale(0.98)';
+        }
+        break;
+    }
+
     return {
-      filter: `
-        blur(${baseBlur * 1.2}px)
-        ${distanceMode === 'far' ? 'brightness(0.9)' : ''}
-        ${blurLevel > 5 ? `contrast(${1 - blurLevel * 0.03})` : ''}
-      `,
+      filter,
+      transform,
       transition: 'all 0.3s ease-in-out',
     };
   };
@@ -68,7 +112,7 @@ const RefractiveErrorPage: React.FC = () => {
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
             Experience and understand different refractive errors with our interactive simulator.
-            Adjust settings to see how vision conditions affect clarity and readability.
+            Select a vision condition to see its effects on text and images.
           </p>
         </div>
 
@@ -81,22 +125,51 @@ const RefractiveErrorPage: React.FC = () => {
             </h2>
 
             <div className="space-y-6">
-              {/* Blur Level */}
+              {/* Vision Type Selection */}
               <div>
-                <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
-                  <Focus className="h-4 w-4 mr-2" />
-                  Vision Clarity: {Math.round((10 - blurLevel) * 10)}%
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Vision Condition
                 </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="10"
-                  step="0.5"
-                  value={blurLevel}
-                  onChange={(e) => setBlurLevel(Number(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
-                />
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { type: 'myopia', label: 'Myopia (Nearsightedness)' },
+                    { type: 'hyperopia', label: 'Hyperopia (Farsightedness)' },
+                    { type: 'astigmatism', label: 'Astigmatism' },
+                    { type: 'presbyopia', label: 'Presbyopia' },
+                  ].map((option) => (
+                    <button
+                      key={option.type}
+                      onClick={() => setVisionType(option.type as any)}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                        visionType === option.type
+                          ? 'bg-primary-100 text-primary-700 border-2 border-primary-500'
+                          : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
               </div>
+
+              {/* Severity Level */}
+              {visionType && (
+                <div>
+                  <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                    <Focus className="h-4 w-4 mr-2" />
+                    Condition Severity: {Math.round((severity / 10) * 100)}%
+                  </label>
+                  <input
+                    type="range"
+                    min="0"
+                    max="10"
+                    step="0.5"
+                    value={severity}
+                    onChange={(e) => setSeverity(Number(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
+                  />
+                </div>
+              )}
 
               {/* Text Size */}
               <div>
@@ -144,17 +217,19 @@ const RefractiveErrorPage: React.FC = () => {
               </div>
 
               {/* Correction Toggle */}
-              <button
-                onClick={() => setCorrection(!correction)}
-                className={`w-full flex items-center justify-center px-6 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
-                  correction
-                    ? 'bg-primary-600 text-white hover:bg-primary-700'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                <Glasses className="h-5 w-5 mr-2" />
-                {correction ? 'Remove Correction' : 'Apply Correction'}
-              </button>
+              {visionType && (
+                <button
+                  onClick={() => setCorrection(!correction)}
+                  className={`w-full flex items-center justify-center px-6 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    correction
+                      ? 'bg-primary-600 text-white hover:bg-primary-700'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  <Glasses className="h-5 w-5 mr-2" />
+                  {correction ? 'Remove Correction' : 'Apply Correction'}
+                </button>
+              )}
             </div>
           </div>
 
@@ -168,14 +243,17 @@ const RefractiveErrorPage: React.FC = () => {
                 src="https://images.pexels.com/photos/261662/pexels-photo-261662.jpeg?auto=compress&cs=tinysrgb&w=1280"
                 alt="Vision test scene with text and objects"
                 className="w-full h-48 object-cover"
-                style={getImageBlurStyle()}
+                style={getImageStyle()}
               />
             </div>
 
             {/* Text Preview */}
             <div
               className="prose max-w-none"
-              style={getBlurStyle()}
+              style={{
+                ...getVisionStyle(),
+                fontSize: `${textSize}px`,
+              }}
             >
               {sampleText.split('\n').map((paragraph, index) => (
                 <p key={index} className="mb-4 text-gray-700">
@@ -191,22 +269,22 @@ const RefractiveErrorPage: React.FC = () => {
           {[
             {
               title: 'Myopia (Nearsightedness)',
-              description: 'Difficulty seeing distant objects clearly. Text and objects appear blurry when far away.',
+              description: 'Distant objects appear blurry while near objects remain clear. Common in children and young adults.',
               icon: Eye,
             },
             {
               title: 'Hyperopia (Farsightedness)',
-              description: 'Trouble focusing on nearby objects. Reading and close-up work may cause eye strain.',
+              description: 'Near objects appear blurry while distant objects remain clear. May cause eye strain during close work.',
               icon: ZoomIn,
             },
             {
               title: 'Astigmatism',
-              description: 'Blurred or distorted vision at all distances due to irregular cornea shape.',
+              description: 'Objects appear stretched or distorted due to irregular cornea shape. Can occur with other conditions.',
               icon: Focus,
             },
             {
               title: 'Presbyopia',
-              description: 'Age-related difficulty focusing on close objects, common after age 40.',
+              description: 'Age-related difficulty focusing on near objects, typically developing after age 40.',
               icon: Glasses,
             },
           ].map((card, index) => (
@@ -232,16 +310,16 @@ const RefractiveErrorPage: React.FC = () => {
           <div className="grid gap-6 md:grid-cols-3">
             {[
               {
-                title: 'Regular Breaks',
+                title: 'Regular Eye Exams',
+                description: 'Schedule comprehensive eye exams to monitor vision changes and update prescriptions as needed.',
+              },
+              {
+                title: 'Digital Eye Strain',
                 description: 'Follow the 20-20-20 rule: Every 20 minutes, look at something 20 feet away for 20 seconds.',
               },
               {
                 title: 'Proper Lighting',
-                description: 'Ensure adequate lighting for reading and close work to reduce eye strain.',
-              },
-              {
-                title: 'Screen Distance',
-                description: 'Maintain an arm\'s length distance from screens and adjust text size as needed.',
+                description: 'Ensure adequate lighting for reading and close work to reduce eye strain and fatigue.',
               },
             ].map((tip, index) => (
               <div
