@@ -26,6 +26,7 @@ const Navbar: React.FC = () => {
     { path: '/dyslexia', label: 'Dyslexia Support' },
     { path: '/low-vision', label: 'Low Vision' },
     { path: '/refractive', label: 'Refractive Support' },
+    { path: '/exercise', label: 'Vision Exercises' },
   ];
 
   const NavLink = ({ path, label }: { path: string; label: string }) => (
