@@ -50,7 +50,7 @@ const Navbar: React.FC = () => {
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center group">
             <Eye className="h-8 w-8 text-primary-600 transition-transform duration-300 group-hover:scale-110" />
-            <span className="ml-2 text-xl font-bold text-primary-600 transition-colors duration-300">
+            <span className="ml-2 text-xl font-bold text-gray-900 transition-colors duration-300">
               VisionAid AI
             </span>
           </Link>
