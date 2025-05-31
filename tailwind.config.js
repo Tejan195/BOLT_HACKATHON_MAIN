@@ -34,6 +34,8 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Inter', 'system-ui', 'sans-serif'],
+        lexend: ['Lexend', 'sans-serif'],
+        opendyslexic: ['OpenDyslexic', 'sans-serif'],
       },
       boxShadow: {
         'inner-lg': 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
