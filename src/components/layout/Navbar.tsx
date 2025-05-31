@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Eye, Menu, X, User } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar: React.FC = () => {
   const location = useLocation();
@@ -18,57 +19,65 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
   const navLinks = [
     { path: '/', label: 'Home' },
     { path: '/color-vision', label: 'Color Vision' },
     { path: '/dyslexia', label: 'Dyslexia Support' },
   ];
 
-  const NavLink = ({ path, label }: { path: string; label: string }) => (
-    <Link
-      to={path}
-      onClick={() => setIsMenuOpen(false)}
-      className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
-        location.pathname === path
-          ? 'text-primary-600 bg-primary-50/50 md:bg-transparent'
-          : 'text-gray-600 hover:text-primary-600 hover:bg-primary-50/50 md:hover:bg-transparent'
-      }`}
-    >
-      {label}
-    </Link>
-  );
-
   return (
-    <header 
-      className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
+    <motion.header 
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className={`fixed w-full top-0 z-50 transition-all duration-500 ${
+        isScrolled ? 'bg-white/90 backdrop-blur-lg shadow-lg' : 'bg-transparent'
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center group">
-            <Eye className="h-8 w-8 text-primary-600 transition-transform duration-300 group-hover:scale-110" />
-            <span className="ml-2 text-xl font-bold text-gray-900 transition-colors duration-300">
+        <div className="flex h-20 items-center justify-between">
+          <Link 
+            to="/" 
+            className="group flex items-center space-x-2"
+          >
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Eye className="h-8 w-8 text-primary-600" />
+            </motion.div>
+            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-800">
               VisionAid AI
             </span>
           </Link>
 
-          <div className="flex items-center space-x-4">
-            {/* Desktop navigation */}
-            <nav className="hidden md:flex md:space-x-4">
+          <div className="flex items-center space-x-6">
+            <nav className="hidden md:flex md:space-x-8">
               {navLinks.map((link) => (
-                <NavLink key={link.path} {...link} />
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`relative px-3 py-2 text-sm font-medium transition-colors ${
+                    location.pathname === link.path
+                      ? 'text-primary-600'
+                      : 'text-gray-600 hover:text-primary-600'
+                  }`}
+                >
+                  {link.label}
+                  {location.pathname === link.path && (
+                    <motion.div
+                      layoutId="navbar-underline"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600"
+                    />
+                  )}
+                </Link>
               ))}
             </nav>
 
-            {/* Account button */}
-            <div className="relative">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               {user ? (
                 <button
                   onClick={() => navigate('/account')}
-                  className="flex items-center space-x-2 rounded-full bg-primary-50/50 p-2 text-primary-600 hover:bg-primary-100 transition-all duration-300 hover:scale-105 focus-ring"
+                  className="flex items-center space-x-2 rounded-full bg-primary-50 p-2 text-primary-600 hover:bg-primary-100 transition-all"
                 >
                   {user.photoURL ? (
                     <img
@@ -83,41 +92,51 @@ const Navbar: React.FC = () => {
               ) : (
                 <button
                   onClick={() => navigate('/auth')}
-                  className="btn-hover-effect rounded-full bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-all duration-300 focus-ring"
+                  className="rounded-full bg-primary-600 px-6 py-2.5 text-sm font-medium text-white hover:bg-primary-700 transition-all"
                 >
                   Sign In
                 </button>
               )}
-            </div>
+            </motion.div>
 
-            {/* Mobile menu button */}
             <button
-              onClick={toggleMenu}
-              className="md:hidden rounded-md p-2 text-gray-500 hover:bg-gray-100 hover:text-primary-600 focus-ring"
-              aria-expanded={isMenuOpen}
-              aria-label="Toggle navigation menu"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden rounded-lg p-2 text-gray-500 hover:bg-gray-100"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile navigation */}
-        <div
-          className={`md:hidden transition-all duration-300 ease-in-out ${
-            isMenuOpen
-              ? 'max-h-48 opacity-100 visible'
-              : 'max-h-0 opacity-0 invisible'
-          }`}
-        >
-          <nav className="flex flex-col space-y-1 pb-3">
-            {navLinks.map((link) => (
-              <NavLink key={link.path} {...link} />
-            ))}
-          </nav>
-        </div>
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden overflow-hidden"
+            >
+              <nav className="flex flex-col space-y-4 py-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                      location.pathname === link.path
+                        ? 'bg-primary-50 text-primary-600'
+                        : 'text-gray-600 hover:bg-gray-50'
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </header>
+    </motion.header>
   );
 };
 
