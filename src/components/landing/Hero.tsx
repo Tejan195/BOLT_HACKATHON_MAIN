@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, Github, Twitter, Users, Sparkles, Download, Chrome, BookOpen, Target } from 'lucide-react';
+import { Eye, Github, Twitter, Users, Sparkles, Download, Chrome, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Hero: React.FC = () => {
@@ -13,23 +13,23 @@ const Hero: React.FC = () => {
         </div>
         
         <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 flex flex-col justify-center min-h-screen">
-          <div className="text-center animate-fade-in">
+          <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
               <span className="block text-transparent bg-gradient-to-r from-violet-400 via-primary-500 to-violet-600 bg-clip-text animate-text-gradient">
                 VisionAid
               </span>
-              <span className="mt-4 block text-white/90 animate-slide-up">
+              <span className="mt-4 block text-white/90">
                 Web Accessibility for Everyone
               </span>
             </h1>
-            <p className="mx-auto mt-8 max-w-2xl text-lg sm:text-xl leading-relaxed text-gray-300 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <p className="mx-auto mt-8 max-w-2xl text-lg sm:text-xl leading-relaxed text-gray-300">
               Transform websites to be more accessible for people with visual impairments. 
               Color correction for color blindness, dyslexia-friendly text, and low vision support, all in one tool.
             </p>
-            <div className="mx-auto mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 stagger-animation">
+            <div className="mx-auto mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
               <Link
                 to="/color-vision"
-                className="group relative px-6 py-3 w-full sm:w-auto rounded-full bg-primary-600 text-white overflow-hidden transition-all duration-300 hover:scale-105 animate-scale-in animate-glow"
+                className="group relative px-6 py-3 w-full sm:w-auto rounded-full bg-primary-600 text-white overflow-hidden transition-all duration-300 hover:scale-105"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-primary-600 transition-transform duration-300 group-hover:scale-105"></div>
                 <span className="relative flex items-center justify-center text-base font-medium">
@@ -39,8 +39,7 @@ const Hero: React.FC = () => {
               </Link>
               <Link
                 to="/dyslexia"
-                className="group relative px-6 py-3 w-full sm:w-auto rounded-full bg-white/10 text-white overflow-hidden transition-all duration-300 hover:scale-105 animate-scale-in"
-                style={{ animationDelay: '0.1s' }}
+                className="group relative px-6 py-3 w-full sm:w-auto rounded-full bg-white/10 text-white overflow-hidden transition-all duration-300 hover:scale-105"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 transition-transform duration-300 group-hover:scale-105"></div>
                 <span className="relative flex items-center justify-center text-base font-medium">
@@ -61,79 +60,83 @@ const Hero: React.FC = () => {
         </div>
         
         <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 animate-fade-in">
+          <div className="text-center mb-16">
             <h2 className="text-3xl font-bold sm:text-4xl mb-4 text-transparent bg-gradient-to-r from-violet-400 to-primary-500 bg-clip-text">
               About VisionAid
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto animate-slide-up">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               Hi, I'm Tej. I created VisionAid during the Bolt Hackathon with a simple yet powerful belief: 
               everyone deserves equal access to digital content, regardless of their visual abilities.
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 stagger-animation">
-            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 card-hover animate-scale-in">
-              <h3 className="text-2xl font-semibold text-white mb-4">Our Story</h3>
-              <p className="text-gray-300 leading-relaxed">
-                The idea for VisionAid was born from my personal commitment to digital accessibility. 
-                During the Bolt Hackathon, I set out to create a solution that would make the web truly 
-                inclusive. What started as a hackathon project has grown into a comprehensive suite of 
-                tools that help people with various visual impairments access digital content effortlessly.
-              </p>
+          <div className="grid gap-8 md:grid-cols-2">
+            <div className="space-y-8">
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 h-full">
+                <h3 className="text-2xl font-semibold text-white mb-4">Our Story</h3>
+                <p className="text-gray-300 leading-relaxed">
+                  The idea for VisionAid was born from my personal commitment to digital accessibility. 
+                  During the Bolt Hackathon, I set out to create a solution that would make the web truly 
+                  inclusive. What started as a hackathon project has grown into a comprehensive suite of 
+                  tools that help people with various visual impairments access digital content effortlessly.
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 h-full">
+                <h3 className="text-2xl font-semibold text-white mb-4">Our Technology</h3>
+                <p className="text-gray-300 leading-relaxed">
+                  VisionAid uses advanced web technologies like React and CSS filters to provide real-time 
+                  color correction and visual enhancement. We've implemented sophisticated color filters 
+                  for different types of color blindness, smart contrast adjustments, and customizable text 
+                  rendering for dyslexia support. Our browser extension ensures these features are available 
+                  across the entire web.
+                </p>
+              </div>
             </div>
 
-            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 card-hover animate-scale-in">
-              <h3 className="text-2xl font-semibold text-white mb-4">Our Mission</h3>
-              <p className="text-gray-300 leading-relaxed">
-                My mission is to break down digital barriers and create a web that's truly accessible to 
-                everyone. VisionAid is more than just a tool – it's a commitment to continuous 
-                innovation in web accessibility. I'm dedicated to developing and improving features that 
-                help people with visual impairments navigate the digital world with confidence and 
-                independence.
-              </p>
-            </div>
+            <div className="space-y-8">
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 h-full">
+                <h3 className="text-2xl font-semibold text-white mb-4">Our Mission</h3>
+                <p className="text-gray-300 leading-relaxed">
+                  My mission is to break down digital barriers and create a web that's truly accessible to 
+                  everyone. VisionAid is more than just a tool – it's a commitment to continuous 
+                  innovation in web accessibility. I'm dedicated to developing and improving features that 
+                  help people with visual impairments navigate the digital world with confidence and 
+                  independence.
+                </p>
+              </div>
 
-            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 card-hover animate-scale-in">
-              <h3 className="text-2xl font-semibold text-white mb-4">Our Technology</h3>
-              <p className="text-gray-300 leading-relaxed">
-                VisionAid uses advanced web technologies like React and CSS filters to provide real-time 
-                color correction and visual enhancement. We've implemented sophisticated color filters 
-                for different types of color blindness, smart contrast adjustments, and customizable text 
-                rendering for dyslexia support. Our browser extension ensures these features are available 
-                across the entire web.
-              </p>
-            </div>
-
-            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 card-hover animate-scale-in">
-              <h3 className="text-2xl font-semibold text-white mb-4">Features & Impact</h3>
-              <ul className="space-y-4 stagger-animation">
-                <li className="flex items-start text-gray-300 animate-slide-in-right">
-                  <Sparkles className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
-                  <span>Real-time color correction for multiple types of color blindness</span>
-                </li>
-                <li className="flex items-start text-gray-300 animate-slide-in-right">
-                  <BookOpen className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
-                  <span>Dyslexia-friendly text rendering with customizable fonts and spacing</span>
-                </li>
-                <li className="flex items-start text-gray-300 animate-slide-in-right">
-                  <Eye className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
-                  <span>Low vision support with contrast enhancement and magnification</span>
-                </li>
-                <li className="flex items-start text-gray-300 animate-slide-in-right">
-                  <Chrome className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
-                  <span>Browser extension for system-wide accessibility improvements</span>
-                </li>
-              </ul>
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 h-full">
+                <h3 className="text-2xl font-semibold text-white mb-4">Features & Impact</h3>
+                <ul className="space-y-4 text-gray-300">
+                  <li className="flex items-start">
+                    <Sparkles className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
+                    <span>Real-time color correction for multiple types of color blindness</span>
+                  </li>
+                  <li className="flex items-start">
+                    <BookOpen className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
+                    <span>Dyslexia-friendly text rendering with customizable fonts and spacing</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Eye className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
+                    <span>Low vision support with contrast enhancement and magnification</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Chrome className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
+                    <span>Browser extension for system-wide accessibility improvements</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 
-          <div className="mt-16 bg-white/5 backdrop-blur-xl rounded-2xl p-10 border border-white/10 animate-fade-in card-hover">
+          <div className="mt-16 bg-white/5 backdrop-blur-xl rounded-2xl p-10 border border-white/10">
             <h3 className="text-2xl font-semibold text-white mb-8 text-center">Looking Forward</h3>
             <p className="text-gray-300 text-center max-w-3xl mx-auto">
               VisionAid is just the beginning. I'm committed to continuing development and innovation 
-              in web accessibility. In the future, we plan to explore new technologies to provide even 
-              more personalized and effective accessibility solutions. Together, we can create a digital 
-              world that's truly accessible to everyone, regardless of their visual abilities.
+              in web accessibility. In the future, we plan to explore machine learning technologies to 
+              provide even more personalized and effective accessibility solutions. Together, we can create 
+              a digital world that's truly accessible to everyone, regardless of their visual abilities.
             </p>
           </div>
         </div>
@@ -148,7 +151,7 @@ const Hero: React.FC = () => {
         
         <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 flex items-center min-h-screen">
           <div className="w-full">
-            <div className="text-center mb-16 animate-fade-in">
+            <div className="text-center mb-16">
               <h2 className="text-3xl font-bold sm:text-4xl mb-4 text-transparent bg-gradient-to-r from-violet-400 to-primary-500 bg-clip-text">
                 Browser Extension
               </h2>
@@ -158,20 +161,20 @@ const Hero: React.FC = () => {
               </p>
             </div>
             
-            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 max-w-4xl mx-auto border border-white/10 animate-scale-in card-hover">
+            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 max-w-4xl mx-auto border border-white/10">
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <h3 className="text-2xl font-semibold text-white mb-6">Color Vision Extension</h3>
-                  <ul className="space-y-4 text-gray-300 mb-8 stagger-animation">
-                    <li className="flex items-center animate-slide-in-right">
+                  <ul className="space-y-4 text-gray-300 mb-8">
+                    <li className="flex items-center">
                       <Chrome className="h-5 w-5 text-primary-400 mr-3" />
                       Works on any website
                     </li>
-                    <li className="flex items-center animate-slide-in-right">
+                    <li className="flex items-center">
                       <Eye className="h-5 w-5 text-primary-400 mr-3" />
                       Supports all color vision types
                     </li>
-                    <li className="flex items-center animate-slide-in-right">
+                    <li className="flex items-center">
                       <Sparkles className="h-5 w-5 text-primary-400 mr-3" />
                       Real-time color correction
                     </li>
@@ -179,7 +182,7 @@ const Hero: React.FC = () => {
                   <a
                     href="/extension.zip"
                     download
-                    className="group relative inline-flex items-center justify-center rounded-full bg-primary-600 px-6 py-3 text-base font-medium text-white transition-all duration-300 hover:scale-105 animate-scale-in animate-glow"
+                    className="group relative inline-flex items-center justify-center rounded-full bg-primary-600 px-6 py-3 text-base font-medium text-white transition-all duration-300 hover:scale-105"
                   >
                     <div className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-600 to-primary-600 transition-transform duration-300 group-hover:scale-105"></div>
                     <span className="relative flex items-center">
@@ -191,12 +194,12 @@ const Hero: React.FC = () => {
                 
                 <div className="bg-black/20 rounded-xl p-6">
                   <h4 className="font-semibold text-white mb-4">How to Install:</h4>
-                  <ol className="space-y-3 text-gray-300 list-decimal list-inside stagger-animation">
-                    <li className="animate-slide-in-right">Download the extension</li>
-                    <li className="animate-slide-in-right">Open Chrome and go to Extensions</li>
-                    <li className="animate-slide-in-right">Enable Developer mode</li>
-                    <li className="animate-slide-in-right">Click "Load unpacked"</li>
-                    <li className="animate-slide-in-right">Select the downloaded folder</li>
+                  <ol className="space-y-3 text-gray-300 list-decimal list-inside">
+                    <li>Download the extension</li>
+                    <li>Open Chrome and go to Extensions</li>
+                    <li>Enable Developer mode</li>
+                    <li>Click "Load unpacked"</li>
+                    <li>Select the downloaded folder</li>
                   </ol>
                 </div>
               </div>
@@ -214,7 +217,7 @@ const Hero: React.FC = () => {
         
         <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 flex items-center min-h-screen">
           <div className="w-full">
-            <div className="text-center mb-16 animate-fade-in">
+            <div className="text-center mb-16">
               <h2 className="text-3xl font-bold sm:text-4xl mb-4 text-transparent bg-gradient-to-r from-violet-400 to-primary-500 bg-clip-text">
                 Our Vision for Web Accessibility
               </h2>
@@ -223,7 +226,7 @@ const Hero: React.FC = () => {
               </p>
             </div>
 
-            <div className="grid gap-8 md:grid-cols-3 stagger-animation">
+            <div className="grid gap-8 md:grid-cols-3">
               {[
                 {
                   icon: Target,
@@ -243,7 +246,7 @@ const Hero: React.FC = () => {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="group bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 transition-all duration-300 hover:scale-[1.02] card-hover animate-scale-in"
+                  className="group bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 transition-all duration-300 hover:scale-[1.02]"
                 >
                   <div className="flex items-center justify-center h-14 w-14 rounded-xl bg-primary-900/50 text-primary-400 mx-auto mb-6">
                     <item.icon className="h-7 w-7" />
@@ -256,15 +259,15 @@ const Hero: React.FC = () => {
               ))}
             </div>
 
-            <div className="mt-16 bg-white/5 backdrop-blur-xl rounded-2xl p-10 border border-white/10 animate-fade-in card-hover">
+            <div className="mt-16 bg-white/5 backdrop-blur-xl rounded-2xl p-10 border border-white/10">
               <h3 className="text-2xl font-semibold text-white mb-8 text-center">Impact & Statistics</h3>
-              <div className="grid md:grid-cols-3 gap-12 text-center stagger-animation">
+              <div className="grid md:grid-cols-3 gap-12 text-center">
                 {[
                   { value: '300M+', label: 'People worldwide with color blindness' },
                   { value: '15-20%', label: 'Of people show symptoms of dyslexia' },
                   { value: '96%', label: 'Of websites fail accessibility standards' }
                 ].map((stat, index) => (
-                  <div key={index} className="transform transition-all duration-300 hover:scale-105 animate-scale-in">
+                  <div key={index} className="transform transition-all duration-300 hover:scale-105">
                     <p className="text-5xl font-bold text-transparent bg-gradient-to-r from-violet-400 to-primary-500 bg-clip-text mb-3">
                       {stat.value}
                     </p>
