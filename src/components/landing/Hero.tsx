@@ -75,7 +75,8 @@ const Hero: React.FC = () => {
               About VisionAid AI
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              We're revolutionizing web accessibility through innovative AI-powered solutions, making the digital world more inclusive for everyone.
+              Hi, I'm Tej. I created VisionAid AI during the Bolt Hackathon with a simple yet powerful belief: 
+              everyone deserves equal access to digital content, regardless of their visual abilities.
             </p>
           </div>
 
@@ -84,14 +85,21 @@ const Hero: React.FC = () => {
               <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
                 <h3 className="text-2xl font-semibold text-white mb-4">Our Story</h3>
                 <p className="text-gray-300 leading-relaxed">
-                  Founded in 2025, VisionAid AI emerged from a simple yet powerful idea: everyone deserves equal access to digital content. Our team of accessibility experts, developers, and AI specialists came together to create innovative solutions for visual impairments.
+                  The idea for VisionAid AI was born from my personal commitment to digital accessibility. 
+                  During the Bolt Hackathon, I set out to create a solution that would make the web truly 
+                  inclusive. What started as a hackathon project has grown into a comprehensive suite of 
+                  tools that help people with various visual impairments access digital content effortlessly.
                 </p>
               </div>
 
               <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
                 <h3 className="text-2xl font-semibold text-white mb-4">Our Technology</h3>
                 <p className="text-gray-300 leading-relaxed">
-                  We leverage cutting-edge AI and machine learning to provide real-time color correction, text enhancement, and visual accessibility features. Our technology adapts to individual needs, offering personalized solutions for various visual impairments.
+                  VisionAid AI leverages advanced AI algorithms to provide real-time color correction and 
+                  visual enhancement. We use machine learning to optimize color filters for different types 
+                  of color blindness, implement smart contrast adjustments, and offer customizable text 
+                  rendering for dyslexia support. Our browser extension ensures these features are available 
+                  across the entire web.
                 </p>
               </div>
             </div>
@@ -100,63 +108,46 @@ const Hero: React.FC = () => {
               <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
                 <h3 className="text-2xl font-semibold text-white mb-4">Our Mission</h3>
                 <p className="text-gray-300 leading-relaxed">
-                  We're committed to breaking down digital barriers and creating a more inclusive online world. Through continuous innovation and user-centered design, we strive to make web content accessible to everyone, regardless of their visual abilities.
+                  My mission is to break down digital barriers and create a web that's truly accessible to 
+                  everyone. VisionAid AI is more than just a tool – it's a commitment to continuous 
+                  innovation in web accessibility. I'm dedicated to developing and improving features that 
+                  help people with visual impairments navigate the digital world with confidence and 
+                  independence.
                 </p>
               </div>
 
               <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
-                <h3 className="text-2xl font-semibold text-white mb-4">Our Impact</h3>
-                <div className="grid grid-cols-2 gap-6 mt-6">
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-primary-400 mb-2">1M+</div>
-                    <div className="text-sm text-gray-400">Users Helped</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-primary-400 mb-2">50K+</div>
-                    <div className="text-sm text-gray-400">Websites Enhanced</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-primary-400 mb-2">98%</div>
-                    <div className="text-sm text-gray-400">User Satisfaction</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-primary-400 mb-2">24/7</div>
-                    <div className="text-sm text-gray-400">Support Available</div>
-                  </div>
-                </div>
+                <h3 className="text-2xl font-semibold text-white mb-4">Features & Impact</h3>
+                <ul className="space-y-4 text-gray-300">
+                  <li className="flex items-start">
+                    <Sparkles className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
+                    <span>AI-powered color correction for multiple types of color blindness</span>
+                  </li>
+                  <li className="flex items-start">
+                    <BookOpen className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
+                    <span>Dyslexia-friendly text rendering with customizable fonts and spacing</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Eye className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
+                    <span>Low vision support with contrast enhancement and magnification</span>
+                  </li>
+                  <li className="flex items-start">
+                    <Chrome className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
+                    <span>Browser extension for system-wide accessibility improvements</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
 
           <div className="mt-16 bg-white/5 backdrop-blur-xl rounded-2xl p-10 border border-white/10">
-            <h3 className="text-2xl font-semibold text-white mb-8 text-center">Our Team Values</h3>
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  title: 'Innovation',
-                  description: 'Constantly pushing boundaries to create better accessibility solutions',
-                  icon: Sparkles
-                },
-                {
-                  title: 'Inclusivity',
-                  description: 'Ensuring our tools are accessible to everyone, regardless of ability',
-                  icon: Users
-                },
-                {
-                  title: 'Excellence',
-                  description: 'Maintaining the highest standards in all our solutions and services',
-                  icon: Target
-                }
-              ].map((value, index) => (
-                <div key={index} className="text-center">
-                  <div className="inline-block p-4 rounded-full bg-primary-900/50 mb-4">
-                    <value.icon className="h-8 w-8 text-primary-400" />
-                  </div>
-                  <h4 className="text-xl font-semibold text-white mb-2">{value.title}</h4>
-                  <p className="text-gray-400">{value.description}</p>
-                </div>
-              ))}
-            </div>
+            <h3 className="text-2xl font-semibold text-white mb-8 text-center">Looking Forward</h3>
+            <p className="text-gray-300 text-center max-w-3xl mx-auto">
+              VisionAid AI is just the beginning. I'm committed to continuing development and innovation 
+              in web accessibility. Together, we can create a digital world that's truly accessible to 
+              everyone, regardless of their visual abilities. Join me in making the web a more inclusive 
+              space for all.
+            </p>
           </div>
         </div>
       </div>
