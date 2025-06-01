@@ -21,6 +21,19 @@ const Navbar: React.FC = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  const handleNavClick = (path: string) => {
+    if (path === '/#about') {
+      const aboutSection = document.getElementById('about');
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      navigate(path);
+    }
+    setIsMenuOpen(false);
+    setIsDropdownOpen(false);
+  };
+
   const mainLinks = [
     { path: '/', label: 'Home' },
     { path: '/#about', label: 'About' },
@@ -35,12 +48,8 @@ const Navbar: React.FC = () => {
   ];
 
   const NavLink = ({ path, label }: { path: string; label: string }) => (
-    <Link
-      to={path}
-      onClick={() => {
-        setIsMenuOpen(false);
-        setIsDropdownOpen(false);
-      }}
+    <button
+      onClick={() => handleNavClick(path)}
       className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
         location.pathname === path
           ? 'text-primary-400 bg-white/5'
@@ -48,7 +57,7 @@ const Navbar: React.FC = () => {
       }`}
     >
       {label}
-    </Link>
+    </button>
   );
 
   return (
@@ -62,7 +71,7 @@ const Navbar: React.FC = () => {
           <Link to="/" className="flex items-center group">
             <Eye className="h-8 w-8 text-primary-400 transition-transform duration-300 group-hover:scale-110" />
             <span className="ml-2 text-xl font-bold text-white transition-colors duration-300">
-              VisionAid AI
+              VisionAid
             </span>
           </Link>
 
@@ -90,14 +99,13 @@ const Navbar: React.FC = () => {
                     className="absolute top-full left-0 mt-1 w-48 rounded-md bg-black/90 backdrop-blur-xl border border-white/10 shadow-lg py-2"
                   >
                     {featureLinks.map((link) => (
-                      <Link
+                      <button
                         key={link.path}
-                        to={link.path}
-                        onClick={() => setIsDropdownOpen(false)}
-                        className="block px-4 py-2 text-sm text-gray-300 hover:text-primary-400 hover:bg-white/5"
+                        onClick={() => handleNavClick(link.path)}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-primary-400 hover:bg-white/5"
                       >
                         {link.label}
-                      </Link>
+                      </button>
                     ))}
                   </div>
                 )}
