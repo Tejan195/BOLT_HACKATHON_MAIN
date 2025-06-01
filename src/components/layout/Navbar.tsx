@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Eye, Menu, X, User } from 'lucide-react';
+import { Eye, Menu, X, User, ChevronDown } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 
@@ -7,6 +7,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { user } = useAuthStore();
 
@@ -20,8 +21,12 @@ const Navbar: React.FC = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const navLinks = [
+  const mainLinks = [
     { path: '/', label: 'Home' },
+    { path: '/about', label: 'About' },
+  ];
+
+  const featureLinks = [
     { path: '/color-vision', label: 'Color Vision' },
     { path: '/dyslexia', label: 'Dyslexia Support' },
     { path: '/low-vision', label: 'Low Vision' },
@@ -32,7 +37,10 @@ const Navbar: React.FC = () => {
   const NavLink = ({ path, label }: { path: string; label: string }) => (
     <Link
       to={path}
-      onClick={() => setIsMenuOpen(false)}
+      onClick={() => {
+        setIsMenuOpen(false);
+        setIsDropdownOpen(false);
+      }}
       className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
         location.pathname === path
           ? 'text-primary-400 bg-white/5'
@@ -61,9 +69,39 @@ const Navbar: React.FC = () => {
           <div className="flex items-center space-x-4">
             {/* Desktop navigation */}
             <nav className="hidden md:flex md:space-x-4">
-              {navLinks.map((link) => (
+              {mainLinks.map((link) => (
                 <NavLink key={link.path} {...link} />
               ))}
+              
+              {/* Features Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  onMouseEnter={() => setIsDropdownOpen(true)}
+                  className="nav-link rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-primary-400 hover:bg-white/5 flex items-center"
+                >
+                  Features
+                  <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {isDropdownOpen && (
+                  <div
+                    onMouseLeave={() => setIsDropdownOpen(false)}
+                    className="absolute top-full left-0 mt-1 w-48 rounded-md bg-black/90 backdrop-blur-xl border border-white/10 shadow-lg py-2"
+                  >
+                    {featureLinks.map((link) => (
+                      <Link
+                        key={link.path}
+                        to={link.path}
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="block px-4 py-2 text-sm text-gray-300 hover:text-primary-400 hover:bg-white/5"
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             </nav>
 
             {/* Account button */}
@@ -110,12 +148,15 @@ const Navbar: React.FC = () => {
         <div
           className={`md:hidden transition-all duration-300 ease-in-out ${
             isMenuOpen
-              ? 'max-h-48 opacity-100 visible'
+              ? 'max-h-96 opacity-100 visible'
               : 'max-h-0 opacity-0 invisible'
           }`}
         >
           <nav className="flex flex-col space-y-1 pb-3">
-            {navLinks.map((link) => (
+            {mainLinks.map((link) => (
+              <NavLink key={link.path} {...link} />
+            ))}
+            {featureLinks.map((link) => (
               <NavLink key={link.path} {...link} />
             ))}
           </nav>
