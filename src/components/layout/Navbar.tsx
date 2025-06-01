@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
 
   const mainLinks = [
     { path: '/', label: 'Home' },
-    { path: '/about', label: 'About' },
+    { path: '/#about', label: 'About' },
   ];
 
   const featureLinks = [

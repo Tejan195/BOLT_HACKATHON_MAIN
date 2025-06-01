@@ -62,6 +62,105 @@ const Hero: React.FC = () => {
         </div>
       </div>
 
+      {/* About Section */}
+      <div id="about" className="min-h-screen relative overflow-hidden bg-black">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary-900/40 via-black to-black"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(124,58,237,0.12),transparent_50%)]"></div>
+        </div>
+        
+        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold sm:text-4xl mb-4 text-transparent bg-gradient-to-r from-violet-400 to-primary-500 bg-clip-text">
+              About VisionAid AI
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              We're revolutionizing web accessibility through innovative AI-powered solutions, making the digital world more inclusive for everyone.
+            </p>
+          </div>
+
+          <div className="grid gap-12 lg:grid-cols-2">
+            <div className="space-y-8">
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
+                <h3 className="text-2xl font-semibold text-white mb-4">Our Story</h3>
+                <p className="text-gray-300 leading-relaxed">
+                  Founded in 2025, VisionAid AI emerged from a simple yet powerful idea: everyone deserves equal access to digital content. Our team of accessibility experts, developers, and AI specialists came together to create innovative solutions for visual impairments.
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
+                <h3 className="text-2xl font-semibold text-white mb-4">Our Technology</h3>
+                <p className="text-gray-300 leading-relaxed">
+                  We leverage cutting-edge AI and machine learning to provide real-time color correction, text enhancement, and visual accessibility features. Our technology adapts to individual needs, offering personalized solutions for various visual impairments.
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-8">
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
+                <h3 className="text-2xl font-semibold text-white mb-4">Our Mission</h3>
+                <p className="text-gray-300 leading-relaxed">
+                  We're committed to breaking down digital barriers and creating a more inclusive online world. Through continuous innovation and user-centered design, we strive to make web content accessible to everyone, regardless of their visual abilities.
+                </p>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
+                <h3 className="text-2xl font-semibold text-white mb-4">Our Impact</h3>
+                <div className="grid grid-cols-2 gap-6 mt-6">
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-primary-400 mb-2">1M+</div>
+                    <div className="text-sm text-gray-400">Users Helped</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-primary-400 mb-2">50K+</div>
+                    <div className="text-sm text-gray-400">Websites Enhanced</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-primary-400 mb-2">98%</div>
+                    <div className="text-sm text-gray-400">User Satisfaction</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-primary-400 mb-2">24/7</div>
+                    <div className="text-sm text-gray-400">Support Available</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-16 bg-white/5 backdrop-blur-xl rounded-2xl p-10 border border-white/10">
+            <h3 className="text-2xl font-semibold text-white mb-8 text-center">Our Team Values</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  title: 'Innovation',
+                  description: 'Constantly pushing boundaries to create better accessibility solutions',
+                  icon: Sparkles
+                },
+                {
+                  title: 'Inclusivity',
+                  description: 'Ensuring our tools are accessible to everyone, regardless of ability',
+                  icon: Users
+                },
+                {
+                  title: 'Excellence',
+                  description: 'Maintaining the highest standards in all our solutions and services',
+                  icon: Target
+                }
+              ].map((value, index) => (
+                <div key={index} className="text-center">
+                  <div className="inline-block p-4 rounded-full bg-primary-900/50 mb-4">
+                    <value.icon className="h-8 w-8 text-primary-400" />
+                  </div>
+                  <h4 className="text-xl font-semibold text-white mb-2">{value.title}</h4>
+                  <p className="text-gray-400">{value.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Browser Extension Section */}
       <div className="min-h-screen relative overflow-hidden bg-black">
         <div className="absolute inset-0">
