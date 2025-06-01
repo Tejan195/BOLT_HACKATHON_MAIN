@@ -22,7 +22,9 @@ const Navbar: React.FC = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleNavClick = (path: string) => {
-    if (path === '/#about') {
+    if (path === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (path === '/#about') {
       const aboutSection = document.getElementById('about');
       if (aboutSection) {
         aboutSection.scrollIntoView({ behavior: 'smooth' });
