@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, BookOpen, Target, Users, Sparkles, Download, Chrome, ZoomIn } from 'lucide-react';
+import { Eye, Github, Twitter, Users, Sparkles, Download, Chrome, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Hero: React.FC = () => {
@@ -47,16 +47,6 @@ const Hero: React.FC = () => {
                   Dyslexia Support
                 </span>
               </Link>
-              <Link
-                to="/low-vision"
-                className="group relative px-6 py-3 w-full sm:w-auto rounded-full bg-white/10 text-white overflow-hidden transition-all duration-300 hover:scale-105"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-white/10 transition-transform duration-300 group-hover:scale-105"></div>
-                <span className="relative flex items-center justify-center text-base font-medium">
-                  <ZoomIn className="mr-2 h-5 w-5" />
-                  Low Vision Support
-                </span>
-              </Link>
             </div>
           </div>
         </div>
@@ -80,9 +70,9 @@ const Hero: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid gap-12 lg:grid-cols-2">
+          <div className="grid gap-8 md:grid-cols-2">
             <div className="space-y-8">
-              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 h-full">
                 <h3 className="text-2xl font-semibold text-white mb-4">Our Story</h3>
                 <p className="text-gray-300 leading-relaxed">
                   The idea for VisionAid was born from my personal commitment to digital accessibility. 
@@ -92,7 +82,7 @@ const Hero: React.FC = () => {
                 </p>
               </div>
 
-              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 h-full">
                 <h3 className="text-2xl font-semibold text-white mb-4">Our Technology</h3>
                 <p className="text-gray-300 leading-relaxed">
                   VisionAid uses advanced web technologies like React and CSS filters to provide real-time 
@@ -105,7 +95,7 @@ const Hero: React.FC = () => {
             </div>
 
             <div className="space-y-8">
-              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 h-full">
                 <h3 className="text-2xl font-semibold text-white mb-4">Our Mission</h3>
                 <p className="text-gray-300 leading-relaxed">
                   My mission is to break down digital barriers and create a web that's truly accessible to 
@@ -116,7 +106,7 @@ const Hero: React.FC = () => {
                 </p>
               </div>
 
-              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10">
+              <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 h-full">
                 <h3 className="text-2xl font-semibold text-white mb-4">Features & Impact</h3>
                 <ul className="space-y-4 text-gray-300">
                   <li className="flex items-start">
