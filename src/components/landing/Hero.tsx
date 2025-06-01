@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, Github, Twitter, Users, Sparkles, Download, Chrome, BookOpen } from 'lucide-react';
+import { Eye, Github, Twitter, Users, Sparkles, Download, Chrome, BookOpen, Target } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Hero: React.FC = () => {
