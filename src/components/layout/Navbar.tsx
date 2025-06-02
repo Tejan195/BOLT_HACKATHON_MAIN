@@ -8,16 +8,7 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const { user } = useAuthStore();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -58,8 +49,7 @@ const Navbar: React.FC = () => {
   const featureLinks = [
     { path: '/color-vision', label: 'Color Vision' },
     { path: '/dyslexia', label: 'Dyslexia Support' },
-    { path: '/low-vision', label: 'Low Vision' },
-    { path: '/refractive', label: 'Refractive Support' },
+    { path: '/refractive', label: 'Vision Correction' },
     { path: '/exercise', label: 'Vision Exercises' },
   ];
 
@@ -77,11 +67,7 @@ const Navbar: React.FC = () => {
   );
 
   return (
-    <header 
-      className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-black/80 backdrop-blur-xl border-b border-white/10' : 'bg-transparent'
-      }`}
-    >
+    <header className="fixed w-full top-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center group">
