@@ -27,8 +27,7 @@ const DyslexiaPage: React.FC = () => {
     { value: 'opendyslexic', label: 'OpenDyslexic', description: 'Weighted bottom characters' },
     { value: 'andika', label: 'Andika', description: 'Simple, clear letterforms' },
     { value: 'atkinson', label: 'Atkinson Hyperlegible', description: 'High character distinction' },
-    { value: 'comic', label: 'Comic Neue', description: 'Casual, friendly style' },
-    { value: 'tiresias', label: 'Tiresias', description: 'Designed for visual impairments' },
+    { value: 'comic', label: 'Comic Neue', description: 'Casual, friendly style' }
   ];
 
   const sampleText = `
