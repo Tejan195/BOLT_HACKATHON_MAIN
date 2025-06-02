@@ -137,7 +137,7 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Browser Extension Section */}
-      <div className="min-h-screen relative overflow-hidden bg-black">
+      <div id="browser-extension" className="min-h-screen relative overflow-hidden bg-black">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-primary-900/40 via-black to-black"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(124,58,237,0.12),transparent_50%)]"></div>

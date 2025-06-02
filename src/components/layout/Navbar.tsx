@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Eye, Menu, X, User, ChevronDown } from 'lucide-react';
+import { Eye, Menu, X, User, ChevronDown, Download } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
 
@@ -24,6 +24,26 @@ const Navbar: React.FC = () => {
       }, 100);
     }
   };
+
+  const scrollToExtension = () => {
+    const extensionSection = document.querySelector('#browser-extension');
+    if (extensionSection) {
+      extensionSection.scrollIntoView({ behavior: 'smooth' });
+    } else if (location.pathname !== '/') {
+      navigate('/', { state: { scrollToExtension: true } });
+    }
+  };
+
+  useEffect(() => {
+    if (location.state?.scrollToExtension) {
+      setTimeout(() => {
+        const extensionSection = document.querySelector('#browser-extension');
+        if (extensionSection) {
+          extensionSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [location]);
 
   const mainLinks = [
     { path: '/', label: 'Home' },
@@ -93,6 +113,15 @@ const Navbar: React.FC = () => {
                 )}
               </div>
             </nav>
+
+            {/* Download Button */}
+            <button
+              onClick={scrollToExtension}
+              className="hidden md:flex items-center space-x-2 rounded-full bg-white/5 px-4 py-2 text-primary-400 hover:bg-white/10 transition-all duration-300 hover:scale-105"
+            >
+              <Download className="h-5 w-5" />
+              <span className="text-sm font-medium">Download</span>
+            </button>
 
             {/* Account button */}
             <div className="relative">
@@ -169,6 +198,13 @@ const Navbar: React.FC = () => {
                 {link.label}
               </button>
             ))}
+            <button
+              onClick={scrollToExtension}
+              className="nav-link rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-primary-400 hover:bg-white/5 flex items-center"
+            >
+              <Download className="h-5 w-5 mr-2" />
+              Download Extension
+            </button>
           </nav>
         </div>
       </div>
