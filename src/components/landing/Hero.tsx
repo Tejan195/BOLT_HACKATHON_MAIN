@@ -23,8 +23,8 @@ const Hero: React.FC = () => {
               </span>
             </h1>
             <p className="mx-auto mt-8 max-w-2xl text-lg sm:text-xl leading-relaxed text-gray-300">
-              Transform websites to be more accessible for people with visual impairments. 
-              Color correction for color blindness, dyslexia-friendly text, and low vision support, all in one tool.
+              Transform websites to be more accessible for people with color vision deficiency and dyslexia. 
+              Experience color correction, dyslexia-friendly text, and interactive vision exercises.
             </p>
             <div className="mx-auto mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
               <Link
@@ -77,18 +77,17 @@ const Hero: React.FC = () => {
                 The idea for VisionAid was born from my personal commitment to digital accessibility. 
                 During the Bolt Hackathon, I set out to create a solution that would make the web truly 
                 inclusive. What started as a hackathon project has grown into a comprehensive suite of 
-                tools that help people with various visual impairments access digital content effortlessly.
+                tools that help people with color vision deficiency and dyslexia access digital content effortlessly.
               </p>
             </div>
 
             <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 card-hover animate-scale-in">
               <h3 className="text-2xl font-semibold text-white mb-4">Our Mission</h3>
               <p className="text-gray-300 leading-relaxed">
-                My mission is to break down digital barriers and create a web that's truly accessible to 
+                Our mission is to break down digital barriers and create a web that's truly accessible to 
                 everyone. VisionAid is more than just a tool – it's a commitment to continuous 
-                innovation in web accessibility. I'm dedicated to developing and improving features that 
-                help people with visual impairments navigate the digital world with confidence and 
-                independence.
+                innovation in web accessibility. We're dedicated to developing and improving features that 
+                help people with visual challenges navigate the digital world with confidence.
               </p>
             </div>
 
@@ -97,9 +96,8 @@ const Hero: React.FC = () => {
               <p className="text-gray-300 leading-relaxed">
                 VisionAid uses advanced web technologies like React and CSS filters to provide real-time 
                 color correction and visual enhancement. We've implemented sophisticated color filters 
-                for different types of color blindness, smart contrast adjustments, and customizable text 
-                rendering for dyslexia support. Our browser extension ensures these features are available 
-                across the entire web.
+                for different types of color blindness, smart text rendering for dyslexia support, and 
+                interactive exercises for vision training.
               </p>
             </div>
 
@@ -115,8 +113,8 @@ const Hero: React.FC = () => {
                   <span>Dyslexia-friendly text rendering with customizable fonts and spacing</span>
                 </li>
                 <li className="flex items-start text-gray-300 animate-slide-in-right">
-                  <Eye className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
-                  <span>Low vision support with contrast enhancement and magnification</span>
+                  <Target className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
+                  <span>Interactive vision exercises for improved visual performance</span>
                 </li>
                 <li className="flex items-start text-gray-300 animate-slide-in-right">
                   <Chrome className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
@@ -129,14 +127,15 @@ const Hero: React.FC = () => {
           <div className="mt-16 bg-white/5 backdrop-blur-xl rounded-2xl p-10 border border-white/10 animate-fade-in card-hover">
             <h3 className="text-2xl font-semibold text-white mb-8 text-center">Looking Forward</h3>
             <p className="text-gray-300 text-center max-w-3xl mx-auto">
-              VisionAid is just the beginning. I'm committed to continuing development and innovation 
+              VisionAid is just the beginning. We're committed to continuing development and innovation 
               in web accessibility. In the future, we plan to explore new technologies to provide even 
               more personalized and effective accessibility solutions. Together, we can create a digital 
-              world that's truly accessible to everyone, regardless of their visual abilities.
+              world that's truly accessible to everyone.
             </p>
           </div>
         </div>
       </div>
+
       {/* Browser Extension Section */}
       <div className="min-h-screen relative overflow-hidden bg-black">
         <div className="absolute inset-0">
@@ -226,12 +225,12 @@ const Hero: React.FC = () => {
                 {
                   icon: Target,
                   title: 'Our Mission',
-                  description: 'To empower individuals with visual impairments by providing innovative tools that enhance their web browsing experience.'
+                  description: 'To empower individuals with color vision deficiency and dyslexia by providing innovative tools that enhance their web browsing experience.'
                 },
                 {
                   icon: Users,
                   title: 'Who We Help',
-                  description: 'We serve individuals with color vision deficiencies, dyslexia, and other visual processing challenges.'
+                  description: 'We serve individuals with color vision deficiencies, dyslexia, and those seeking to improve their visual performance.'
                 },
                 {
                   icon: Sparkles,
