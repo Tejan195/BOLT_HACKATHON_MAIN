@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Book, Type, Palette, Sparkles, Maximize2, AlignLeft, Ruler, Volume2, Wand2, ArrowLeftRight, ArrowUpDown } from 'lucide-react';
 import { useVisionStore } from '../store/useVisionStore';
+import { SpeechControls } from '../components/speech/SpeechControls';
 
 interface BionicWord {
   text: string;
@@ -351,7 +352,10 @@ const DyslexiaPage: React.FC = () => {
             className={`rounded-xl shadow-sm border border-gray-200 p-6 ${getBackgroundColor()}`}
             style={{ maxWidth: `${columnWidth}px` }}
           >
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Preview</h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold text-gray-900">Preview</h2>
+              <SpeechControls text={sampleText} />
+            </div>
             <div
               className={`prose max-w-none ${getFontClass()}`}
               style={{
