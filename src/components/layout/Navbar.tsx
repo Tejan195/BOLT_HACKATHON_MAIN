@@ -167,13 +167,17 @@ const Navbar: React.FC = () => {
 
         {/* Mobile navigation */}
         <div
-          className={`md:hidden transition-all duration-300 ease-in-out ${
+          className={`md:hidden fixed inset-x-0 bg-black/95 backdrop-blur-xl border-b border-white/10 transition-all duration-300 ease-in-out ${
             isMenuOpen
-              ? 'max-h-96 opacity-100 visible'
-              : 'max-h-0 opacity-0 invisible'
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 -translate-y-4 pointer-events-none'
           }`}
+          style={{
+            top: '64px',
+            transformOrigin: 'top',
+          }}
         >
-          <nav className="flex flex-col space-y-1 pb-3">
+          <nav className="flex flex-col space-y-1 p-4">
             {mainLinks.map((link) => (
               <button
                 key={link.path}
