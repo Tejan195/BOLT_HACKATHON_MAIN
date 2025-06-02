@@ -18,7 +18,6 @@ const Navbar: React.FC = () => {
 
     if (location.pathname !== '/') {
       navigate('/');
-      // Wait for navigation to complete before scrolling
       setTimeout(() => {
         if (path === '/#about') {
           const aboutSection = document.getElementById('about');
@@ -49,7 +48,6 @@ const Navbar: React.FC = () => {
   const featureLinks = [
     { path: '/color-vision', label: 'Color Vision' },
     { path: '/dyslexia', label: 'Dyslexia Support' },
-    { path: '/refractive', label: 'Vision Correction' },
     { path: '/exercise', label: 'Vision Exercises' },
   ];
 
@@ -177,6 +175,6 @@ const Navbar: React.FC = () => {
       </div>
     </header>
   );
-};
+}
 
 export default Navbar;
