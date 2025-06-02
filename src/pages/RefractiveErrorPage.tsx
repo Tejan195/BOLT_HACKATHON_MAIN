@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Eye, ZoomIn, Focus, Glasses, Sparkles, ArrowLeft, Brain, Target } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { VisionCorrection } from '../components/vision/VisionCorrection';
 
 const RefractiveErrorPage: React.FC = () => {
   const navigate = useNavigate();
@@ -325,18 +326,16 @@ const RefractiveErrorPage: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <>
+              <VisionCorrection
+                visionType={visionType}
+                severity={severity}
+                correction={correction}
+                distanceMode={distanceMode}
+              >
                 {/* Image Preview */}
                 <div className="mb-6 space-y-4">
                   {images.map((image, index) => (
-                    <div
-                      key={index}
-                      className="relative rounded-lg overflow-hidden"
-                      style={{
-                        transform: calculateDistortion(),
-                        filter: `blur(${calculateBlur()}px)`,
-                      }}
-                    >
+                    <div key={index} className="relative rounded-lg overflow-hidden">
                       <img
                         src={image.url}
                         alt={image.title}
@@ -353,21 +352,14 @@ const RefractiveErrorPage: React.FC = () => {
                 </div>
 
                 {/* Text Preview */}
-                <div
-                  className="prose max-w-none"
-                  style={{
-                    fontSize: `${textSize}px`,
-                    transform: calculateDistortion(),
-                    filter: `blur(${calculateBlur()}px)`,
-                  }}
-                >
+                <div className="prose max-w-none" style={{ fontSize: `${textSize}px` }}>
                   {sampleText.split('\n').map((paragraph, index) => (
                     <p key={index} className="mb-4 text-gray-700">
                       {paragraph.trim()}
                     </p>
                   ))}
                 </div>
-              </>
+              </VisionCorrection>
             )}
           </div>
         </div>
