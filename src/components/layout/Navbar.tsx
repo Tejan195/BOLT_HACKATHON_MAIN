@@ -10,8 +10,6 @@ const Navbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { user } = useAuthStore();
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
   const handleNavClick = (path: string) => {
     setIsMenuOpen(false);
     setIsDropdownOpen(false);
@@ -38,24 +36,11 @@ const Navbar: React.FC = () => {
     { path: '/exercise', label: 'Vision Exercises' },
   ];
 
-  const NavLink = ({ path, label }: { path: string; label: string }) => (
-    <button
-      onClick={() => handleNavClick(path)}
-      className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
-        location.pathname === path
-          ? 'text-primary-400 bg-white/5'
-          : 'text-gray-300 hover:text-primary-400 hover:bg-white/5'
-      }`}
-    >
-      {label}
-    </button>
-  );
-
   return (
     <header className="fixed w-full top-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center group">
+          <Link to="/" className="flex items-center group" onClick={() => setIsMenuOpen(false)}>
             <Eye className="h-8 w-8 text-primary-400 transition-transform duration-300 group-hover:scale-110" />
             <span className="ml-2 text-xl font-bold text-white transition-colors duration-300">
               VisionAid
@@ -66,7 +51,17 @@ const Navbar: React.FC = () => {
             {/* Desktop navigation */}
             <nav className="hidden md:flex md:space-x-4">
               {mainLinks.map((link) => (
-                <NavLink key={link.path} {...link} />
+                <button
+                  key={link.path}
+                  onClick={() => handleNavClick(link.path)}
+                  className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                    location.pathname === link.path
+                      ? 'text-primary-400 bg-white/5'
+                      : 'text-gray-300 hover:text-primary-400 hover:bg-white/5'
+                  }`}
+                >
+                  {link.label}
+                </button>
               ))}
               
               {/* Features Dropdown */}
@@ -88,10 +83,7 @@ const Navbar: React.FC = () => {
                     {featureLinks.map((link) => (
                       <button
                         key={link.path}
-                        onClick={() => {
-                          handleNavClick(link.path);
-                          setIsDropdownOpen(false);
-                        }}
+                        onClick={() => handleNavClick(link.path)}
                         className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-primary-400 hover:bg-white/5"
                       >
                         {link.label}
@@ -132,7 +124,7 @@ const Navbar: React.FC = () => {
 
             {/* Mobile menu button */}
             <button
-              onClick={toggleMenu}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden rounded-md p-2 text-gray-300 hover:bg-white/5 hover:text-primary-400"
               aria-expanded={isMenuOpen}
               aria-label="Toggle navigation menu"
@@ -152,10 +144,30 @@ const Navbar: React.FC = () => {
         >
           <nav className="flex flex-col space-y-1 pb-3">
             {mainLinks.map((link) => (
-              <NavLink key={link.path} {...link} />
+              <button
+                key={link.path}
+                onClick={() => handleNavClick(link.path)}
+                className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                  location.pathname === link.path
+                    ? 'text-primary-400 bg-white/5'
+                    : 'text-gray-300 hover:text-primary-400 hover:bg-white/5'
+                }`}
+              >
+                {link.label}
+              </button>
             ))}
             {featureLinks.map((link) => (
-              <NavLink key={link.path} {...link} />
+              <button
+                key={link.path}
+                onClick={() => handleNavClick(link.path)}
+                className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                  location.pathname === link.path
+                    ? 'text-primary-400 bg-white/5'
+                    : 'text-gray-300 hover:text-primary-400 hover:bg-white/5'
+                }`}
+              >
+                {link.label}
+              </button>
             ))}
           </nav>
         </div>
