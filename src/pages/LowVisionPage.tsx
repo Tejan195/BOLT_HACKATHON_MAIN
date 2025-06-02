@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ZoomIn, Sun, Moon, Type, Volume2, Eye } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { ZoomIn, Sun, Moon, Type, Volume2, Eye, Focus, Glasses, Ruler, Crosshair } from 'lucide-react';
 
 const LowVisionPage: React.FC = () => {
   const [scale, setScale] = useState(1);
@@ -7,38 +7,129 @@ const LowVisionPage: React.FC = () => {
   const [brightness, setBrightness] = useState(1);
   const [fontSize, setFontSize] = useState(16);
   const [highContrast, setHighContrast] = useState(false);
+  const [correction, setCorrection] = useState(false);
+  const [focalPoint, setFocalPoint] = useState({ x: 0, y: 0 });
+  const [astigmatismAngle, setAstigmatismAngle] = useState(0);
+  const [astigmatismStrength, setAstigmatismStrength] = useState(0);
+  const [sphericalPower, setSphericalPower] = useState(0);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [viewingDistance, setViewingDistance] = useState(60); // cm
 
-  const sampleText = `
-    Welcome to the Low Vision Support Tools. These features are designed to make
-    content more accessible for users with visual impairments. You can adjust text
-    size, contrast, brightness, and enable screen magnification to suit your needs.
+  // Simulate actual vision correction by applying inverse transformations
+  const calculateCorrectionTransform = () => {
+    if (!correction) return '';
     
-    The tools provided here include:
-    • Screen magnification
-    • High contrast mode
-    • Adjustable text size
-    • Brightness controls
-    • Screen reader compatibility
-  `;
-
-  const getContrastMode = () => {
-    if (highContrast) {
-      return 'bg-black text-white';
+    const transforms = [];
+    
+    // Correct spherical error (myopia/hyperopia)
+    if (sphericalPower !== 0) {
+      // Simulate lens power correction
+      const scaleFactor = 1 + (sphericalPower * 0.01);
+      transforms.push(`scale(${scaleFactor})`);
     }
-    return 'bg-white text-gray-900';
+
+    // Correct astigmatism
+    if (astigmatismStrength !== 0) {
+      // Apply inverse cylindrical correction
+      transforms.push(
+        `rotate(${astigmatismAngle}deg)`,
+        `skew(${-astigmatismStrength}deg, ${-astigmatismStrength * 0.5}deg)`,
+        `rotate(${-astigmatismAngle}deg)`
+      );
+    }
+
+    return transforms.join(' ');
   };
 
+  // Calculate blur based on viewing distance and prescription
+  const calculateBlur = () => {
+    if (correction) return 0;
+    
+    // Base blur from spherical error
+    let blur = Math.abs(sphericalPower) * 0.1;
+    
+    // Additional blur from astigmatism
+    blur += astigmatismStrength * 0.05;
+    
+    // Adjust blur based on viewing distance
+    const distanceFactor = Math.abs(viewingDistance - 60) / 30;
+    blur *= (1 + distanceFactor);
+    
+    return blur;
+  };
+
+  // Simulate peripheral vision loss
+  const calculateVignette = () => {
+    if (!correction && sphericalPower < 0) {
+      const intensity = Math.abs(sphericalPower) * 5;
+      return `radial-gradient(
+        circle at ${focalPoint.x}px ${focalPoint.y}px,
+        transparent ${70 - intensity}%,
+        rgba(0,0,0,${intensity * 0.1}) 100%
+      )`;
+    }
+    return 'none';
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (contentRef.current) {
+        const rect = contentRef.current.getBoundingClientRect();
+        setFocalPoint({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  const sampleText = `
+    This text demonstrates how vision correction works. The simulation takes into
+    account factors like viewing distance, spherical power (myopia/hyperopia),
+    and astigmatism. Move your mouse to see how peripheral vision is affected.
+
+    Vision correction involves complex optical principles. When light enters the eye,
+    it's bent by the cornea and lens to focus on the retina. Vision problems occur
+    when this focus point is either in front of or behind the retina, or when the
+    cornea is irregularly shaped (astigmatism).
+
+    Corrective lenses work by adding or subtracting optical power to compensate for
+    these focusing errors. The simulation demonstrates this by applying appropriate
+    transformations to the content, similar to how actual corrective lenses work.
+  `;
+
+  const images = [
+    {
+      url: 'https://images.pexels.com/photos/261662/pexels-photo-261662.jpeg?auto=compress&cs=tinysrgb&w=1280',
+      title: 'Distance Vision Test',
+      description: 'Urban landscape with varying depths'
+    },
+    {
+      url: 'https://images.pexels.com/photos/256520/pexels-photo-256520.jpeg?auto=compress&cs=tinysrgb&w=1280',
+      title: 'Near Vision Test',
+      description: 'Reading material at close range'
+    },
+    {
+      url: 'https://images.pexels.com/photos/590493/pexels-photo-590493.jpeg?auto=compress&cs=tinysrgb&w=1280',
+      title: 'Visual Acuity Test',
+      description: 'Signs at different distances'
+    }
+  ];
+
   return (
-    <div className={`min-h-screen pt-24 pb-16 ${getContrastMode()}`}>
+    <div className={`min-h-screen pt-24 pb-16 ${highContrast ? 'bg-black text-white' : 'bg-white text-gray-900'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className={`text-4xl font-bold sm:text-5xl lg:text-6xl mb-6 ${
             highContrast ? 'text-white' : 'text-transparent bg-gradient-to-r from-violet-400 via-primary-500 to-violet-600 bg-clip-text'
           }`}>
-            Low Vision Support
+            Advanced Vision Correction
           </h1>
           <p className={`text-lg sm:text-xl ${highContrast ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
-            Customize your viewing experience with tools designed for low vision accessibility.
+            Experience realistic vision correction simulation based on optical principles.
           </p>
         </div>
 
@@ -51,19 +142,72 @@ const LowVisionPage: React.FC = () => {
             </h2>
 
             <div className="space-y-6">
-              {/* Magnification */}
+              {/* Spherical Power */}
               <div>
                 <label className={`flex items-center text-sm font-medium mb-2 ${highContrast ? 'text-gray-300' : 'text-gray-700'}`}>
-                  <ZoomIn className="h-4 w-4 mr-2" />
-                  Magnification: {Math.round(scale * 100)}%
+                  <Focus className="h-4 w-4 mr-2" />
+                  Spherical Power: {sphericalPower.toFixed(1)} D
                 </label>
                 <input
                   type="range"
-                  min="1"
-                  max="3"
+                  min="-6"
+                  max="6"
+                  step="0.25"
+                  value={sphericalPower}
+                  onChange={(e) => setSphericalPower(Number(e.target.value))}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
+                />
+                <div className="flex justify-between text-xs mt-1">
+                  <span>Myopia</span>
+                  <span>Hyperopia</span>
+                </div>
+              </div>
+
+              {/* Astigmatism Strength */}
+              <div>
+                <label className={`flex items-center text-sm font-medium mb-2 ${highContrast ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <Crosshair className="h-4 w-4 mr-2" />
+                  Astigmatism: {astigmatismStrength.toFixed(1)}°
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="5"
                   step="0.1"
-                  value={scale}
-                  onChange={(e) => setScale(Number(e.target.value))}
+                  value={astigmatismStrength}
+                  onChange={(e) => setAstigmatismStrength(Number(e.target.value))}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
+                />
+              </div>
+
+              {/* Astigmatism Angle */}
+              <div>
+                <label className={`flex items-center text-sm font-medium mb-2 ${highContrast ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <Ruler className="h-4 w-4 mr-2" />
+                  Axis: {astigmatismAngle}°
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="180"
+                  value={astigmatismAngle}
+                  onChange={(e) => setAstigmatismAngle(Number(e.target.value))}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
+                />
+              </div>
+
+              {/* Viewing Distance */}
+              <div>
+                <label className={`flex items-center text-sm font-medium mb-2 ${highContrast ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <ZoomIn className="h-4 w-4 mr-2" />
+                  Viewing Distance: {viewingDistance} cm
+                </label>
+                <input
+                  type="range"
+                  min="20"
+                  max="100"
+                  value={viewingDistance}
+                  onChange={(e) => setViewingDistance(Number(e.target.value))}
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
                 />
               </div>
@@ -118,6 +262,19 @@ const LowVisionPage: React.FC = () => {
                 />
               </div>
 
+              {/* Vision Correction Toggle */}
+              <button
+                onClick={() => setCorrection(!correction)}
+                className={`w-full flex items-center justify-center px-6 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  correction
+                    ? highContrast ? 'bg-white text-black' : 'bg-primary-600 text-white'
+                    : highContrast ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900'
+                }`}
+              >
+                <Glasses className="h-5 w-5 mr-2" />
+                {correction ? 'Remove Correction' : 'Apply Correction'}
+              </button>
+
               {/* High Contrast Toggle */}
               <button
                 onClick={() => setHighContrast(!highContrast)}
@@ -132,82 +289,97 @@ const LowVisionPage: React.FC = () => {
                 ) : (
                   <Moon className="h-5 w-5 mr-2" />
                 )}
-                {highContrast ? 'Disable High Contrast' : 'Enable High Contrast'}
+                {highContrast ? 'Standard Contrast' : 'High Contrast'}
               </button>
-
-              {/* Screen Reader Hint */}
-              <div className={`mt-4 flex items-center p-4 rounded-lg ${
-                highContrast ? 'bg-gray-800' : 'bg-primary-50'
-              }`}>
-                <Volume2 className={`h-5 w-5 mr-2 ${
-                  highContrast ? 'text-primary-400' : 'text-primary-600'
-                }`} />
-                <p className={`text-sm ${
-                  highContrast ? 'text-gray-300' : 'text-primary-700'
-                }`}>
-                  This page is optimized for screen readers. Use your screen reader's navigation commands to explore the content.
-                </p>
-              </div>
             </div>
           </div>
 
           {/* Preview Panel */}
           <div 
-            className={`rounded-xl shadow-sm border p-6 ${
+            ref={contentRef}
+            className={`rounded-xl shadow-sm border p-6 relative overflow-hidden ${
               highContrast 
                 ? 'border-white/20 bg-gray-900' 
                 : 'border-gray-200 bg-white'
             }`}
             style={{
-              transform: `scale(${scale})`,
-              transformOrigin: 'top left',
-              filter: `contrast(${contrast}) brightness(${brightness})`,
+              filter: `contrast(${contrast}) brightness(${brightness}) blur(${calculateBlur()}px)`,
+              transform: calculateCorrectionTransform(),
             }}
           >
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: calculateVignette(),
+                mixBlendMode: 'multiply',
+              }}
+            />
+
             <h2 className={`text-2xl font-semibold mb-6 ${highContrast ? 'text-white' : 'text-gray-900'}`}>
-              Preview
+              Vision Simulation
             </h2>
-            <div 
-              className="prose max-w-none"
-              style={{ fontSize: `${fontSize}px` }}
-            >
-              {sampleText.split('\n').map((paragraph, index) => (
-                <p 
-                  key={index} 
-                  className={`mb-4 ${highContrast ? 'text-gray-300' : 'text-gray-700'}`}
-                >
-                  {paragraph.trim()}
-                </p>
+
+            <div className="space-y-6">
+              {images.map((image, index) => (
+                <div key={index} className="relative rounded-lg overflow-hidden">
+                  <img
+                    src={image.url}
+                    alt={image.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className={`p-4 ${highContrast ? 'bg-black/80' : 'bg-white/80'}`}>
+                    <h3 className={`font-medium ${highContrast ? 'text-white' : 'text-gray-900'}`}>
+                      {image.title}
+                    </h3>
+                    <p className={`text-sm ${highContrast ? 'text-gray-300' : 'text-gray-600'}`}>
+                      {image.description}
+                    </p>
+                  </div>
+                </div>
               ))}
+
+              <div 
+                className="prose max-w-none"
+                style={{ fontSize: `${fontSize}px` }}
+              >
+                {sampleText.split('\n').map((paragraph, index) => (
+                  <p 
+                    key={index} 
+                    className={`mb-4 ${highContrast ? 'text-gray-300' : 'text-gray-700'}`}
+                  >
+                    {paragraph.trim()}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Accessibility Tips */}
+        {/* Vision Information */}
         <div className={`mt-12 rounded-xl shadow-sm border p-6 ${
           highContrast ? 'border-white/20 bg-gray-900' : 'border-gray-200 bg-white'
         }`}>
           <h2 className={`text-2xl font-semibold mb-6 ${highContrast ? 'text-white' : 'text-gray-900'}`}>
-            Accessibility Tips
+            Understanding Vision Correction
           </h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3">
             {[
               {
-                title: 'Use Keyboard Navigation',
-                description: 'Press Tab to move between controls and Enter to activate buttons.',
-                icon: Type,
+                title: 'Spherical Power',
+                description: 'Corrects nearsightedness (negative) or farsightedness (positive)',
+                icon: Focus,
               },
               {
-                title: 'Screen Reader Support',
-                description: 'All controls are labeled for screen reader compatibility.',
-                icon: Volume2,
+                title: 'Astigmatism',
+                description: 'Corrects irregular cornea shape causing distorted vision',
+                icon: Crosshair,
               },
               {
-                title: 'Customize Settings',
-                description: 'Adjust settings until you find the most comfortable viewing experience.',
-                icon: Sun,
+                title: 'Viewing Distance',
+                description: 'Affects how vision problems manifest at different distances',
+                icon: ZoomIn,
               },
-            ].map((tip, index) => (
+            ].map((info, index) => (
               <div
                 key={index}
                 className={`rounded-lg p-4 ${
@@ -217,19 +389,19 @@ const LowVisionPage: React.FC = () => {
                 }`}
               >
                 <div className="flex items-center mb-2">
-                  <tip.icon className={`h-5 w-5 mr-2 ${
+                  <info.icon className={`h-5 w-5 mr-2 ${
                     highContrast ? 'text-primary-400' : 'text-primary-600'
                   }`} />
                   <h3 className={`font-medium ${
                     highContrast ? 'text-white' : 'text-gray-900'
                   }`}>
-                    {tip.title}
+                    {info.title}
                   </h3>
                 </div>
                 <p className={`text-sm ${
                   highContrast ? 'text-gray-400' : 'text-gray-600'
                 }`}>
-                  {tip.description}
+                  {info.description}
                 </p>
               </div>
             ))}
