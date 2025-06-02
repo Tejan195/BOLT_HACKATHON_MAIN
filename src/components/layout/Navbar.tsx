@@ -22,18 +22,32 @@ const Navbar: React.FC = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleNavClick = (path: string) => {
-    if (path === '/') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (path === '/#about') {
-      const aboutSection = document.getElementById('about');
-      if (aboutSection) {
-        aboutSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      navigate(path);
-    }
     setIsMenuOpen(false);
     setIsDropdownOpen(false);
+
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Wait for navigation to complete before scrolling
+      setTimeout(() => {
+        if (path === '/#about') {
+          const aboutSection = document.getElementById('about');
+          if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      if (path === '/#about') {
+        const aboutSection = document.getElementById('about');
+        if (aboutSection) {
+          aboutSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
   };
 
   const mainLinks = [
@@ -103,7 +117,10 @@ const Navbar: React.FC = () => {
                     {featureLinks.map((link) => (
                       <button
                         key={link.path}
-                        onClick={() => handleNavClick(link.path)}
+                        onClick={() => {
+                          navigate(link.path);
+                          setIsDropdownOpen(false);
+                        }}
                         className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-primary-400 hover:bg-white/5"
                       >
                         {link.label}
@@ -121,9 +138,9 @@ const Navbar: React.FC = () => {
                   onClick={() => navigate('/account')}
                   className="flex items-center space-x-2 rounded-full bg-white/5 p-2 text-primary-400 hover:bg-white/10 transition-all duration-300 hover:scale-105"
                 >
-                  {user.photoURL ? (
+                  {user.user_metadata?.avatar_url ? (
                     <img
-                      src={user.photoURL}
+                      src={user.user_metadata.avatar_url}
                       alt="Profile"
                       className="h-8 w-8 rounded-full ring-2 ring-primary-400"
                     />
