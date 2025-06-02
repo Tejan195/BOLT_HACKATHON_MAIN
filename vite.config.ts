@@ -36,8 +36,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'vision-core': ['zustand', 'lucide-react'],
-          'firebase': ['firebase/app', 'firebase/auth'],
+          'vision-core': ['zustand', 'lucide-react']
         },
       },
     },
