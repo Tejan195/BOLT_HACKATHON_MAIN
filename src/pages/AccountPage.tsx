@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuthStore } from '../store/useAuthStore';
-import { auth } from '../lib/firebase';
+import { supabase } from '../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, Settings, User, Shield } from 'lucide-react';
 
@@ -10,7 +10,7 @@ const AccountPage: React.FC = () => {
 
   const handleSignOut = async () => {
     try {
-      await auth.signOut();
+      await supabase.auth.signOut();
       navigate('/auth');
     } catch (error) {
       console.error('Failed to sign out:', error);
