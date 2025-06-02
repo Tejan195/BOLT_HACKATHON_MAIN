@@ -27,6 +27,31 @@
     @apply antialiased text-gray-900 bg-white;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
+
+  /* Compact Form Controls */
+  .settings-control {
+    @apply flex flex-col gap-1.5 py-2;
+  }
+
+  .settings-label {
+    @apply flex items-center text-sm font-medium text-gray-700;
+  }
+
+  .settings-input {
+    @apply w-full h-1.5 bg-gray-200 rounded appearance-none cursor-pointer accent-primary-600 transition-all duration-300;
+  }
+
+  .settings-input:hover {
+    @apply bg-gray-300;
+  }
+
+  .settings-button {
+    @apply px-3 py-1.5 rounded text-sm font-medium transition-all duration-300;
+  }
+
+  .settings-card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-4 space-y-4;
+  }
 }
 
 /* Font Classes */
@@ -153,7 +178,7 @@
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  @apply w-2;
+  @apply w-1.5;
 }
 
 ::-webkit-scrollbar-track {
@@ -200,6 +225,12 @@
 /* Focus Styles */
 .focus-ring {
   @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-white;
+}
+
+/* Compact Grid Layout */
+.settings-grid {
+  @apply grid gap-4;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 /* Smooth Transitions */
