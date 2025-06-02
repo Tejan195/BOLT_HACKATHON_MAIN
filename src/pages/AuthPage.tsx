@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Eye, Mail, Lock, LogIn, UserPlus, Chrome } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { toast } from 'sonner';
-import { loginSchema, signupSchema, sanitizeInput, checkRateLimit, generateCSRFToken } from '../lib/security';
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -14,12 +13,6 @@ const AuthPage: React.FC = () => {
 
   const handleGoogleSignIn = async () => {
     try {
-      // Rate limiting
-      if (!checkRateLimit('google-signin', 5, 60000)) {
-        toast.error('Too many attempts. Please try again later.');
-        return;
-      }
-
       setLoading(true);
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -40,35 +33,19 @@ const AuthPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-      // Rate limiting
-      if (!checkRateLimit(`auth-${email}`, 5, 300000)) {
-        toast.error('Too many attempts. Please try again later.');
-        return;
-      }
-
-      // Input validation and sanitization
-      const sanitizedEmail = sanitizeInput(email);
-      const schema = isLogin ? loginSchema : signupSchema;
-      schema.parse({ email: sanitizedEmail, password });
-
-      setLoading(true);
-
-      // Generate and store CSRF token
-      const csrfToken = generateCSRFToken();
-      localStorage.setItem('csrf_token', csrfToken);
-
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({
-          email: sanitizedEmail,
+          email,
           password,
         });
         if (error) throw error;
         toast.success('Successfully signed in!');
       } else {
         const { error } = await supabase.auth.signUp({
-          email: sanitizedEmail,
+          email,
           password,
           options: {
             emailRedirectTo: `${window.location.origin}/auth/callback`,
@@ -79,11 +56,7 @@ const AuthPage: React.FC = () => {
       }
       navigate('/account');
     } catch (error: any) {
-      if (error.name === 'ZodError') {
-        toast.error('Invalid email or password format');
-      } else {
-        toast.error(error.message);
-      }
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -133,14 +106,8 @@ const AuthPage: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
-                  autoComplete={isLogin ? 'current-password' : 'new-password'}
                 />
               </div>
-              {!isLogin && (
-                <p className="mt-2 text-sm text-gray-500">
-                  Password must be at least 8 characters long and include uppercase, lowercase, number, and special character
-                </p>
-              )}
             </div>
 
             <div>
