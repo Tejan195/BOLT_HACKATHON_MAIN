@@ -15,9 +15,16 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     detectSessionInUrl: true
   },
   global: {
-    headers: {
-      ...securityHeaders,
-      'X-CSRF-Token': localStorage.getItem('csrf_token') || ''
-    }
+    headers: securityHeaders
   }
+});
+
+// Add request interceptor for additional security
+supabase.rest.interceptors.request.use((config) => {
+  // Add CSRF token to requests
+  const csrfToken = localStorage.getItem('csrf_token');
+  if (csrfToken) {
+    config.headers['X-CSRF-Token'] = csrfToken;
+  }
+  return config;
 });
