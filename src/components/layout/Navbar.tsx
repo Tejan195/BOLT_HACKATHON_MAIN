@@ -32,6 +32,7 @@ const Navbar: React.FC = () => {
     } else if (location.pathname !== '/') {
       navigate('/', { state: { scrollToExtension: true } });
     }
+    setIsMenuOpen(false);
   };
 
   useEffect(() => {
@@ -96,7 +97,7 @@ const Navbar: React.FC = () => {
                 </button>
                 
                 <div
-                  className={`absolute top-full left-0 mt-1 w-48 rounded-md bg-black/90 backdrop-blur-xl border border-white/10 shadow-lg overflow-hidden transition-all duration-300 origin-top-left ${
+                  className={`absolute top-full left-0 mt-1 w-48 rounded-md bg-black/90 backdrop-blur-xl border border-white/10 shadow-lg overflow-hidden transition-all duration-300 origin-top ${
                     isDropdownOpen 
                       ? 'opacity-100 scale-100 translate-y-0' 
                       : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
@@ -156,7 +157,7 @@ const Navbar: React.FC = () => {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden rounded-md p-2 text-gray-300 hover:bg-white/5 hover:text-primary-400 left-0"
+              className="md:hidden rounded-md p-2 text-gray-300 hover:bg-white/5 hover:text-primary-400"
               aria-expanded={isMenuOpen}
               aria-label="Toggle navigation menu"
             >
@@ -167,7 +168,7 @@ const Navbar: React.FC = () => {
 
         {/* Mobile navigation */}
         <div
-          className={`md:hidden fixed inset-x-0 bg-black/95 backdrop-blur-xl border-b border-white/10 transition-all duration-300 ease-in-out ${
+          className={`md:hidden fixed inset-x-0 bg-black/95 backdrop-blur-xl border-b border-white/10 transition-all duration-300 ease-out ${
             isMenuOpen
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 -translate-y-4 pointer-events-none'
@@ -177,12 +178,12 @@ const Navbar: React.FC = () => {
             transformOrigin: 'top',
           }}
         >
-          <nav className="flex flex-col space-y-1 p-4">
+          <nav className="flex flex-col p-4">
             {mainLinks.map((link) => (
               <button
                 key={link.path}
                 onClick={() => handleNavClick(link.path)}
-                className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                className={`nav-link text-left rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
                   location.pathname === link.path
                     ? 'text-primary-400 bg-white/5'
                     : 'text-gray-300 hover:text-primary-400 hover:bg-white/5'
@@ -195,7 +196,7 @@ const Navbar: React.FC = () => {
               <button
                 key={link.path}
                 onClick={() => handleNavClick(link.path)}
-                className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                className={`nav-link text-left rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
                   location.pathname === link.path
                     ? 'text-primary-400 bg-white/5'
                     : 'text-gray-300 hover:text-primary-400 hover:bg-white/5'
@@ -206,7 +207,7 @@ const Navbar: React.FC = () => {
             ))}
             <button
               onClick={scrollToExtension}
-              className="nav-link rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-primary-400 hover:bg-white/5 flex items-center"
+              className="nav-link text-left rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-primary-400 hover:bg-white/5 flex items-center"
             >
               <Download className="h-5 w-5 mr-2" />
               Download Extension
