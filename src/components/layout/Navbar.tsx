@@ -95,22 +95,24 @@ const Navbar: React.FC = () => {
                   <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
                 
-                {isDropdownOpen && (
-                  <div
-                    onMouseLeave={() => setIsDropdownOpen(false)}
-                    className="absolute top-full left-0 mt-1 w-48 rounded-md bg-black/90 backdrop-blur-xl border border-white/10 shadow-lg py-2"
-                  >
-                    {featureLinks.map((link) => (
-                      <button
-                        key={link.path}
-                        onClick={() => handleNavClick(link.path)}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-primary-400 hover:bg-white/5"
-                      >
-                        {link.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
+                <div
+                  className={`absolute top-full left-0 mt-1 w-48 rounded-md bg-black/90 backdrop-blur-xl border border-white/10 shadow-lg overflow-hidden transition-all duration-300 origin-top-left ${
+                    isDropdownOpen 
+                      ? 'opacity-100 scale-100 translate-y-0' 
+                      : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
+                  }`}
+                  onMouseLeave={() => setIsDropdownOpen(false)}
+                >
+                  {featureLinks.map((link) => (
+                    <button
+                      key={link.path}
+                      onClick={() => handleNavClick(link.path)}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-primary-400 hover:bg-white/5 transition-colors duration-200"
+                    >
+                      {link.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </nav>
 
