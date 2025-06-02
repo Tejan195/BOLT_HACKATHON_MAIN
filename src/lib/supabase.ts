@@ -15,16 +15,17 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     detectSessionInUrl: true
   },
   global: {
-    headers: securityHeaders
+    headers: securityHeaders,
+    fetch: (url, options = {}) => {
+      // Add CSRF token to requests if needed
+      const csrfToken = localStorage.getItem('csrf_token');
+      if (csrfToken) {
+        options.headers = {
+          ...options.headers,
+          'X-CSRF-Token': csrfToken
+        };
+      }
+      return fetch(url, options);
+    }
   }
-});
-
-// Add request interceptor for additional security
-supabase.rest.interceptors.request.use((config) => {
-  // Add CSRF token to requests
-  const csrfToken = localStorage.getItem('csrf_token');
-  if (csrfToken) {
-    config.headers['X-CSRF-Token'] = csrfToken;
-  }
-  return config;
 });
