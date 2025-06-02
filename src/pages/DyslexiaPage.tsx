@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+{`import React, { useState, useEffect, useRef } from 'react';
 import { Book, Type, Palette, Sparkles, Maximize2, AlignLeft, Ruler, Volume2, Wand2, ArrowLeftRight, ArrowUpDown } from 'lucide-react';
 import { useVisionStore } from '../store/useVisionStore';
 import { SpeechControls } from '../components/speech/SpeechControls';
@@ -27,11 +27,10 @@ const DyslexiaPage: React.FC = () => {
     { value: 'opendyslexic', label: 'OpenDyslexic', description: 'Weighted bottom characters' },
     { value: 'andika', label: 'Andika', description: 'Simple, clear letterforms' },
     { value: 'atkinson', label: 'Atkinson Hyperlegible', description: 'High character distinction' },
-    { value: 'comic', label: 'Comic Neue', description: 'Casual, friendly style' },
-    { value: 'tiresias', label: 'Tiresias', description: 'Designed for visual impairments' },
+    { value: 'comic', label: 'Comic Neue', description: 'Casual, friendly style' }
   ];
 
-  const sampleText = `
+  const sampleText = \`
     The quick brown fox jumps over the lazy dog. This is a sample text that demonstrates
     how different settings affect readability for people with dyslexia. Reading can be
     challenging when letters appear to move or blur together. By adjusting these settings,
@@ -50,7 +49,7 @@ const DyslexiaPage: React.FC = () => {
     and comprehension. Try adjusting these settings to find what works best for you.
     Remember that everyone's needs are different, so take time to experiment with
     different combinations.
-  `;
+  \`;
 
   useEffect(() => {
     if (dyslexiaSupport) {
@@ -94,7 +93,7 @@ const DyslexiaPage: React.FC = () => {
   };
 
   const getFontClass = () => {
-    return `font-${fontFamily}`;
+    return \`font-\${fontFamily}\`;
   };
 
   const processBionicText = (text: string): BionicWord[] => {
@@ -108,7 +107,7 @@ const DyslexiaPage: React.FC = () => {
   };
 
   const renderBionicText = (text: string) => {
-    return text.split('\n').map((paragraph, index) => {
+    return text.split('\\n').map((paragraph, index) => {
       const words = processBionicText(paragraph.trim());
       return (
         <p key={index} className="mb-4">
@@ -162,11 +161,11 @@ const DyslexiaPage: React.FC = () => {
                         setFontFamily(font.value);
                         if (dyslexiaSupport) setDyslexiaSupport(false);
                       }}
-                      className={`px-4 py-2 rounded-lg text-sm transition-all duration-300 ${
+                      className={\`px-4 py-2 rounded-lg text-sm transition-all duration-300 \${
                         fontFamily === font.value
                           ? 'bg-primary-100 text-primary-700 border-2 border-primary-500'
                           : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
-                      } ${`font-${font.value}`}`}
+                      } \${\`font-\${font.value}\`}\`}
                     >
                       <div className="text-base mb-1">{font.label}</div>
                       <div className="text-xs opacity-75">{font.description}</div>
@@ -290,13 +289,13 @@ const DyslexiaPage: React.FC = () => {
                         setBackgroundColor(bg.value as any);
                         if (dyslexiaSupport) setDyslexiaSupport(false);
                       }}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                      className={\`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 \${
                         bg.color
-                      } ${
+                      } \${
                         backgroundColor === bg.value
                           ? 'ring-2 ring-primary-500'
                           : 'ring-1 ring-gray-200 hover:ring-gray-300'
-                      }`}
+                      }\`}
                     >
                       {bg.label}
                     </button>
@@ -308,11 +307,11 @@ const DyslexiaPage: React.FC = () => {
               <div className="flex flex-wrap gap-3">
                 <button
                   onClick={() => setShowReadingRuler(!showReadingRuler)}
-                  className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  className={\`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 \${
                     showReadingRuler
                       ? 'bg-primary-100 text-primary-700 border-2 border-primary-500'
                       : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
-                  }`}
+                  }\`}
                 >
                   <Ruler className="h-4 w-4 mr-2" />
                   Reading Ruler
@@ -320,11 +319,11 @@ const DyslexiaPage: React.FC = () => {
 
                 <button
                   onClick={() => setBionicReading(!bionicReading)}
-                  className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  className={\`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 \${
                     bionicReading
                       ? 'bg-primary-100 text-primary-700 border-2 border-primary-500'
                       : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
-                  }`}
+                  }\`}
                 >
                   <Wand2 className="h-4 w-4 mr-2" />
                   Bionic Reading
@@ -334,11 +333,11 @@ const DyslexiaPage: React.FC = () => {
               {/* Enable All Features */}
               <button
                 onClick={() => setDyslexiaSupport(!dyslexiaSupport)}
-                className={`w-full mt-4 flex items-center justify-center px-6 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                className={\`w-full mt-4 flex items-center justify-center px-6 py-3 rounded-lg text-sm font-medium transition-all duration-300 \${
                   dyslexiaSupport
                     ? 'bg-primary-600 text-white hover:bg-primary-700'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
+                }\`}
               >
                 <Sparkles className="h-5 w-5 mr-2" />
                 {dyslexiaSupport ? 'Disable All Features' : 'Enable All Features'}
@@ -349,23 +348,23 @@ const DyslexiaPage: React.FC = () => {
           {/* Preview Panel */}
           <div
             ref={contentRef}
-            className={`rounded-xl shadow-sm border border-gray-200 p-6 ${getBackgroundColor()}`}
-            style={{ maxWidth: `${columnWidth}px` }}
+            className={\`rounded-xl shadow-sm border border-gray-200 p-6 \${getBackgroundColor()}\`}
+            style={{ maxWidth: \`\${columnWidth}px\` }}
           >
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-semibold text-gray-900">Preview</h2>
               <SpeechControls text={sampleText} />
             </div>
             <div
-              className={`prose max-w-none ${getFontClass()}`}
+              className={\`prose max-w-none \${getFontClass()}\`}
               style={{
-                fontSize: `${fontSize}px`,
+                fontSize: \`\${fontSize}px\`,
                 lineHeight: lineSpacing,
-                letterSpacing: `${letterSpacing}em`,
-                wordSpacing: `${wordSpacing}em`,
+                letterSpacing: \`\${letterSpacing}em\`,
+                wordSpacing: \`\${wordSpacing}em\`,
               }}
             >
-              {bionicReading ? renderBionicText(sampleText) : sampleText.split('\n').map((paragraph, index) => (
+              {bionicReading ? renderBionicText(sampleText) : sampleText.split('\\n').map((paragraph, index) => (
                 <p key={index} className="mb-4">
                   {paragraph.trim()}
                 </p>
@@ -377,7 +376,7 @@ const DyslexiaPage: React.FC = () => {
         {showReadingRuler && (
           <div
             className="reading-ruler"
-            style={{ top: `${rulerPosition}px` }}
+            style={{ top: \`\${rulerPosition}px\` }}
           />
         )}
 
@@ -420,4 +419,4 @@ const DyslexiaPage: React.FC = () => {
   );
 };
 
-export default DyslexiaPage;
+export default DyslexiaPage;`}
