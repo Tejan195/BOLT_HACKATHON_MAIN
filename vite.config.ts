@@ -25,7 +25,47 @@ export default defineConfig({
             type: 'image/png'
           }
         ]
-      }
+      },
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/images\.pexels\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'pexels-images',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            urlPattern: /\.(js|css|woff2?)$/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'static-resources',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+              },
+            },
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'google-fonts',
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+              },
+            },
+          },
+        ],
+      },
     })
   ],
   optimizeDeps: {
@@ -36,7 +76,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'vision-core': ['zustand', 'lucide-react']
+          'vision-core': ['zustand', 'lucide-react', '@tanstack/react-query']
         },
       },
     },
