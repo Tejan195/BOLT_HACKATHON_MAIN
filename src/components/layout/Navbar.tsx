@@ -15,28 +15,15 @@ const Navbar: React.FC = () => {
   const handleNavClick = (path: string) => {
     setIsMenuOpen(false);
     setIsDropdownOpen(false);
+    navigate(path);
 
-    if (location.pathname !== '/') {
-      navigate('/');
+    if (path.includes('#')) {
       setTimeout(() => {
-        if (path === '/#about') {
-          const aboutSection = document.getElementById('about');
-          if (aboutSection) {
-            aboutSection.scrollIntoView({ behavior: 'smooth' });
-          }
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+        const element = document.getElementById(path.split('#')[1]);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
         }
       }, 100);
-    } else {
-      if (path === '/#about') {
-        const aboutSection = document.getElementById('about');
-        if (aboutSection) {
-          aboutSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
     }
   };
 
@@ -102,7 +89,7 @@ const Navbar: React.FC = () => {
                       <button
                         key={link.path}
                         onClick={() => {
-                          navigate(link.path);
+                          handleNavClick(link.path);
                           setIsDropdownOpen(false);
                         }}
                         className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-primary-400 hover:bg-white/5"
@@ -175,6 +162,6 @@ const Navbar: React.FC = () => {
       </div>
     </header>
   );
-}
+};
 
 export default Navbar;
