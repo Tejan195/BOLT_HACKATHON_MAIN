@@ -29,7 +29,6 @@ export default defineConfig({
     })
   ],
   server: {
-    https: true,
     headers: {
       'Content-Security-Policy': 
         "default-src 'self'; " +
