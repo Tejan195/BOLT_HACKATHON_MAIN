@@ -156,7 +156,7 @@ const Navbar: React.FC = () => {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden rounded-md p-2 text-gray-300 hover:bg-white/5 hover:text-primary-400"
+              className="md:hidden rounded-md p-2 text-gray-300 hover:bg-white/5 hover:text-primary-400 left-0"
               aria-expanded={isMenuOpen}
               aria-label="Toggle navigation menu"
             >
