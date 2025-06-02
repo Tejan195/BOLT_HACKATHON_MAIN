@@ -108,7 +108,7 @@ const Navbar: React.FC = () => {
                     <button
                       key={link.path}
                       onClick={() => handleNavClick(link.path)}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:text-primary-400 hover:bg-white/5 transition-colors duration-200"
+                      className="block w-full text-right px-4 py-2 text-sm text-gray-300 hover:text-primary-400 hover:bg-white/5 transition-colors duration-200"
                     >
                       {link.label}
                     </button>
