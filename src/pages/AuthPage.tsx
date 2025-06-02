@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth, googleProvider, handleAuthError } from '../lib/firebase';
 import { useNavigate } from 'react-router-dom';
 import { Eye, Mail, Lock, LogIn, UserPlus, Chrome } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 import { toast } from 'sonner';
 
 const AuthPage: React.FC = () => {
@@ -15,11 +14,18 @@ const AuthPage: React.FC = () => {
   const handleGoogleSignIn = async () => {
     try {
       setLoading(true);
-      await signInWithPopup(auth, googleProvider);
-      toast.success('Successfully signed in!');
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+      
+      if (error) throw error;
+      toast.success('Successfully signed in with Google!');
       navigate('/account');
-    } catch (error) {
-      handleAuthError(error);
+    } catch (error: any) {
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -31,15 +37,26 @@ const AuthPage: React.FC = () => {
 
     try {
       if (isLogin) {
-        await signInWithEmailAndPassword(auth, email, password);
+        const { error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (error) throw error;
         toast.success('Successfully signed in!');
       } else {
-        await createUserWithEmailAndPassword(auth, email, password);
-        toast.success('Account created successfully!');
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/auth/callback`,
+          },
+        });
+        if (error) throw error;
+        toast.success('Check your email to confirm your account!');
       }
       navigate('/account');
-    } catch (error) {
-      handleAuthError(error);
+    } catch (error: any) {
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
