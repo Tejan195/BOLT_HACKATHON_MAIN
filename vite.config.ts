@@ -28,6 +28,26 @@ export default defineConfig({
       }
     })
   ],
+  server: {
+    https: true,
+    headers: {
+      'Content-Security-Policy': 
+        "default-src 'self'; " +
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+        "img-src 'self' data: https: blob:; " +
+        "font-src 'self' https://fonts.gstatic.com; " +
+        "connect-src 'self' https://api.supabase.co wss://api.supabase.co; " +
+        "frame-ancestors 'none'; " +
+        "form-action 'self';",
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
+      'X-XSS-Protection': '1; mode=block',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload'
+    }
+  },
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
@@ -37,7 +57,7 @@ export default defineConfig({
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'vision-core': ['zustand', 'lucide-react'],
-          'firebase': ['firebase/app', 'firebase/auth'],
+          'supabase': ['@supabase/supabase-js'],
         },
       },
     },
