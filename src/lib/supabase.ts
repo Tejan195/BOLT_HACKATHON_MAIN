@@ -15,17 +15,9 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     detectSessionInUrl: true
   },
   global: {
-    headers: securityHeaders,
-    fetch: (url, options = {}) => {
-      // Add CSRF token to requests if needed
-      const csrfToken = localStorage.getItem('csrf_token');
-      if (csrfToken) {
-        options.headers = {
-          ...options.headers,
-          'X-CSRF-Token': csrfToken
-        };
-      }
-      return fetch(url, options);
+    headers: {
+      ...securityHeaders,
+      'X-CSRF-Token': localStorage.getItem('csrf_token') || ''
     }
   }
 });
