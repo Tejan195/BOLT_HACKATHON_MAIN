@@ -32,7 +32,6 @@ const Navbar: React.FC = () => {
     } else if (location.pathname !== '/') {
       navigate('/', { state: { scrollToExtension: true } });
     }
-    setIsMenuOpen(false);
   };
 
   useEffect(() => {
@@ -93,14 +92,14 @@ const Navbar: React.FC = () => {
                   className="nav-link rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-primary-400 hover:bg-white/5 flex items-center"
                 >
                   Features
-                  <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-500 ease-in-out ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
                 
                 <div
-                  className={`absolute top-full left-0 mt-1 w-48 rounded-md bg-black/90 backdrop-blur-xl border border-white/10 shadow-lg overflow-hidden transition-all duration-500 ease-in-out transform origin-top ${
+                  className={`absolute top-full left-0 mt-1 w-48 rounded-md bg-black/90 backdrop-blur-xl border border-white/10 shadow-lg overflow-hidden transition-all duration-300 origin-top-left ${
                     isDropdownOpen 
-                      ? 'opacity-100 scale-y-100 translate-y-0' 
-                      : 'opacity-0 scale-y-0 -translate-y-2 pointer-events-none'
+                      ? 'opacity-100 scale-100 translate-y-0' 
+                      : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
                   }`}
                   onMouseLeave={() => setIsDropdownOpen(false)}
                 >
@@ -157,40 +156,32 @@ const Navbar: React.FC = () => {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden rounded-md p-2 text-gray-300 hover:bg-white/5 hover:text-primary-400 transition-all duration-300"
+              className="md:hidden rounded-md p-2 text-gray-300 hover:bg-white/5 hover:text-primary-400 left-0"
               aria-expanded={isMenuOpen}
               aria-label="Toggle navigation menu"
             >
-              <div className="relative w-6 h-6">
-                <div className={`absolute inset-0 transform transition-transform duration-500 ease-in-out ${isMenuOpen ? 'rotate-180' : ''}`}>
-                  {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                </div>
-              </div>
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
 
         {/* Mobile navigation */}
         <div
-          className={`md:hidden fixed inset-x-0 bg-black/95 backdrop-blur-xl border-b border-white/10 transition-all duration-500 ease-in-out transform ${
+          className={`md:hidden transition-all duration-300 ease-in-out ${
             isMenuOpen
-              ? 'opacity-100 translate-y-0'
-              : 'opacity-0 -translate-y-full pointer-events-none'
+              ? 'max-h-96 opacity-100 visible'
+              : 'max-h-0 opacity-0 invisible'
           }`}
-          style={{
-            top: '64px',
-            transformOrigin: 'top',
-          }}
         >
-          <nav className="flex flex-col p-4 space-y-1">
+          <nav className="flex flex-col space-y-1 pb-3">
             {mainLinks.map((link) => (
               <button
                 key={link.path}
                 onClick={() => handleNavClick(link.path)}
-                className={`nav-link text-left rounded-md px-3 py-2 text-sm font-medium transition-transform duration-500 ease-in-out ${
+                className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
                   location.pathname === link.path
-                    ? 'text-primary-400 bg-white/5 translate-x-2'
-                    : 'text-gray-300 hover:text-primary-400 hover:bg-white/5 hover:translate-x-2'
+                    ? 'text-primary-400 bg-white/5'
+                    : 'text-gray-300 hover:text-primary-400 hover:bg-white/5'
                 }`}
               >
                 {link.label}
@@ -200,10 +191,10 @@ const Navbar: React.FC = () => {
               <button
                 key={link.path}
                 onClick={() => handleNavClick(link.path)}
-                className={`nav-link text-left rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 transform ${
+                className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ${
                   location.pathname === link.path
-                    ? 'text-primary-400 bg-white/5 translate-x-2'
-                    : 'text-gray-300 hover:text-primary-400 hover:bg-white/5 hover:translate-x-2'
+                    ? 'text-primary-400 bg-white/5'
+                    : 'text-gray-300 hover:text-primary-400 hover:bg-white/5'
                 }`}
               >
                 {link.label}
@@ -211,7 +202,7 @@ const Navbar: React.FC = () => {
             ))}
             <button
               onClick={scrollToExtension}
-              className="nav-link text-left rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-primary-400 hover:bg-white/5 flex items-center transition-all duration-300 transform hover:translate-x-2"
+              className="nav-link rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:text-primary-400 hover:bg-white/5 flex items-center"
             >
               <Download className="h-5 w-5 mr-2" />
               Download Extension
