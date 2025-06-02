@@ -70,59 +70,57 @@ const Hero: React.FC = () => {
             </p>
           </div>
 
-          <div className="overflow-x-auto pb-6 -mx-4 px-4">
-            <div className="flex md:grid md:grid-cols-2 gap-6 min-w-[640px] md:min-w-0">
-              <div className="flex-shrink-0 w-[300px] md:w-auto bg-white/5 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/10 card-hover animate-scale-in">
-                <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4">Our Story</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  The idea for VisionAid was born from my personal commitment to digital accessibility. 
-                  During the Bolt Hackathon, I set out to create a solution that would make the web truly 
-                  inclusive. What started as a hackathon project has grown into a comprehensive suite of 
-                  tools that help people with color vision deficiency and dyslexia access digital content effortlessly.
-                </p>
-              </div>
+          <div className="grid gap-6 md:grid-cols-2 px-4">
+            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/10 card-hover animate-scale-in">
+              <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4">Our Story</h3>
+              <p className="text-gray-300 leading-relaxed">
+                The idea for VisionAid was born from my personal commitment to digital accessibility. 
+                During the Bolt Hackathon, I set out to create a solution that would make the web truly 
+                inclusive. What started as a hackathon project has grown into a comprehensive suite of 
+                tools that help people with color vision deficiency and dyslexia access digital content effortlessly.
+              </p>
+            </div>
 
-              <div className="flex-shrink-0 w-[300px] md:w-auto bg-white/5 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/10 card-hover animate-scale-in">
-                <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4">Our Mission</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  Our mission is to break down digital barriers and create a web that's truly accessible to 
-                  everyone. VisionAid is more than just a tool – it's a commitment to continuous 
-                  innovation in web accessibility. We're dedicated to developing and improving features that 
-                  help people with visual challenges navigate the digital world with confidence.
-                </p>
-              </div>
+            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/10 card-hover animate-scale-in">
+              <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4">Our Mission</h3>
+              <p className="text-gray-300 leading-relaxed">
+                Our mission is to break down digital barriers and create a web that's truly accessible to 
+                everyone. VisionAid is more than just a tool – it's a commitment to continuous 
+                innovation in web accessibility. We're dedicated to developing and improving features that 
+                help people with visual challenges navigate the digital world with confidence.
+              </p>
+            </div>
 
-              <div className="flex-shrink-0 w-[300px] md:w-auto bg-white/5 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/10 card-hover animate-scale-in">
-                <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4">Our Technology</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  VisionAid uses advanced web technologies like React and CSS filters to provide real-time 
-                  color correction and visual enhancement. We've implemented sophisticated color filters 
-                  for different types of color blindness, smart text rendering for dyslexia support, and 
-                  interactive exercises for vision training.
-                </p>
-              </div>
+            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/10 card-hover animate-scale-in">
+              <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4">Our Technology</h3>
+              <p className="text-gray-300 leading-relaxed">
+                VisionAid uses advanced web technologies like React and CSS filters to provide real-time 
+                color correction and visual enhancement. We've implemented sophisticated color filters 
+                for different types of color blindness, smart text rendering for dyslexia support, and 
+                interactive exercises for vision training.
+              </p>
+            </div>
 
-              <div className="flex-shrink-0 w-[300px] md:w-auto bg-white/5 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/10 card-hover animate-scale-in">
-                <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4">Features & Impact</h3>
-                <ul className="space-y-4 stagger-animation">
-                  <li className="flex items-start text-gray-300 animate-slide-in-right">
-                    <Sparkles className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
-                    <span>Real-time color correction for multiple types of color blindness</span>
-                  </li>
-                  <li className="flex items-start text-gray-300 animate-slide-in-right">
-                    <BookOpen className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
-                    <span>Dyslexia-friendly text rendering with customizable fonts and spacing</span>
-                  </li>
-                  <li className="flex items-start text-gray-300 animate-slide-in-right">
-                    <Target className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
-                    <span>Interactive vision exercises for improved visual performance</span>
-                  </li>
-                  <li className="flex items-start text-gray-300 animate-slide-in-right">
-                    <Chrome className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
-                    <span>Browser extension for system-wide accessibility improvements</span>
-                  </li>
-                </ul>
-              </div>
+            <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/10 card-hover animate-scale-in">
+              <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4">Features & Impact</h3>
+              <ul className="space-y-4 stagger-animation">
+                <li className="flex items-start text-gray-300 animate-slide-in-right">
+                  <Sparkles className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
+                  <span>Real-time color correction for multiple types of color blindness</span>
+                </li>
+                <li className="flex items-start text-gray-300 animate-slide-in-right">
+                  <BookOpen className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
+                  <span>Dyslexia-friendly text rendering with customizable fonts and spacing</span>
+                </li>
+                <li className="flex items-start text-gray-300 animate-slide-in-right">
+                  <Target className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
+                  <span>Interactive vision exercises for improved visual performance</span>
+                </li>
+                <li className="flex items-start text-gray-300 animate-slide-in-right">
+                  <Chrome className="h-6 w-6 text-primary-400 mr-3 mt-1 flex-shrink-0" />
+                  <span>Browser extension for system-wide accessibility improvements</span>
+                </li>
+              </ul>
             </div>
           </div>
 
