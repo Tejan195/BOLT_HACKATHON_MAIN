@@ -187,7 +187,7 @@ const Navbar: React.FC = () => {
               <button
                 key={link.path}
                 onClick={() => handleNavClick(link.path)}
-                className={`nav-link text-left rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 transform ${
+                className={`nav-link text-left rounded-md px-3 py-2 text-sm font-medium transition-transform duration-500 ease-in-out ${
                   location.pathname === link.path
                     ? 'text-primary-400 bg-white/5 translate-x-2'
                     : 'text-gray-300 hover:text-primary-400 hover:bg-white/5 hover:translate-x-2'
