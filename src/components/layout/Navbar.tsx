@@ -167,7 +167,7 @@ const Navbar: React.FC = () => {
 
         {/* Mobile navigation */}
         <div
-          className={`md:hidden transition-all duration-300 ease-in-out origin-top-left ${
+          className={`md:hidden transition-all duration-500 ease-in-out origin-top-left ${
             isMenuOpen
               ? 'max-h-96 opacity-100 scale-100 translate-y-0'
               : 'max-h-0 opacity-0 scale-95 -translate-y-2 pointer-events-none'
@@ -178,7 +178,7 @@ const Navbar: React.FC = () => {
               <button
                 key={link.path}
                 onClick={() => handleNavClick(link.path)}
-                className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 text-left ${
+                className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-500 text-left ${
                   location.pathname === link.path
                     ? 'text-primary-400 bg-white/5'
                     : 'text-gray-300 hover:text-primary-400 hover:bg-white/5'
@@ -191,7 +191,7 @@ const Navbar: React.FC = () => {
               <button
                 key={link.path}
                 onClick={() => handleNavClick(link.path)}
-                className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 text-left ${
+                className={`nav-link rounded-md px-3 py-2 text-sm font-medium transition-all duration-500 text-left ${
                   location.pathname === link.path
                     ? 'text-primary-400 bg-white/5'
                     : 'text-gray-300 hover:text-primary-400 hover:bg-white/5'
