@@ -13,9 +13,11 @@ const Hero: React.FC = () => {
         className="fixed top-4 right-4 z-50 transition-transform duration-300 hover:scale-110"
       >
         <img
-          src="https://bolt.new/badge.svg"
+          src="/white_circle_360x360.png"
           alt="Built with Bolt"
-          className="h-12 w-12"
+          width={80}
+          height={80}
+          className="w-20 h-20"
         />
       </a>
 
