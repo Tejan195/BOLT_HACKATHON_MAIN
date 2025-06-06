@@ -10,7 +10,7 @@ const Hero: React.FC = () => {
         href="https://bolt.new"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed top-4 right-4 z-50 transition-transform duration-300 hover:scale-110"
+        className="fixed top-24 right-4 z-50 transition-transform duration-300 hover:scale-110"
       >
         <img
           src="/white_circle_360x360.png"
