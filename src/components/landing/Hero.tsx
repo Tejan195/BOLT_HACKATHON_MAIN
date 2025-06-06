@@ -5,6 +5,20 @@ import { Link } from 'react-router-dom';
 const Hero: React.FC = () => {
   return (
     <div className="bg-black text-white">
+      {/* Bolt.new Badge */}
+      <a
+        href="https://bolt.new"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed top-4 right-4 z-50 transition-transform duration-300 hover:scale-110"
+      >
+        <img
+          src="https://bolt.new/badge.svg"
+          alt="Built with Bolt"
+          className="h-12 w-12"
+        />
+      </a>
+
       {/* Main Hero Section */}
       <div className="min-h-screen relative overflow-hidden">
         <div className="absolute inset-0">
