@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, Mail, Lock, LogIn, UserPlus, Chrome } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { Eye, Mail, Lock, LogIn, UserPlus, Chrome, AlertCircle } from 'lucide-react';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { toast } from 'sonner';
 
 const AuthPage: React.FC = () => {
@@ -11,7 +11,15 @@ const AuthPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Check if Supabase is configured
+  const supabaseConfigured = isSupabaseConfigured();
+
   const handleGoogleSignIn = async () => {
+    if (!supabaseConfigured) {
+      toast.error('Authentication is not configured. Please contact the administrator.');
+      return;
+    }
+
     try {
       setLoading(true);
       const { error } = await supabase.auth.signInWithOAuth({
@@ -33,6 +41,12 @@ const AuthPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!supabaseConfigured) {
+      toast.error('Authentication is not configured. Please contact the administrator.');
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -75,6 +89,22 @@ const AuthPage: React.FC = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          {!supabaseConfigured && (
+            <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-md">
+              <div className="flex">
+                <AlertCircle className="h-5 w-5 text-yellow-400" />
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-yellow-800">
+                    Demo Mode
+                  </h3>
+                  <div className="mt-2 text-sm text-yellow-700">
+                    <p>Authentication is currently in demo mode. You can explore the app without signing in.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -88,7 +118,8 @@ const AuthPage: React.FC = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                  disabled={!supabaseConfigured}
+                  className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                 />
               </div>
             </div>
@@ -105,7 +136,8 @@ const AuthPage: React.FC = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500"
+                  disabled={!supabaseConfigured}
+                  className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-primary-500 focus:border-primary-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                 />
               </div>
             </div>
@@ -113,9 +145,9 @@ const AuthPage: React.FC = () => {
             <div>
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || !supabaseConfigured}
                 className={`w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
-                  loading ? 'bg-primary-400 cursor-not-allowed' : 'bg-primary-600 hover:bg-primary-700'
+                  loading || !supabaseConfigured ? 'bg-primary-400 cursor-not-allowed' : 'bg-primary-600 hover:bg-primary-700'
                 } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500`}
               >
                 {loading ? (
@@ -147,9 +179,9 @@ const AuthPage: React.FC = () => {
             <div className="mt-6">
               <button
                 onClick={handleGoogleSignIn}
-                disabled={loading}
+                disabled={loading || !supabaseConfigured}
                 className={`w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white ${
-                  loading ? 'cursor-not-allowed' : 'hover:bg-gray-50'
+                  loading || !supabaseConfigured ? 'cursor-not-allowed opacity-50' : 'hover:bg-gray-50'
                 } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500`}
               >
                 {loading ? (
@@ -168,10 +200,22 @@ const AuthPage: React.FC = () => {
             <button
               onClick={() => setIsLogin(!isLogin)}
               className="text-sm text-primary-600 hover:text-primary-500"
+              disabled={!supabaseConfigured}
             >
               {isLogin ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
             </button>
           </div>
+
+          {!supabaseConfigured && (
+            <div className="mt-6 text-center">
+              <button
+                onClick={() => navigate('/')}
+                className="text-sm text-gray-600 hover:text-gray-500"
+              >
+                Continue exploring without signing in
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
