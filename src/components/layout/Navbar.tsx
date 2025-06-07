@@ -61,7 +61,11 @@ const Navbar: React.FC = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <Link to="/" className="flex items-center group" onClick={() => setIsMenuOpen(false)}>
-            <Eye className="h-8 w-8 text-primary-400 transition-transform duration-300 group-hover:scale-110" />
+            <img 
+              src="/VisionAid.png" 
+              alt="VisionAid Logo" 
+              className="h-8 w-auto transition-transform duration-300 group-hover:scale-110"
+            />
             <span className="ml-2 text-xl font-bold text-white transition-colors duration-300">
               VisionAid
             </span>

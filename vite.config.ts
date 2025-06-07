@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+      includeAssets: ['VisionAid.png', 'white_circle_360x360.png', 'black_circle_360x360.png'],
       manifest: {
         name: 'VisionAid AI',
         short_name: 'VisionAid',
@@ -15,12 +15,12 @@ export default defineConfig({
         theme_color: '#7c3aed',
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: 'VisionAid.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'pwa-512x512.png',
+            src: 'VisionAid.png',
             sizes: '512x512',
             type: 'image/png'
           }

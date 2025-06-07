@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, Mail, Lock, LogIn, UserPlus, Chrome, AlertCircle } from 'lucide-react';
+import { Mail, Lock, LogIn, UserPlus, Chrome, AlertCircle } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { toast } from 'sonner';
 
@@ -80,7 +80,11 @@ const AuthPage: React.FC = () => {
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-          <Eye className="h-12 w-12 text-primary-600" />
+          <img 
+            src="/VisionAid.png" 
+            alt="VisionAid Logo" 
+            className="h-12 w-auto"
+          />
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           {isLogin ? 'Sign in to your account' : 'Create a new account'}

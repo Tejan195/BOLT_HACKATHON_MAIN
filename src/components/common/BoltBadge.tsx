@@ -14,7 +14,7 @@ const BoltBadge: React.FC = () => {
         alt="Built with Bolt"
         width={60}
         height={60}
-        className="h-12 w-12 md:h-14 md:w-14 lg:h-16 lg:w-16"
+        className="h-10 w-10 md:h-12 md:w-12 lg:h-14 lg:w-14"
       />
     </a>
   );
