@@ -64,7 +64,7 @@ const Navbar: React.FC = () => {
             <img 
               src="/VisionAid.png" 
               alt="VisionAid Logo" 
-              className="h-8 w-auto transition-transform duration-300 group-hover:scale-110"
+              className="h-20 w-auto transition-transform duration-300 group-hover:scale-110"
             />
             <span className="ml-2 text-xl font-bold text-white transition-colors duration-300">
               VisionAid
