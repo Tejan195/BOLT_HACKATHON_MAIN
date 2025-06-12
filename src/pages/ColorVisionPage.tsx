@@ -98,11 +98,11 @@ const ColorVisionPage: React.FC = () => {
                   </div>
 
                   <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex items-center mb-3">
-                      <Eye className="h-5 w-5 text-primary-600 mr-2" aria-hidden="true" />
-                      <h2 className="text-lg font-semibold text-gray-900">{info.title}</h2>
+                    <div className="flex items-start mb-3">
+                      <Eye className="h-5 w-5 text-primary-600 mr-2 mt-0.5 flex-shrink-0" aria-hidden="true" />
+                      <h2 className="text-lg font-semibold text-gray-900 leading-tight">{info.title}</h2>
                     </div>
-                    <p className="text-sm leading-relaxed text-gray-600 mb-4 flex-grow">{info.description}</p>
+                    <p className="text-sm leading-relaxed text-gray-600 mb-4 flex-grow min-h-[4rem]">{info.description}</p>
                     <div className="mt-auto">
                       <div className="rounded-lg px-4 py-2 text-sm font-medium bg-primary-50 text-primary-600 group-hover:bg-primary-100 transition-colors duration-300 text-center">
                         Explore Vision Type
