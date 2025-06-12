@@ -67,7 +67,7 @@ const ColorVisionPage: React.FC = () => {
                 <Link
                   key={info.type}
                   to={`/color-vision/${info.type}`}
-                  className="group bg-white rounded-2xl border border-gray-200 overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-lg animate-fade-in-up"
+                  className="group bg-white rounded-2xl border border-gray-200 overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-lg animate-fade-in-up flex flex-col h-full"
                   style={{ animationDelay: `${index * 150}ms` }}
                   role="listitem"
                 >
@@ -97,14 +97,16 @@ const ColorVisionPage: React.FC = () => {
                     />
                   </div>
 
-                  <div className="p-6">
+                  <div className="p-6 flex flex-col flex-grow">
                     <div className="flex items-center mb-3">
                       <Eye className="h-5 w-5 text-primary-600 mr-2" aria-hidden="true" />
                       <h2 className="text-lg font-semibold text-gray-900">{info.title}</h2>
                     </div>
-                    <p className="text-sm leading-relaxed text-gray-600 mb-4">{info.description}</p>
-                    <div className="rounded-lg px-4 py-2 text-sm font-medium bg-primary-50 text-primary-600 group-hover:bg-primary-100 transition-colors duration-300">
-                      Explore Vision Type
+                    <p className="text-sm leading-relaxed text-gray-600 mb-4 flex-grow">{info.description}</p>
+                    <div className="mt-auto">
+                      <div className="rounded-lg px-4 py-2 text-sm font-medium bg-primary-50 text-primary-600 group-hover:bg-primary-100 transition-colors duration-300 text-center">
+                        Explore Vision Type
+                      </div>
                     </div>
                   </div>
                 </Link>
