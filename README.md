@@ -54,7 +54,17 @@ VisionAid AI is a comprehensive web accessibility solution that helps people wit
    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
    ```
 
-3. **Run Database Migrations**
+3. **Configure Email Settings (Important for Email Confirmation)**
+   
+   In your Supabase Dashboard:
+   - Go to **Authentication > Settings**
+   - **Disable "Enable email confirmations"** for development
+   - Or configure SMTP settings for production:
+     - Go to **Settings > Auth**
+     - Configure SMTP settings with your email provider
+     - Set up email templates for confirmation and password reset
+
+4. **Run Database Migrations**
    ```sql
    -- The migration file will automatically create:
    -- - user_profiles table with RLS policies
@@ -62,10 +72,41 @@ VisionAid AI is a comprehensive web accessibility solution that helps people wit
    -- - Update timestamp triggers
    ```
 
-4. **Configure Authentication Providers**
+5. **Configure Authentication Providers**
    - Enable Email authentication in Supabase Dashboard
-   - Configure Google OAuth (optional)
-   - Set up email templates for confirmation and password reset
+   - Configure Google OAuth (optional):
+     - Go to **Authentication > Providers**
+     - Enable Google provider
+     - Add your Google OAuth credentials
+
+### Email Confirmation Issues
+
+If you're not receiving confirmation emails, here are the solutions:
+
+#### Option 1: Disable Email Confirmation (Development)
+1. Go to Supabase Dashboard → **Authentication → Settings**
+2. Turn OFF "Enable email confirmations"
+3. Users can sign up and sign in immediately without email verification
+
+#### Option 2: Configure SMTP (Production)
+1. Go to Supabase Dashboard → **Settings → Auth**
+2. Configure SMTP settings:
+   ```
+   SMTP Host: your-smtp-host.com
+   SMTP Port: 587 (or 465 for SSL)
+   SMTP User: your-email@domain.com
+   SMTP Pass: your-app-password
+   ```
+3. Popular SMTP providers:
+   - **Gmail**: smtp.gmail.com (use App Password)
+   - **SendGrid**: smtp.sendgrid.net
+   - **Mailgun**: smtp.mailgun.org
+   - **AWS SES**: email-smtp.region.amazonaws.com
+
+#### Option 3: Use Supabase's Built-in Email (Limited)
+- Supabase provides limited email sending for development
+- Check your spam folder
+- Ensure the email address is valid
 
 ### Database Schema
 
@@ -98,6 +139,7 @@ CREATE TABLE user_profiles (
 - Real-time password strength indicator
 - Full name collection
 - Automatic profile creation via database trigger
+- **Email confirmation disabled for development**
 
 #### Sign In
 - Email/password authentication
@@ -105,6 +147,7 @@ CREATE TABLE user_profiles (
 - Form validation with error handling
 - Loading states and user feedback
 - Automatic redirect after successful login
+- Helpful error messages for common issues
 
 #### Profile Management
 - Complete profile form with validation
@@ -152,21 +195,44 @@ CREATE TABLE user_profiles (
    # Edit .env with your Supabase credentials
    ```
 
-4. **Run database migrations**
+4. **Configure Supabase Authentication**
+   - Create a Supabase project
+   - Disable email confirmation for development OR configure SMTP
+   - Enable email authentication
+   - Set up OAuth providers (optional)
+
+5. **Run database migrations**
    ```bash
    # Apply the migration file in your Supabase dashboard
    # or use the Supabase CLI
    ```
 
-5. **Start development server**
+6. **Start development server**
    ```bash
    npm run dev
    ```
 
-6. **Configure Supabase Authentication**
-   - Enable email authentication
-   - Set up OAuth providers (optional)
-   - Configure email templates
+## Troubleshooting Email Issues
+
+### Common Problems and Solutions
+
+1. **No confirmation email received**
+   - Check spam/junk folder
+   - Disable email confirmation in Supabase settings
+   - Configure SMTP settings properly
+
+2. **"Email not confirmed" error**
+   - Disable email confirmation in Supabase Dashboard
+   - Or ensure SMTP is configured correctly
+
+3. **Invalid email format**
+   - Ensure email follows standard format
+   - Check for typos in email address
+
+4. **SMTP configuration issues**
+   - Verify SMTP credentials
+   - Check firewall/network restrictions
+   - Use app-specific passwords for Gmail
 
 ## Authentication Flow
 
@@ -175,7 +241,7 @@ CREATE TABLE user_profiles (
 2. Form validates email format and password strength
 3. Supabase creates user account
 4. Database trigger automatically creates user profile
-5. Email confirmation sent (if enabled)
+5. Email confirmation sent (if enabled) or immediate access (if disabled)
 6. User redirected to profile page
 
 ### User Login

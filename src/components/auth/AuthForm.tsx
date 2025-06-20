@@ -111,17 +111,26 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onModeChange, onSuccess }) =>
             data: {
               full_name: formData.fullName,
             },
+            // Disable email confirmation for development
+            emailRedirectTo: undefined,
           },
         });
 
         if (error) throw error;
 
+        // Check if email confirmation is required
         if (data.user && !data.user.email_confirmed_at) {
-          toast.success('Please check your email to confirm your account!');
+          toast.success('Account created! You can now sign in.', {
+            description: 'Email confirmation is disabled for development.',
+            duration: 5000,
+          });
         } else {
           toast.success('Account created successfully!');
-          onSuccess();
         }
+        
+        // Automatically switch to sign in mode
+        onModeChange('signin');
+        setFormData(prev => ({ ...prev, password: '', confirmPassword: '', fullName: '' }));
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email: formData.email,
@@ -135,7 +144,18 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onModeChange, onSuccess }) =>
       }
     } catch (error: any) {
       console.error('Auth error:', error);
-      toast.error(error.message || 'An error occurred during authentication');
+      
+      // Handle specific error cases
+      if (error.message.includes('Email not confirmed')) {
+        toast.error('Please check your email and click the confirmation link before signing in.');
+      } else if (error.message.includes('Invalid login credentials')) {
+        toast.error('Invalid email or password. Please check your credentials.');
+      } else if (error.message.includes('User already registered')) {
+        toast.error('An account with this email already exists. Please sign in instead.');
+        onModeChange('signin');
+      } else {
+        toast.error(error.message || 'An error occurred during authentication');
+      }
     } finally {
       setLoading(false);
     }
@@ -152,11 +172,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onModeChange, onSuccess }) =>
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: `${window.location.origin}/account`,
         },
       });
       
       if (error) throw error;
+      
+      toast.success('Redirecting to Google...');
     } catch (error: any) {
       console.error('Google sign in error:', error);
       toast.error(error.message || 'Failed to sign in with Google');
