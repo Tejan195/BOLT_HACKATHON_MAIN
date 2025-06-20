@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import { AuthProvider } from './components/auth/AuthProvider';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 import { Toaster } from 'sonner';
 import LoadingSpinner from './components/common/LoadingSpinner';
 
@@ -28,13 +29,37 @@ function App() {
                 <Route path="/color-vision/:type" element={<VisionSimulationPage />} />
                 <Route path="/dyslexia" element={<DyslexiaPage />} />
                 <Route path="/exercise" element={<ExercisePage />} />
-                <Route path="/auth" element={<AuthPage />} />
-                <Route path="/account" element={<AccountPage />} />
+                <Route 
+                  path="/auth" 
+                  element={
+                    <ProtectedRoute requireAuth={false}>
+                      <AuthPage />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/account" 
+                  element={
+                    <ProtectedRoute requireAuth={true}>
+                      <AccountPage />
+                    </ProtectedRoute>
+                  } 
+                />
               </Routes>
             </Layout>
           </ColorVisionFilter>
         </Suspense>
-        <Toaster position="top-right" />
+        <Toaster 
+          position="top-right" 
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#fff',
+              color: '#374151',
+              border: '1px solid #e5e7eb',
+            },
+          }}
+        />
       </AuthProvider>
     </Router>
   );
