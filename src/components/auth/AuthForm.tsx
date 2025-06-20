@@ -36,7 +36,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onModeChange, onSuccess }) =>
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // More strict email validation - requires valid TLD with at least 2 alphabetic characters
+    const emailRegex = /^[^\[\]\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   };
 
@@ -53,7 +54,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onModeChange, onSuccess }) =>
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = 'Please enter a valid email address (e.g., user@example.com)';
     }
 
     // Password validation
@@ -148,11 +149,18 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onModeChange, onSuccess }) =>
       // Handle specific error cases
       if (error.message.includes('Email not confirmed')) {
         toast.error('Please check your email and click the confirmation link before signing in.');
-      } else if (error.message.includes('Invalid login credentials')) {
-        toast.error('Invalid email or password. Please check your credentials.');
+      } else if (error.message.includes('Invalid login credentials') || error.message.includes('invalid_credentials')) {
+        if (mode === 'signin') {
+          toast.error('Invalid email or password. Please check your credentials and try again.');
+        } else {
+          toast.error('Unable to create account. Please check your information and try again.');
+        }
       } else if (error.message.includes('User already registered')) {
         toast.error('An account with this email already exists. Please sign in instead.');
         onModeChange('signin');
+      } else if (error.message.includes('email_address_invalid') || error.message.includes('Email address') && error.message.includes('invalid')) {
+        toast.error('Please enter a valid email address.');
+        setErrors(prev => ({ ...prev, email: 'Please enter a valid email address' }));
       } else {
         toast.error(error.message || 'An error occurred during authentication');
       }
