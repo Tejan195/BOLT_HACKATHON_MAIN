@@ -112,57 +112,75 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onModeChange, onSuccess }) =>
             data: {
               full_name: formData.fullName,
             },
-            // Disable email confirmation for development
-            emailRedirectTo: undefined,
           },
         });
 
         if (error) throw error;
 
-        // Check if email confirmation is required
-        if (data.user && !data.user.email_confirmed_at) {
-          toast.success('Account created! You can now sign in.', {
-            description: 'Email confirmation is disabled for development.',
-            duration: 5000,
-          });
-        } else {
-          toast.success('Account created successfully!');
+        // Check if user was created successfully
+        if (data.user) {
+          if (data.user.email_confirmed_at) {
+            // User is immediately confirmed (email confirmation disabled)
+            toast.success('Account created successfully! You can now sign in.');
+          } else {
+            // Email confirmation required
+            toast.success('Account created! Please check your email to confirm your account before signing in.', {
+              duration: 8000,
+            });
+          }
+          
+          // Automatically switch to sign in mode
+          onModeChange('signin');
+          setFormData(prev => ({ ...prev, password: '', confirmPassword: '', fullName: '' }));
         }
-        
-        // Automatically switch to sign in mode
-        onModeChange('signin');
-        setFormData(prev => ({ ...prev, password: '', confirmPassword: '', fullName: '' }));
       } else {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
           email: formData.email,
           password: formData.password,
         });
 
         if (error) throw error;
         
-        toast.success('Successfully signed in!');
-        onSuccess();
+        if (data.user) {
+          toast.success('Successfully signed in!');
+          onSuccess();
+        }
       }
     } catch (error: any) {
       console.error('Auth error:', error);
       
-      // Handle specific error cases
+      // Handle specific error cases with more helpful messages
       if (error.message.includes('Email not confirmed')) {
         toast.error('Please check your email and click the confirmation link before signing in.');
       } else if (error.message.includes('Invalid login credentials') || error.message.includes('invalid_credentials')) {
         if (mode === 'signin') {
-          toast.error('Invalid email or password. Please check your credentials and try again.');
+          toast.error('Invalid email or password. Please check your credentials and try again.', {
+            description: "Don't have an account? Click 'Sign up' below to create one.",
+            duration: 6000,
+          });
         } else {
           toast.error('Unable to create account. Please check your information and try again.');
         }
       } else if (error.message.includes('User already registered')) {
         toast.error('An account with this email already exists. Please sign in instead.');
         onModeChange('signin');
-      } else if (error.message.includes('email_address_invalid') || error.message.includes('Email address') && error.message.includes('invalid')) {
+      } else if (error.message.includes('email_address_invalid') || (error.message.includes('Email address') && error.message.includes('invalid'))) {
         toast.error('Please enter a valid email address.');
         setErrors(prev => ({ ...prev, email: 'Please enter a valid email address' }));
+      } else if (error.message.includes('Password should be at least')) {
+        toast.error('Password must be at least 6 characters long.');
+        setErrors(prev => ({ ...prev, password: 'Password must be at least 6 characters long' }));
+      } else if (error.message.includes('Signup is disabled')) {
+        toast.error('Account registration is currently disabled. Please contact support.');
       } else {
-        toast.error(error.message || 'An error occurred during authentication');
+        // Generic error with more context
+        const errorMsg = error.message || 'An error occurred during authentication';
+        toast.error(`Authentication failed: ${errorMsg}`, {
+          description: mode === 'signin' 
+            ? 'Please verify your email and password are correct.' 
+            : 'Please check your information and try again.',
+          duration: 6000,
+        });
       }
     } finally {
       setLoading(false);
