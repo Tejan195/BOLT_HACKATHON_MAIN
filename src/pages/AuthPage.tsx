@@ -4,9 +4,13 @@ import { AlertCircle } from 'lucide-react';
 import { isSupabaseConfigured } from '../lib/supabase';
 import { useAuthStore } from '../store/useAuthStore';
 import AuthForm from '../components/auth/AuthForm';
+import PasswordResetForm from '../components/auth/PasswordResetForm';
+
+type AuthView = 'signin' | 'signup' | 'reset-password';
 
 const AuthPage: React.FC = () => {
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
+  const [currentView, setCurrentView] = useState<AuthView>('signin');
   const navigate = useNavigate();
   const location = useLocation();
   const { user, loading } = useAuthStore();
@@ -23,6 +27,20 @@ const AuthPage: React.FC = () => {
 
   const handleAuthSuccess = () => {
     navigate(from, { replace: true });
+  };
+
+  const handleModeChange = (mode: 'signin' | 'signup') => {
+    setAuthMode(mode);
+    setCurrentView(mode);
+  };
+
+  const handleShowPasswordReset = () => {
+    setCurrentView('reset-password');
+  };
+
+  const handleBackToSignIn = () => {
+    setCurrentView('signin');
+    setAuthMode('signin');
   };
 
   // Show loading while checking auth state
@@ -45,12 +63,19 @@ const AuthPage: React.FC = () => {
           />
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          {authMode === 'signin' ? 'Sign in to your account' : 'Create your account'}
+          {currentView === 'reset-password' 
+            ? 'Reset your password'
+            : authMode === 'signin' 
+              ? 'Sign in to your account' 
+              : 'Create your account'
+          }
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          {authMode === 'signin' 
-            ? 'Welcome back! Please sign in to continue.' 
-            : 'Join VisionAid to access personalized accessibility features.'
+          {currentView === 'reset-password'
+            ? 'Enter your email to receive a password reset link'
+            : authMode === 'signin' 
+              ? 'Welcome back! Please sign in to continue.' 
+              : 'Join VisionAid to access personalized accessibility features.'
           }
         </p>
       </div>
@@ -73,11 +98,29 @@ const AuthPage: React.FC = () => {
             </div>
           )}
 
-          <AuthForm 
-            mode={authMode}
-            onModeChange={setAuthMode}
-            onSuccess={handleAuthSuccess}
-          />
+          {currentView === 'reset-password' ? (
+            <PasswordResetForm onBack={handleBackToSignIn} />
+          ) : (
+            <>
+              <AuthForm 
+                mode={authMode}
+                onModeChange={handleModeChange}
+                onSuccess={handleAuthSuccess}
+              />
+
+              {/* Forgot Password Link - Only show on sign in */}
+              {authMode === 'signin' && isSupabaseConfigured() && (
+                <div className="mt-4 text-center">
+                  <button
+                    onClick={handleShowPasswordReset}
+                    className="text-sm text-primary-600 hover:text-primary-500 transition-colors"
+                  >
+                    Forgot your password?
+                  </button>
+                </div>
+              )}
+            </>
+          )}
 
           {!isSupabaseConfigured() && (
             <div className="mt-6 text-center">

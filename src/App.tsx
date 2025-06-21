@@ -14,6 +14,7 @@ const DyslexiaPage = React.lazy(() => import('./pages/DyslexiaPage'));
 const ExercisePage = React.lazy(() => import('./pages/ExercisePage'));
 const AuthPage = React.lazy(() => import('./pages/AuthPage'));
 const AccountPage = React.lazy(() => import('./pages/AccountPage'));
+const NewPasswordForm = React.lazy(() => import('./components/auth/NewPasswordForm'));
 const ColorVisionFilter = React.lazy(() => import('./components/vision/ColorVisionFilter'));
 
 function App() {
@@ -34,6 +35,14 @@ function App() {
                   element={
                     <ProtectedRoute requireAuth={false}>
                       <AuthPage />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/auth/reset-password" 
+                  element={
+                    <ProtectedRoute requireAuth={false}>
+                      <NewPasswordForm />
                     </ProtectedRoute>
                   } 
                 />

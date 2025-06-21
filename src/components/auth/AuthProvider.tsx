@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Session } from '@supabase/supabase-js';
 import { supabase, isSupabaseConfigured } from '../../lib/supabase';
 import { useAuthStore } from '../../store/useAuthStore';
+import { SessionManager } from './SessionManager';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { setUser, setLoading } = useAuthStore();
@@ -32,5 +33,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => subscription.unsubscribe();
   }, [setUser, setLoading]);
 
-  return <>{children}</>;
+  return (
+    <SessionManager>
+      {children}
+    </SessionManager>
+  );
 };
