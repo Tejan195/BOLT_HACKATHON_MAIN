@@ -277,7 +277,7 @@ const DyslexiaPage: React.FC = () => {
                   <Palette className="h-4 w-4 mr-2" />
                   Background Color
                 </label>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {[
                     { value: 'white', label: 'White', color: 'bg-white' },
                     { value: 'cream', label: 'Cream', color: 'bg-[#faf3e0]' },
