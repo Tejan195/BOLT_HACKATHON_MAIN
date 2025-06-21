@@ -7,6 +7,7 @@ interface AuthFormProps {
   mode: 'signin' | 'signup';
   onModeChange: (mode: 'signin' | 'signup') => void;
   onSuccess: () => void;
+  onShowPasswordReset?: () => void;
 }
 
 interface FormData {
@@ -23,7 +24,7 @@ interface FormErrors {
   fullName?: string;
 }
 
-const AuthForm: React.FC<AuthFormProps> = ({ mode, onModeChange, onSuccess }) => {
+const AuthForm: React.FC<AuthFormProps> = ({ mode, onModeChange, onSuccess, onShowPasswordReset }) => {
   const [formData, setFormData] = useState<FormData>({
     email: '',
     password: '',
@@ -448,6 +449,20 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onModeChange, onSuccess }) =>
             }
           </button>
         </div>
+
+        {/* Forgot Password Link - Only show on sign in */}
+        {mode === 'signin' && isSupabaseConfigured() && onShowPasswordReset && (
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={onShowPasswordReset}
+              className="text-sm text-gray-600 hover:text-primary-600 transition-colors"
+              disabled={loading}
+            >
+              Forgot your password?
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );

@@ -101,25 +101,12 @@ const AuthPage: React.FC = () => {
           {currentView === 'reset-password' ? (
             <PasswordResetForm onBack={handleBackToSignIn} />
           ) : (
-            <>
-              <AuthForm 
-                mode={authMode}
-                onModeChange={handleModeChange}
-                onSuccess={handleAuthSuccess}
-              />
-
-              {/* Forgot Password Link - Only show on sign in */}
-              {authMode === 'signin' && isSupabaseConfigured() && (
-                <div className="mt-4 text-center">
-                  <button
-                    onClick={handleShowPasswordReset}
-                    className="text-sm text-primary-600 hover:text-primary-500 transition-colors"
-                  >
-                    Forgot your password?
-                  </button>
-                </div>
-              )}
-            </>
+            <AuthForm 
+              mode={authMode}
+              onModeChange={handleModeChange}
+              onSuccess={handleAuthSuccess}
+              onShowPasswordReset={handleShowPasswordReset}
+            />
           )}
 
           {!isSupabaseConfigured() && (
