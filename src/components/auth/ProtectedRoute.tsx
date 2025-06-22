@@ -16,7 +16,10 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const { user, loading } = useAuthStore();
   const location = useLocation();
 
-  // If Supabase is not configured, allow access
+  // Get redirect path from location state or default to account
+  const from = location.state?.from?.pathname || '/account';
+
+  // If Supabase is not configured, allow access to all pages
   if (!isSupabaseConfigured()) {
     return <>{children}</>;
   }
@@ -31,9 +34,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
-  // If user is logged in but trying to access auth pages
-  if (!requireAuth && user && location.pathname === '/auth') {
-    return <Navigate to="/account" replace />;
+  // If user is logged in but trying to access auth pages, redirect to account
+  if (!requireAuth && user && (location.pathname === '/auth' || location.pathname.startsWith('/auth/'))) {
+    return <Navigate to={from} replace />;
   }
 
   return <>{children}</>;

@@ -19,8 +19,8 @@ const AuthPage: React.FC = () => {
   const from = location.state?.from?.pathname || '/account';
 
   useEffect(() => {
-    // If user is already authenticated, redirect them
-    if (!loading && user) {
+    // Only redirect if user is authenticated and we're not loading
+    if (!loading && user && isSupabaseConfigured()) {
       navigate(from, { replace: true });
     }
   }, [user, loading, navigate, from]);
@@ -50,6 +50,11 @@ const AuthPage: React.FC = () => {
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
       </div>
     );
+  }
+
+  // If user is already authenticated and Supabase is configured, don't render the auth form
+  if (user && isSupabaseConfigured()) {
+    return null; // This prevents flash of auth form before redirect
   }
 
   return (
