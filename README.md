@@ -383,36 +383,6 @@ VisionAid AI represents more than just a project—it's a **movement toward digi
 - **Scalability**: Architecture designed for millions of users
 - **Sustainability**: Business model that supports continued development
 
-### **Why VisionAid AI Wins**
-
-1. **Immediate Impact**: Works on any website without waiting for site owners
-2. **Technical Innovation**: Advanced color correction algorithms
-3. **User Empowerment**: Puts accessibility control in users' hands
-4. **Production Ready**: Complete authentication and user management
-5. **Extensible Platform**: Foundation for future accessibility innovations
-
-## 📞 Support & Contact
-
-### **Get Help**
-- **Documentation**: [docs.visionaid-ai.com](https://docs.visionaid-ai.com)
-- **Support Email**: support@visionaid-ai.com
-- **Community Forum**: [community.visionaid-ai.com](https://community.visionaid-ai.com)
-- **GitHub Issues**: [Report bugs and request features](https://github.com/your-username/vision-aid-ai/issues)
-
-### **Connect With Us**
-- **Twitter**: [@VisionAidAI](https://twitter.com/VisionAidAI)
-- **LinkedIn**: [VisionAid AI](https://linkedin.com/company/visionaid-ai)
-- **Discord**: [Join our community](https://discord.gg/visionaid-ai)
-- **Newsletter**: [Subscribe for updates](https://visionaid-ai.netlify.app/newsletter)
-
----
-
-<div align="center">
-
-**Built with ❤️ for digital accessibility and inclusion**
-
-*Making the web accessible to everyone, one website at a time*
-
 [![Built with Bolt](https://bolt.new/badge.svg)](https://bolt.new) [![Netlify Status](https://api.netlify.com/api/v1/badges/your-badge-id/deploy-status)](https://app.netlify.com/sites/visionaid-ai/deploys)
 
 </div>
