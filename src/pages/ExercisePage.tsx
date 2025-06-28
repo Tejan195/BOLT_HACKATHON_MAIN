@@ -82,6 +82,11 @@ const ExercisePage: React.FC = () => {
   const [score, setScore] = useState(0);
   const [combo, setCombo] = useState(0);
   const [highScore, setHighScore] = useState<Record<string, number>>({});
+  const [convergencePos, setConvergencePos] = useState(0); // -1 (left) to 1 (right), 0 is center
+  const [isAligned, setIsAligned] = useState(false);
+  const [lastClickTime, setLastClickTime] = useState(0);
+  const [fusionOffset, setFusionOffset] = useState(80); // px offset from center
+  const [isFused, setIsFused] = useState(false);
   const targetRef = useRef<HTMLDivElement>(null);
   const gameAreaRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number>();
@@ -103,6 +108,58 @@ const ExercisePage: React.FC = () => {
       endExercise();
     }
   }, [isExercising, timeLeft]);
+
+  useEffect(() => {
+    if (selectedExercise?.type === 'convergence' && isExercising) {
+      animateConvergenceTarget();
+      return () => {
+        if (animationRef.current) cancelAnimationFrame(animationRef.current);
+      };
+    }
+    // eslint-disable-next-line
+  }, [selectedExercise, isExercising]);
+
+  useEffect(() => {
+    if (selectedExercise?.type === 'amblyopia' && isExercising) {
+      animateTarget();
+      return () => {
+        if (animationRef.current) cancelAnimationFrame(animationRef.current);
+      };
+    }
+    // eslint-disable-next-line
+  }, [selectedExercise, isExercising]);
+
+  useEffect(() => {
+    if (selectedExercise?.type === 'strabismus' && isExercising) {
+      let startTime = performance.now();
+      const duration = 2000; // 2 seconds for a full cycle
+
+      const animate = (currentTime: number) => {
+        const elapsed = currentTime - startTime;
+        const progress = (elapsed % duration) / duration;
+        // Offset oscillates from 80px to 0px and back
+        const offset = 80 * Math.abs(Math.sin(progress * Math.PI));
+        setFusionOffset(offset);
+        setIsFused(offset < 18); // Consider fused if close
+
+        if (isExercising && selectedExercise?.type === 'strabismus') {
+          animationRef.current = requestAnimationFrame(animate);
+        }
+      };
+
+      animationRef.current = requestAnimationFrame(animate);
+      return () => {
+        if (animationRef.current) cancelAnimationFrame(animationRef.current);
+      };
+    }
+    // eslint-disable-next-line
+  }, [selectedExercise, isExercising]);
+
+  useEffect(() => {
+    if (!isExercising && targetRef.current) {
+      targetRef.current.style.transform = '';
+    }
+  }, [isExercising]);
 
   const endExercise = () => {
     setIsExercising(false);
@@ -126,10 +183,14 @@ const ExercisePage: React.FC = () => {
 
   const handleTargetClick = () => {
     if (!selectedExercise) return;
-    
+
+    const now = Date.now();
+    if (now - lastClickTime < 300) return; // 300ms cooldown
+    setLastClickTime(now);
+
     setScore(prev => prev + selectedExercise.points * (1 + combo * 0.1));
     setCombo(prev => prev + 1);
-    
+
     // Visual feedback
     if (targetRef.current) {
       targetRef.current.classList.add('scale-125', 'bg-green-500');
@@ -143,29 +204,97 @@ const ExercisePage: React.FC = () => {
 
   const animateTarget = () => {
     if (!targetRef.current || !gameAreaRef.current) return;
-    
+
     let startTime = performance.now();
-    const duration = 2000;
-    
+    const duration = 1000; // Faster: 1 second per circle
+
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = (elapsed % duration) / duration;
-      
+
       if (targetRef.current && gameAreaRef.current) {
         const areaRect = gameAreaRef.current.getBoundingClientRect();
         const radius = Math.min(areaRect.width, areaRect.height) * 0.3;
         const x = Math.cos(progress * Math.PI * 2) * radius;
         const y = Math.sin(progress * Math.PI * 2) * radius;
-        
+
         targetRef.current.style.transform = `translate(${x}px, ${y}px)`;
       }
-      
+
       if (isExercising) {
         animationRef.current = requestAnimationFrame(animate);
       }
     };
-    
+
     animationRef.current = requestAnimationFrame(animate);
+  };
+
+  const animateConvergenceTarget = () => {
+    if (!isExercising || selectedExercise?.type !== 'convergence') return;
+
+    let startTime = performance.now();
+    const duration = 2000; // 2 seconds for a full left-right-left cycle
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      // Move from left (-1) to right (1) and back (sinusoidal motion)
+      const progress = (elapsed % duration) / duration;
+      const pos = Math.sin(progress * Math.PI * 2); // -1 to 1
+      setConvergencePos(pos);
+
+      // Consider "aligned" if close to center
+      setIsAligned(Math.abs(pos) < 0.18); // Slightly easier to click
+
+      if (isExercising && selectedExercise?.type === 'convergence') {
+        animationRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+  };
+
+  const handleConvergenceClick = () => {
+    if (!selectedExercise) return;
+    if (!isAligned) return; // Only score if aligned
+
+    const now = Date.now();
+    if (now - lastClickTime < 400) return; // 400ms cooldown for fairness
+    setLastClickTime(now);
+
+    setScore(prev => prev + selectedExercise.points * (1 + combo * 0.1));
+    setCombo(prev => prev + 1);
+
+    // Visual feedback
+    if (targetRef.current) {
+      targetRef.current.classList.add('scale-125', 'bg-green-500');
+      setTimeout(() => {
+        if (targetRef.current) {
+          targetRef.current.classList.remove('scale-125', 'bg-green-500');
+        }
+      }, 200);
+    }
+  };
+
+  const handleFusionClick = () => {
+    if (!selectedExercise) return;
+    if (!isFused) return; // Only score if fused
+
+    const now = Date.now();
+    if (now - lastClickTime < 400) return; // Cooldown
+    setLastClickTime(now);
+
+    setScore(prev => prev + selectedExercise.points * (1 + combo * 0.1));
+    setCombo(prev => prev + 1);
+
+    // Visual feedback
+    if (targetRef.current) {
+      targetRef.current.classList.add('scale-125', 'bg-green-500');
+      setTimeout(() => {
+        if (targetRef.current) {
+          targetRef.current.classList.remove('scale-125', 'bg-green-500');
+        }
+      }, 200);
+    }
   };
 
   const formatTime = (seconds: number) => {
@@ -197,6 +326,30 @@ const ExercisePage: React.FC = () => {
             and track your progress!
           </p>
         </div>
+
+        {selectedExercise?.type === 'convergence' && isExercising && (
+          <div className="mb-6 p-4 bg-gray-900/60 border-l-4 border-blue-400 rounded text-blue-100">
+            <h3 className="font-bold mb-1">How to Play: Eye Convergence Challenge</h3>
+            <ul className="list-disc pl-5 text-sm">
+              <li>Watch the central target move left and right between the two side dots.</li>
+              <li>When the central target glows yellow (aligned in the center), <b>click it</b> to score points.</li>
+              <li>Each successful click increases your score and combo multiplier.</li>
+              <li>Try to score as many points as possible before time runs out!</li>
+            </ul>
+          </div>
+        )}
+
+        {selectedExercise?.type === 'amblyopia' && isExercising && (
+          <div className="mb-6 p-4 bg-gray-900/60 border-l-4 border-blue-400 rounded text-blue-100">
+            <h3 className="font-bold mb-1">How to Play: Target Tracker</h3>
+            <ul className="list-disc pl-5 text-sm">
+              <li>Watch the target move in a circular path.</li>
+              <li>Click the target as it moves to score points.</li>
+              <li>Each successful click increases your score and combo multiplier.</li>
+              <li>Try to score as many points as possible before time runs out!</li>
+            </ul>
+          </div>
+        )}
 
         {selectedExercise && isExercising ? (
           <div className="bg-gray-800 rounded-xl shadow-lg p-8 max-w-4xl mx-auto border border-gray-700">
@@ -230,11 +383,19 @@ const ExercisePage: React.FC = () => {
                 </div>
               )}
               {selectedExercise.type === 'convergence' && (
-                <div className="space-x-24 flex items-center">
+                <div className="space-x-24 flex items-center relative w-full h-24 justify-center">
                   <div className="w-8 h-8 bg-primary-500 rounded-full animate-pulse" />
-                  <div 
-                    onClick={handleTargetClick}
-                    className="w-12 h-12 bg-primary-400 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
+                  <div
+                    ref={targetRef}
+                    onClick={handleConvergenceClick}
+                    className={`w-12 h-12 bg-primary-400 rounded-full flex items-center justify-center cursor-pointer transition-transform absolute`}
+                    style={{
+                      left: `calc(50% + ${convergencePos * 120}px - 1.5rem)`,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      boxShadow: isAligned ? '0 0 0 6px #facc15' : undefined, // yellow glow when aligned
+                      zIndex: 10,
+                    }}
                   >
                     <Crosshair className="w-8 h-8 text-white" />
                   </div>
@@ -242,15 +403,44 @@ const ExercisePage: React.FC = () => {
                 </div>
               )}
               {selectedExercise.type === 'strabismus' && (
-                <div className="relative">
-                  <div className="absolute -left-16 top-0 w-8 h-8 bg-primary-500 rounded-full" />
-                  <div 
-                    onClick={handleTargetClick}
-                    className="w-16 h-16 bg-primary-400 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
+                <div className="relative w-full h-32 flex items-center justify-center">
+                  <div
+                    className="absolute"
+                    style={{
+                      left: `calc(50% - ${fusionOffset + 32}px)`,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      transition: 'left 0.1s',
+                    }}
                   >
-                    <Focus className="w-10 h-10 text-white" />
+                    <div className="w-8 h-8 bg-primary-500 rounded-full" />
                   </div>
-                  <div className="absolute -right-16 top-0 w-8 h-8 bg-primary-500 rounded-full" />
+                  <div
+                    ref={targetRef}
+                    onClick={handleFusionClick}
+                    className="absolute cursor-pointer flex items-center justify-center"
+                    style={{
+                      left: 'calc(50% - 1.5rem)',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      zIndex: 10,
+                      boxShadow: isFused ? '0 0 0 6px #facc15' : undefined, // yellow glow when fused
+                      transition: 'box-shadow 0.1s',
+                    }}
+                  >
+                    <Focus className="w-12 h-12 text-white bg-primary-400 rounded-full" />
+                  </div>
+                  <div
+                    className="absolute"
+                    style={{
+                      left: `calc(50% + ${fusionOffset}px)`,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      transition: 'left 0.1s',
+                    }}
+                  >
+                    <div className="w-8 h-8 bg-primary-500 rounded-full" />
+                  </div>
                 </div>
               )}
               {selectedExercise.type === 'accommodation' && (
