@@ -174,7 +174,7 @@ const Hero: React.FC = () => {
                     </li>
                   </ul>
                   <a
-                    href="https://somkonpwqjjqiibyjqio.supabase.co/storage/v1/object/public/extension//visionaidextension.zip"
+                    href="https://somkonpwqjjqiibyjqio.supabase.co/storage/v1/object/public/extension//visionaid.zip"
                     download
                     className="group relative inline-flex w-full sm:w-auto items-center justify-center rounded-full bg-primary-600 px-6 py-3 text-base font-medium text-white transition-all duration-300 hover:scale-105"
                   >
