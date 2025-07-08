@@ -6,7 +6,7 @@ VisionAid AI is a groundbreaking web accessibility platform that transforms how 
 
 ## 🚀 Live Demo & Links
 
-- **🌐 Live Website**: [https://visionaid-ai.netlify.app](https://visionaid-ai.netlify.app)
+- **🌐 Live Website**: [https://visionaid-ai.netlify.app](https://bolt-new-visionaid.netlify.app/)
 - **⚡ Bolt Project**: [https://bolt.new/~/vision-aid-ai](https://bolt.new/~/vision-aid-ai)
 - **📱 Demo Video**: [Watch on YouTube](https://youtu.be/demo)
 - **🔗 GitHub Repository**: [View Source Code](https://github.com/your-username/vision-aid-ai)
